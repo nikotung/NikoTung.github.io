@@ -1,14 +1,12 @@
 ---
 layout: post
 title: "Unit Test Result Macro Reference"
-description: ""
-category: 
-tags: []
+description: "some macro for ios unit- test"
+category: "IOS unit-test"
+tags: [ios]
 ---
 {% include JB/setup %}
 
-Unit-Test Result Macro Reference
-=================================
 So far,I have never do Unit-Test .This is the beginning for to learn about Unit-Test on ios develope .If you find something wrong ,pls corret it ,I will appreciate it.
 
 As the title,this artitle is about Unit-Test Result Macro ,which we use on unit test.For more details,pls go to apple's [document](https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/UnitTesting/00-About_Unit_Testing/about.html)
