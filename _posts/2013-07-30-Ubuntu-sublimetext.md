@@ -34,6 +34,7 @@ tags: [开发工具]
 
 ## Step 4
 把sublimetext设置为所有的文本的默认编辑器。
+
                 sudo sublime /usr/share/applications/defaults.list
 
 把所有的gedit.desktop替换成sublime.destop
