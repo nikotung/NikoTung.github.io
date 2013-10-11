@@ -2,7 +2,7 @@
 layout: post
 title: "IOS下單元測試"
 description: "簡述一些ios下的單元測試庫"
-category: “ios开发”
+category: “iOS开发”
 tags: [单元测试]
 ---
 {% include JB/setup %}
