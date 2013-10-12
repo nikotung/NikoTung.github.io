@@ -14,7 +14,7 @@ tags: [UIEdgeInsets]
 
 如果我们对一个button既设置了图片又设置了标题的话，它是如下显示的：
 
-![]({{site.url}}/2013-10-11-UIEdgeInsets-1.png)
+![]({{site.url}}/images/2013-10-11-UIEdgeInsets-1.png)
 
 看到button中有一个`titleEdgeInsets`和`imageEdgeInsets`.
 
@@ -37,5 +37,5 @@ tags: [UIEdgeInsets]
 
 
 
-![]({{site.ur}}/2013-10-11-UIEdgeInsets-2.png)
+![]({{site.ur}}/images/2013-10-11-UIEdgeInsets-2.png)
 
