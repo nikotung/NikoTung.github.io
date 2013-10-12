@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "UIEdgeInsets 理解"
+title: "UIEdgeInsets"
 description: "basic understand about UIEdgeInsets"
-category: "iOS开发","2013年10月"
+category: "2013年10月""
 tags: [UIEdgeInsets]
 ---
 {% include JB/setup %}
