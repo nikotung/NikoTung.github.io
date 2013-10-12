@@ -34,4 +34,6 @@ tags: [UIEdgeInsets,图形界面]
 
 效果图如下：(更精确的对齐，可能还是需要再微调一下)
 
+
+
 ![]({{site.ur}}/2013-10-11-UIEdgeInsets-2)
