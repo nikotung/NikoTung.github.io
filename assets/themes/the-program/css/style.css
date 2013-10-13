@@ -1075,7 +1075,6 @@ pre {
     -webkit-box-shadow: #ffffff 0px 0px 2px;
     -moz-box-shadow: #ffffff 0px 0px 2px;
     -o-box-shadow: #ffffff 0px 0px 2px;
-    margin-right: 450px;
     padding: 26px 52px;
     min-height: 1050px;
   }
@@ -1083,9 +1082,7 @@ pre {
     position: relative;
     top: auto;
     display: block;
-    float: left;
     padding: 26px 0 0 26px;
-    width: 420px;
   }
   .the-footer h4 {
     font-size: 30px;
