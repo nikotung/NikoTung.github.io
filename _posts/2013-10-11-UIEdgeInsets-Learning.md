@@ -36,5 +36,5 @@ tags: [UIEdgeInsets]
 
 
 
-![]({{site.ur}}/images/2013-10-11-UIEdgeInsets-2.png)
+![](/assets/2013-10-11-UIEdgeInsets-2.png)
 
