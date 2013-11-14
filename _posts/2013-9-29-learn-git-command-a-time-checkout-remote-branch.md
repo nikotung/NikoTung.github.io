@@ -5,7 +5,6 @@ description: "checkout command"
 category: “git learning”
 tags: [git,checkout]
 ---
-{% include JB/setup %}
 
 最近开始要频繁使用git了，这些文章在于纪录使用的一些命令，以及遇到的一些问题。
 

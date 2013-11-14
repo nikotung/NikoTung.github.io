@@ -5,7 +5,6 @@ description: "some macro for ios unit- test"
 category: "IOS unit-test"
 tags: [ios]
 ---
-{% include JB/setup %}
 
 So far,I have never do Unit-Test .This is the beginning for to learn about Unit-Test on ios develope .If you find something wrong ,pls corret it ,I will appreciate it.
 

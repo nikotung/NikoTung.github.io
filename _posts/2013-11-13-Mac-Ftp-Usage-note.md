@@ -5,7 +5,6 @@ description: ""
 category: “2013-10-12”
 tags: [Mac,工具杂谈]
 ---
-{% include JB/setup %}
 
 今天研究了一下iOS的in-house发布方式，发现还是比较简单的。在研究过程中要用到ftp上传文件进行测试，于是发现在mac中已经预置了ftp工具，通过Finder可以简单的连接到ftp服务器。通过命令行可以进行一些简单的操作，如下载，上传等。把这些东西记录一下。
 
@@ -13,7 +12,7 @@ tags: [Mac,工具杂谈]
 --------------------------
 我们在Dock中右键一下Finder就可以看到一个 #Connect to Server# 的选项，点击它就在弹出的框中输入ftp地址。这时你就通过Finder中看到server上面的东西
 
-![]({{site.url}}/images/2013-11-13-ftp.png)
+![](/assets/2013-11-13-ftp.png)
 
 简单的ftp命令（在mac下）
 -------------------------------

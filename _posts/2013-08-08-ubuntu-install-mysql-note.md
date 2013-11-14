@@ -5,7 +5,6 @@ description: ""
 category: “development envirment”,"database"
 tags: [Mysql,database]
 ---
-{% include JB/setup %}
 
 Recently,I am learning server and web development.So I need to install a database on my ubuntu 
 system and I choosed mysql for my first try.Now I record the whole process I install Mysql server and client.

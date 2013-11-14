@@ -4,7 +4,6 @@ title: "Ubuntu install sublimetext 2.0小记"
 description: "简述ubuntu下安装sublimetext的过程"
 tags: [开发工具]
 ---
-{% include JB/setup %}
 
 
 今天把笔记本装上了Ubuntu现在才开始用，感觉已经很落后了。安装完后，第一时间把我最喜欢的文本编辑器sublimetext给安装了，安装过程就今天记录以下。

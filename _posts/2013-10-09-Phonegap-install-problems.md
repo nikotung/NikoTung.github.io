@@ -5,7 +5,6 @@ description: "Problems ocurred during config phonegap"
 category: "环境搭建"
 tags: [phonegap]
 ---
-{% include JB/setup %}
 
 
 目测以后要用到phonegap进行跨平台开发，今天有空就先把开发环境给搭建起来，来个简单的入门。去到[phonegap](http://docs.phonegap.com/)的官网，看到对初学者的安装是有比较全面的文档，第一感觉还是不错的。

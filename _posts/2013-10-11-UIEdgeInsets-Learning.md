@@ -5,7 +5,6 @@ description: "basic understand about UIEdgeInsets"
 category: “2013年10月”
 tags: [UIEdgeInsets]
 ---
-{% include JB/setup %}
 
 
 今天出于好奇，想自己写一个UITabBarController,于是就开始动手,于是也就遇到了在tabbar中如何只用一个控件就能把图片和标题显示成标准的baritem一样。
@@ -14,7 +13,7 @@ tags: [UIEdgeInsets]
 
 如果我们对一个button既设置了图片又设置了标题的话，它是如下显示的：
 
-![]({{site.url}}/images/2013-10-11-UIEdgeInsets-1.png)
+![](/assets/2013-10-11-UIEdgeInsets-1.png)
 
 看到button中有一个`titleEdgeInsets`和`imageEdgeInsets`.
 

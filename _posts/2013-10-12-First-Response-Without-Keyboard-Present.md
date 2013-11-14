@@ -5,7 +5,6 @@ description: ""
 category: “2013-10-12”
 tags: [iOS开发,objective-c]
 ---
-{% include JB/setup %}
 
 
 在iOS开发中，我们大多数是通过`UITextField`,`UITextView`来响应输入的，而且这也满足了绝大部分的需求了。由于需要实现一个响应输入（成为firstreponse），而又不显示系统键盘，今天就大概看了一下文档。
