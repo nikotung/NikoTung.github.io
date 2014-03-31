@@ -85,4 +85,4 @@ The gesture recognizer in this property tracks touch events that indicate the us
 这样问题就好了。
 
 ###参考
-[iOS 7 Development Tips, Tricks & Hacks]http://stuartkhall.com/posts/ios-7-development-tips-tricks-hacks
+[iOS 7 Development Tips, Tricks & Hacks](http://stuartkhall.com/posts/ios-7-development-tips-tricks-hacks)
