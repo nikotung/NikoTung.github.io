@@ -97,23 +97,3 @@ Sample
 这样我们就能够完成了一个iOS7的后台获取的功能了。
 
 在调试的时候，我们可以通过Xcode的Debug菜单下的Simulate Background Fetch 来触发，当然也可以通过在edit scheme中Duplicate Scheme然后勾上Backgroung Fetch这个选项就好了。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
