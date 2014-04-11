@@ -17,7 +17,6 @@ comments: no
 
 邮箱：[{{ site.email }}](mailto:{{ site.email }})
 
-GitHub：[{{ site.github }}](https://github.com/{{ site.github }})
 
 ----
 
