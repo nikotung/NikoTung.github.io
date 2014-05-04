@@ -100,7 +100,35 @@ HTTP(HyperText Transfer Protocal)协议也许就是最广泛应用在网络上�
 
 在空闲状态，一个HTTP服务器什么事都不干，只是监听会发送请求过来的IP地址和端口。当一个请求过来的时候，服务器使用配置文件的规则分析请求的头，相应不同的处理方法。网页的主要控制只要是在配置文件中，接下来会详细讨论。
 
+### 建立在TCP/IP协议的HTTP
 
+HTTP是一个主从架构的应用层协议。它主要是运行在一个TCP/IP连接之上，就像下图描述一样。(HTTP 其实不需要运行在TCP/IP连接之上。它只是需要一个可靠的传输。任何能够保证稳定的传输协议都可以)
+
+![](assets/2014-04-27-HTTP_OverTCPIP.png)
+
+TCP/IP是一系列用于设备通过网络交互传输的传输层和网络层的协议。
+
+IP(Internet Protocol)是一个处理网络地址和路由的网络层协议。在一个IP网络，每一个机器都有一个唯一的ip地址(比如。165.1.2.3)，并且IP路由软件就是负责把信息从一个源IP地址发送到目的IP地址。在IPv4，IP地址包含4哥字节，每个从0-255，通过点号隔开，称为四分之一点格式。这种格式包含了4g多个IP地址。最新得IPv6就更多了。由于记住数字是比较难的，一个用英语表示的域名，比如www.test101.com就代替了数字。DNS就是负责把域名转化称为IP地址。一个特别的IP地址127.0.0.1 通常就是表示你自己的机器，它的域名就是localhost可以用于本地回路测试。
+
+TCP是一个传输层的协议，负责在两台机器上建立连接。TCP包括两个协议:TCP和UDP。tcp连接更可靠，它的每一个包都有一个顺序号，和一个应答信号。一个包如果没有被收到，它就会从新发送。包的传输在tcp中是很好的保证了。udp就不能保证每一个包都能发送，所以它是不可靠的。但是upd需要比较少的网络开销，能够用于一些音频和视频的流传输。
+
+TCP支持在同一个IP的机器中多个应用程序传输。对于每一台机器可以有65536个端口，从端口号0到65535。一个应用比如HTTP,FTP会占用一个特定的端口。端口0到1023被一些主流的协议给占用了。比如HTTP用80,FTP用21，Telnet用23 SMTP用25，NNTP用119，DNS用53。在1024以上的我们都能用。
+
+尽管TCP端口80默认是被HTTP使用，但是这不影响用其他可用的端口(1024-65535),比如8080，8000，尤其是那些测试的服务。你也可以在同一台机器上同时使用不同的端口运行HTTP服务。当一个客户端输入没有指定端口号的URL时，比如：http://www.test101.com:8080/docs/index.html,浏览器就会默认连接到80端口。你需要指定端口号，比如：http://www.test101.com/docs/index.html如果服务器监听在8000端口而不是80端口.
+
+简而言之，通过TCP/IP协议连接，你需要了解IP地址，域名和端口号。
+
+### HTTP规范
+
+HTTP规范是由[W3C](http://www.w3.org/)来维护，在[这里](http://www.w3.org/standards/techs/http)可以看到。目前来说，只有两个版本的HTTP规范，HTTP/1.0 和HTTP/1.1。最初的版本，HTTP/0.9(1991年)，是由蒂姆·伯纳斯-李写的，是一个简单的通过网络传输元数据的协议。HTTP/1.0(1996年)通过允许MIME-like的信息来提升了。1.0版本没有说明代理，缓存，持久连接，虚拟host和断点续传，这些功能都在1.1版给完善了。
+
+### Apache HTTP Server or Apache Tomcat Server
+
+建立一个http服务，是由必要知道http协议的。
+
+apache HTTP 服务是一个流程的工业级的服务，是由Apache Software Foundation(ASF)@[www.apache.org](www.apache.org)提供。ASF是一个开源的的软件基础服务，就是说apache http 服务是免费的并且提供了源代码。
+
+阅读[Apache How to](http://www3.ntu.edu.sg/home/ehchua/programming/howto/Apache_HowToInstall.html) 关于如何暗转和配置apache http 服务；或者[Tomcat How-to](http://www3.ntu.edu.sg/home/ehchua/programming/howto/Tomcat_HowTo.html)关于如何安装并开始使用apache tomcat服务。
 
 
 
