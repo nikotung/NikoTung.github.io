@@ -130,6 +130,163 @@ apache HTTP 服务是一个流程的工业级的服务，是由Apache Software F
 
 阅读[Apache How to](http://www3.ntu.edu.sg/home/ehchua/programming/howto/Apache_HowToInstall.html) 关于如何暗转和配置apache http 服务；或者[Tomcat How-to](http://www3.ntu.edu.sg/home/ehchua/programming/howto/Tomcat_HowTo.html)关于如何安装并开始使用apache tomcat服务。
 
+### HTTP请求和相应信息
+
+HTTP客户端和服务器通过发送文本信息来通信。客户端发送请求信息到服务端，接着服务端就会返回一个相应信息。
+
+一个HTTP信息包括信息的"头"和一个可选的信息体，通过一个空行隔开，像下面描述一样：
+
+![](assets/2014-04-27-HTTP_MessageFormat.png)
+
+#### HTTP请求信息
+
+HTTP请求信息的格式如下：
+
+![](assets/2014-04-27-HTTP_RequestMessage.png)
+
+###### 请求线(Request Line)
+
+请求头的第一行称为请求线，接着可选的请求头
+
+请求线有如下的语法：
+
+	request-method-name request-URI HTTP-version
+
+* request-method-name: HTTP 协议定义了一系列的请求方法，比如，GET,POST,HEAD,and OPTIONS.客户端可以使用其中的一个去发起请求到服务器中去。
+* request-URI:指定了要请求的资源
+* HTTP-version: 当前有两个版本在使用：HTTP/1.0 和 HTTP/1.1.
+
+下面是一个请求线的样例：
+
+	GET /test.html HTTP/1.1
+	HEAD /query.html HTTP/1.0
+	POST /index.html HTTP/1.1
+
+###### 请求头(request-header)
+
+请求头是通过key－value的形式的，多个值就通过逗号隔开。
+	
+	request-header-name: request-header-value1, request-header-value2, ...
+
+下面是一个请求头的样例：
+
+	Host: www.xyz.com
+	Connection: Keep-Alive
+	Accept: image/gif, image/jpeg, */*
+	Accept-Language: us-en, fr, cn
+
+##### 样例
+
+下面是一个HTTP请求的样例：
+
+![](assets/2014-04-27-HTTP_RequestMessageExample.png)
+
+#### HTTP相应信息
+
+HTTP相应信息的格式如下：
+
+![](assets/2014-04-27-HTTP_ResponseMessage.png)
+
+##### 状态线(status line)
+
+第一行称为状态线，接着一下可选的请求头
+
+状态线有如下的语法：
+
+	HTTP-version status-code reason-phrase
+
+* HTTP-version: 使用在这次会话的HTTP版本，HTTP/1.0 或者 HTTP/1.1。
+* status-code: 服务端根据请求的输出而生成的一个三位数。
+* reason-phrase:一个对status-code的简单描述。
+* 常见的status-code是“200 OK”.
+
+状态线的样例:
+
+	HTTP/1.1 200 OK
+	HTTP/1.0 404 Not Found
+	HTTP/1.1 403 Forbidden 
+
+
+##### 相应头(response headers)
+
+相应头是一个键值对(key-value)的形式：
+
+	response-header-name: response-header-value1, response-header-value2, ...
+
+相应头的样本：
+
+	Content-Type: text/html
+	Content-Length: 35
+	Connection: Keep-Alive
+	Keep-Alive: timeout=15, max=100
+
+相应信息的样例：
+
+![](assets/2014-04-27-HTTP_ResponseMessageExample.png)
+
+### HTTP 请求方法
+
+HTTP协议定义了一系列的请求方法。客户端可以使用其中的一个去发起请求到服务器。可以使用的请求方法有:
+
+* GET: 客户端使用该方法可以获取一些网页资源
+* HEAD: 去获取一个get请求的头。这个头包含了last-modified 的日期信息，可以用于跟本地缓存做对比。
+* POST:post数据到服务器
+* PUT: 请求服务器去保存数据
+* DELETE:请求服务器去删除数据
+* TRACE:返回整个请求过程的信息，如一开始的请求信息
+* OPTIONS:返回服务器支持哪些请求方法
+* CONNECT:
+* 其它扩展方法。
+
+
+### GET请求方法
+
+GET是最常见的HTTP请求方法。客户端可以用GET方法去获取一些资源。一个GET请求需要如下的语法：
+
+	GET request-URI HTTP-version
+	(optional request headers)
+	(blank line)
+	(optional request body)
+
+* GET 关键词是大小写敏感的，并且必须要大写
+* request-URI:指定了请求资源的路径
+* HTTP-verion:请求的版本
+* 客户端可以使用一些可选的请求头(比如Accept,Accept-Language等等)去和服务器交换并要求返回指定的内容
+* GET 请求有一些可选的请求内容包括一些查询串（稍后会提到）
+
+
+
+
+#### http/1.0 GET请求
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
