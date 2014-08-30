@@ -2,7 +2,7 @@
 layout: post
 title: "Git command a day - checkout remote branch"
 description: "checkout command"
-category: “git learning”
+category: “2013-09-29”
 tags: [git,checkout]
 ---
 
