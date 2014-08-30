@@ -58,4 +58,49 @@ tags: [stash,rebase]
 
 因为有时候需要强制的串行（就是让commit tree好看），我这边经常要用到另个功能： rev-parse,merge-base
 
-	git rev-parse origin/
+	git rev-parse origin/master
+	ed8f0f4760530b0b04b701e523ba35cd8b6490c0
+
+	git merge-base origin/master origin/feature/writting
+	ed8f0f4760530b0b04b701e523ba35cd8b6490c0
+
+
+rev-parse ：找出某一个分支的是基于哪个分支的
+merge-base: 找出两个分支的最近的公共基点
+
+如果两个id是一致的，这样提merge request时就能保证串行了。
+
+
+rebase的基本用法
+
+当你在自己的分支上做开发了，也提交了好几个commit，最后完成了。怎被合到master去，这时候发现master已经被别人合过很多遍了，而你需要你自己的提交嫁接在master分支上最新的commit去，这时候：
+
+	git rebase origin/master
+
+ 如果没有冲突，就是一个forward－fast的合并了。
+
+ 如果有冲突，当然要自己解决啦。解决完后不需要commit了，只需要这样:
+
+ 	git rebase --continue
+
+ 如果再用冲突，再解决，再
+
+ 	git rebase --continue
+
+ 直到完全合并完成。
+
+ 如果你rebase到一半，不想干了，怎么办？那就不干吧，简单了。
+
+ 	git rebase --abort
+
+ 这样rebase就终止了，一切回到解放前了。
+
+ 最近用的就是这些了。
+
+
+
+ ### Reference(翻墙效果更好)
+
+ [Git-rebase 小筆記](http://blog.yorkxin.org/posts/2011/07/29/git-rebase)
+
+ [How to look at the stash](http://makandracards.com/makandra/11565-git-how-to-look-at-the-stash)
