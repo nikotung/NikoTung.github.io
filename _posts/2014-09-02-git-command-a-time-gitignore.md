@@ -2,7 +2,7 @@
 layout: post
 title: "Git command a day - gitignore"
 description: "checkout command"
-category: “2014-09-02”
+category: "2014-09-02"
 tags: [gitignore]
 ---
 

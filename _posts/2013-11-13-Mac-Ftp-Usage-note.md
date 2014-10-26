@@ -2,7 +2,7 @@
 layout: post
 title: "Mac下简单ftp使用"
 description: ""
-category: “2013-11-13”
+category: "2013-11-13"
 tags: [Mac,工具杂谈]
 ---
 

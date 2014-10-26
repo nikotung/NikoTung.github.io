@@ -2,7 +2,7 @@
 layout: post
 title: "First Response Without Keyboard Present"
 description: ""
-category: “2013-10-12”
+category: "2013-10-12"
 tags: [iOS开发,objective-c]
 ---
 
