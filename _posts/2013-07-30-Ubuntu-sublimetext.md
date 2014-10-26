@@ -2,6 +2,7 @@
 layout: post
 title: "Ubuntu install sublimetext 2.0小记"
 description: "简述ubuntu下安装sublimetext的过程"
+category: “2013-07-30”
 tags: [开发工具]
 ---
 

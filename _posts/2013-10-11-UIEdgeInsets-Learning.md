@@ -2,7 +2,7 @@
 layout: post
 title: "UIEdgeInsets 小记"
 description: "basic understand about UIEdgeInsets"
-category: “2013年10月”
+category: “2013-10-11”
 tags: [UIEdgeInsets]
 ---
 

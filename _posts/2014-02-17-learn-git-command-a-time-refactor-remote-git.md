@@ -2,7 +2,7 @@
 layout: post
 title: "Git command a day - Git 迁移保留提交记录和分支"
 description: "checkout command"
-category: “git learning”
+category: "2014-02-17"
 tags: [git,migration]
 ---
 

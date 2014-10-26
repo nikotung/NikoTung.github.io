@@ -2,7 +2,7 @@
 layout: post
 title: "Ubuntu 安装go语言开发环境小记"
 description: ""
-category: “go开发”
+category: “2013-08-04”
 tags: [开发工具]
 ---
 

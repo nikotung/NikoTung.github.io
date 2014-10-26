@@ -2,7 +2,7 @@
 layout: post
 title: "重载UINavigationController导致iOS7的屏幕滑动返回手势失效"
 description: "iOS7 屏幕返回手势失效"
-category: “2014-03-31”
+category: "2014-03-31"
 tags: [iOS dev,iOS开发]
 ---
 
