@@ -1,14 +1,30 @@
-markdown: rdiscount
-permalink: /:title/
-url: http://nikotung.github.io
-name: NikoTung
-author: NikoTung
-TrackerId: UA-42600147-1 
-email: Nizh2008@gmail.com
-duoshuo: NikoTung
-weibo: 1864516430
-github: NikoTung
-pygments: true
-safe: true
-paginate: 20
-about: "这是我的个人博客，好没有什么好东西那得出来介绍"
+paginate: 10 # pagination based on number of posts
+paginate_path: "page:num"
+exclude: ["README.md"] # files to exclude
+highlighter: pygments
+markdown: kramdown
+
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      title: Niko
+
+description: Niko's Blog
+author:
+  name: Niko
+  email: Nizh2008@gmail.com
+  github: NikoTung
+  twitter: LandonTung
+  pinterest: asd123
+  linkedin: asd123
+  bio: Hey,Code!
+  email_md5: 3f00d8c07975d19fa5f05c71492f17dc
+
+rss_path: feed.xml
+categories_path: categories.html
+tags_path: tags.html
+
+BASE_PATH:
