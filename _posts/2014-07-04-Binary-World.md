@@ -2,7 +2,7 @@
 layout: post
 title: "二进制世界"
 description: "二进制的世界"
-category: "2014-07-04"
+category: "2014-07"
 tags: [翻译,二进制]
 ---
 

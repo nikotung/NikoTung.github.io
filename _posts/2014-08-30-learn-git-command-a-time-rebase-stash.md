@@ -2,7 +2,7 @@
 layout: post
 title: "Git command a day - rebase and stash"
 description: "checkout command"
-category: "2014-08-30"
+category: "2014-08"
 tags: [stash,rebase]
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Android BroadcastReceiver初试"
 description: "在Android中如何简单的使用BroadcastReceiver"
-category: "2014-10-26"
+category: "2014-10"
 tags: [Android,BroadcastReceiver]
 ---
 

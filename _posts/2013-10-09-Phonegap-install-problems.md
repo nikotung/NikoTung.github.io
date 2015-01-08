@@ -2,7 +2,7 @@
 layout: post
 title: "Mac OS X 安装phonegap的android和iOS的问题"
 description: "Problems ocurred during config phonegap"
-category: "2013-10-09"
+category: "2013-10"
 tags: [phonegap]
 ---
 

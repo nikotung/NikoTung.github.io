@@ -2,7 +2,7 @@
 layout: post
 title: "Objective-C Class,Object and MetaClass"
 description: "Objective-C运行时的一些特性"
-category: "2014-11-17"
+category: "2014-11"
 tags: [Objective-C]
 ---
 

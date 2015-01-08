@@ -2,7 +2,7 @@
 layout: post
 title: "iOS控件素材读取"
 description: "动态下载iOS标准控件素材"
-category: "2014-03-16"
+category: "2014-03"
 tags: [iOS dev,iOS开发]
 ---
 

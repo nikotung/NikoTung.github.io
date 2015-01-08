@@ -2,7 +2,7 @@
 layout: post
 title: "工作小记"
 description: ""
-category: "2013-11-26"
+category: "2013-11"
 tags: [工作]
 ---
 

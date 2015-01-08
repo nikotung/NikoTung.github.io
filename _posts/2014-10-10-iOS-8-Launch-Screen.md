@@ -2,7 +2,7 @@
 layout: post
 title: "iOS 8 Launch Screen"
 description: "在iOS 8 中使用xib或者storyboard文件创建启动画面"
-category: "2014-10-10"
+category: "2014-10"
 tags: [iOS8]
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Ubuntu Install Mysql Note"
 description: ""
-category: "2013-08-08"
+category: "2013-08"
 tags: [Mysql,database]
 ---
 

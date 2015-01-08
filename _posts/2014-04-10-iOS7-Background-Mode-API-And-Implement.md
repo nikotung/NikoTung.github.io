@@ -2,7 +2,7 @@
 layout: post
 title: "iOS7多任务和Background Fetch"
 description: "iOS7 后台运行"
-category: "2014-04-10"
+category: "2014-04"
 tags: [iOS开发]
 ---
 

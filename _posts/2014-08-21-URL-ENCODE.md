@@ -2,7 +2,7 @@
 layout: post
 title: "URL编码和解码的问题"
 description: "了解HTTP协议"
-category: "2014-08-21"
+category: "2014-08"
 tags: [URL]
 ---
 

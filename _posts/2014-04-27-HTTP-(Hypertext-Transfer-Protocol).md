@@ -2,7 +2,7 @@
 layout: post
 title: "HTTP协议"
 description: "了解HTTP协议"
-category: "2014-04-27"
+category: "2014-04"
 tags: [HTTP]
 ---
 

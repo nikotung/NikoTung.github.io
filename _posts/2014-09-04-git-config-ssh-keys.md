@@ -2,7 +2,7 @@
 layout: post
 title: "多个git仓库配置多个ssh key"
 description: "使用ssh连接git"
-category: "2014-09-04"
+category: "2014-09"
 tags: [ssh key]
 ---
 
