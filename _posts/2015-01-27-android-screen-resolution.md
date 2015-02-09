@@ -3,7 +3,7 @@ layout: post
 title: "Android分辨率的一些基础知识和理解"
 description: "Android开发中，能够理解好分辨这个东西是非常有用的"
 category: "2015-01"
-tags: [Android,分辨率]
+tags: [Android,分辨率,屏幕适配]
 ---
 
 在Android开发过程中，分辨率这个东西非常重要。会影响在不同机型，分辨率下的效果，外观以及对素材的使用。
@@ -80,6 +80,16 @@ density和dpi的关系为 density = dpi/160
 ### 总结
 
 对基本概念的理解就差不多了。
+
+
+
+### Reference(翻墙效果更好)
+
+ [Android上dip、dp、px、sp等单位说明](http://www.imyukin.com/?p=277)
+
+ [Supporting Multiple Screens](http://developer.android.com/guide/practices/screens_support.html)
+
+ [屏幕适配](http://stormzhang.com/android/2014/05/16/android-screen-adaptation/)
 
 
 
