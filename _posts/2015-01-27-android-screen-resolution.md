@@ -83,7 +83,7 @@ density和dpi的关系为 density = dpi/160
 
 
 
-### Reference(翻墙效果更好)
+### Reference
 
  [Android上dip、dp、px、sp等单位说明](http://www.imyukin.com/?p=277)
 
