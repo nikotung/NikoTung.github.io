@@ -10,3 +10,5 @@ Thumbs.db
 .rvmrc
 
 .md~
+*/_site/*
+_site/
