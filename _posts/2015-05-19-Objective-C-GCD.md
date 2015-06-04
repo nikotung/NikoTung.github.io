@@ -78,6 +78,33 @@ GCD的使用大部分都是基于block的，如果你不了解block的语法的�
 
 这种使用方法给了我们另外的一种在等待多个异步操作完成后才能进行下一步的操作的情况下的一种实现方式。跟dispatch_group_async很类似。
 
+
+### Dispatch Source
+
+Dispatch Source是一本比较低层的监控API。监控的事件有很多：
+
+* Mach port send right state changes.
+* Mach port receive right state changes.
+* External process state change.
+* File descriptor ready for read.
+* File descriptor ready for write.
+* Filesystem node event.
+* POSIX signal.
+* Custom timer.
+* Custom event.
+
+在你初始化一个source的时候传入一个类型进去，就能代表去监控某种类型的事件，然后设置该事件触发后的回调事件，基本的使用方法就是这样，具体会有部分差别。
+
+一个需要主要的是`Dispatch Source`在初始化后是出于一种暂停的状态(suspended),所以要启动它需要手动调用`dispatch_resume(source)`。 
+
+> Dispatch sources are created in a suspended state. After creating the
+  source and setting any desired attributes (i.e. the handler, context, etc.),
+  a call must be made to dispatch_resume() in order to begin event delivery.
+
+
+这里面的用法大部分都比较是底层的，可能需要另起一片文章去写了。这里件简单介绍一下。
+
+
 	
 
 
