@@ -104,7 +104,18 @@ Dispatch Source是一本比较低层的监控API。监控的事件有很多：
 
 这里面的用法大部分都比较是底层的，可能需要另起一片文章去写了。这里件简单介绍一下。
 
+### Semaphores
 
+Dispatch semaphores类似于一种生产-消费者这种模式(也可以用锁去理解)。有三个API `dispatch_semaphore_create`,`dispatch_semaphore_signal`和`dispatch_semaphore_wait`。通过signal会增加一个可以消费的信号量，wait就会减少一个。
+
+在创建的时候传进去的初始化值一般有0和大于0两种用法。0的话主要就是用于同步锁这样的一个需求，而大于0的话是用于管理有限资源，比如资源数有六个，然后传个6进去，就可以限定最多6个线程可以访问这六个资源。
+
+ps:可以通过terminal 用如下命令查看用法 : man dispatch_semaphore_create 
+
+
+### Resume & Suspension 
+
+Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。`dispatch_resume` `dispathc_suspend`
 	
 
 
