@@ -3,7 +3,7 @@ layout: post
 title: "swift学习笔记 -- optional value ? and !"
 description: "swift学习笔记"
 category: "2015-07"
-tags: [optinal value,swift]
+tags: [optional value,swift]
 ---
 
 在swift中，你可以通过`var`关键词去声明一个变量，通过`let`去声明一个常量。与OC一个不一样的地方是，在OC中声明一个变量的时候，如果没有赋默认值则就是一个默认的`nil`，直接去使用也不会报错。而在swift中你没有初始化一个变量，而去直接使用是会报错的，而且还是在编译期就报错了，因为swift中不会在声明一个对象的时候有一个`nil`的默认值。
