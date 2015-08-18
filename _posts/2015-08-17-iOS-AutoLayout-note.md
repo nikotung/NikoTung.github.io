@@ -134,4 +134,10 @@ Apple 中会有一个 VFL 的一个解析器，把 `format`里面的东西一个
 在上面中，设置了`label`和`imageView`的 centery 的关系。下面只需要把`label`和`imageView` 中的任意一个跟`superview`做关联，这样就能实现`label`和`imageView`联动。
 
 
+
+#### Reference
+
+[Auto Layout Guide](https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010853-CH13-SW1)
+
+[AutoLayout & VFL](http://objc.co/2014/11/26/AutoLayout-VFL/)
                       
