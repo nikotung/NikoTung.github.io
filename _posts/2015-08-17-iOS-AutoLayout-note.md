@@ -92,7 +92,7 @@ x 和 y 的可能值有 left, right, top, bottom, leading, trailing, width, heig
 
 `NSLayoutConstraint`中有一个API，
 
-	    class func constraintsWithVisualFormat(format: String, options opts: NSLayoutFormatOptions, metrics: [NSObject : AnyObject]?, views: [NSObject : AnyObject]) -> [AnyObject]
+	class func constraintsWithVisualFormat(format: String, options opts: NSLayoutFormatOptions, metrics: [NSObject : AnyObject]?, views: [NSObject : AnyObject]) -> [AnyObject]
 
 可以用 VFL 去增加约束。
 
