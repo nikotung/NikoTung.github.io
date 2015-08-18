@@ -8,6 +8,11 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
 
+	<!-- code highlight -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-eighties.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+
+
 	<!--Favicon-->
 	<link rel="shortcut icon" href="{{ "/favicon.ico" | prepend: site.baseurl }}" type="image/x-icon">
 
@@ -31,6 +36,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js"></script>
 	{% endif %}
 
+
 	<!-- Google Analytics -->
 	{% if site.theme.google_analytics %}
 	<script>
@@ -43,4 +49,6 @@
 	ga('send', 'pageview');
 	</script>
 	{% endif %}
+
+
 </head>
