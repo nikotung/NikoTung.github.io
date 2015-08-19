@@ -52,6 +52,8 @@ pod 本身就提供了验证的功能，简单运行命令
 这样出错了，会提示我们具体的原因。
 
 
+
+
 把我的 Podspec 文件内容贴上来
 
 	Pod::Spec.new do |s|
@@ -91,6 +93,12 @@ pod 本身就提供了验证的功能，简单运行命令
 
 	end
 		
+
+#### Update
+
+有一天浏览了一下 [CocoaPods](https://github.com/CocoaPods/CocoaPods)的库发现已经有人做了这个事情，把支付宝的 [SDK](https://github.com/beiliubei/AliPay) 放到 pod 中去了。
+
+
 
 #### Reference 
 
