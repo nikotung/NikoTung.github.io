@@ -18,6 +18,8 @@ tags: [Xcode]
 
 但是，我确实需要修改这个名字的，因为在代码中我要读取这个名字。后来发现在项目文件中其实有一个选项可以修改这个名字的。就是在 `Build Settings` 中有一个叫 **PRODUCT_NAME** 的选项可以修改，在这里修改就可以达到效果了，当然也要在 target 中做同样的修改。
 
+另外，那个 bundle ID 也可以在 Xcode 项目文件中设定了，这个也是 Xcode recommend的设置，这样就不用在 info.plist 中设定了。
+
 
 
 
