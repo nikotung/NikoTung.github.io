@@ -62,6 +62,7 @@ theme:
   post_navigation: false
 
 # PAGINATION
+gems: [jekyll-paginate]
 paginate: 10
 paginate_path: "blog/page:num"
 
