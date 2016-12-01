@@ -4,7 +4,7 @@ url: "http://blog.eiko.me" # the base hostname & protocol for your site
 
 
 # THEME-SPECIFIC CONFIGURATION
-theme:
+style:
   # Meta
   title: Niko's Blog
   avatar: avatar.png
