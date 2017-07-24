@@ -65,7 +65,8 @@ tags: [stash,rebase]
 	ed8f0f4760530b0b04b701e523ba35cd8b6490c0
 
 
-rev-parse ：找出某一个分支的是基于哪个分支的
+rev-parse ：可以找出某一个分支的最新commit
+
 merge-base: 找出两个分支的最近的公共基点
 
 如果两个id是一致的，这样提merge request时就能保证串行了。
