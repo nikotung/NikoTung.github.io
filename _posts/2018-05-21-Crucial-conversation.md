@@ -2,7 +2,7 @@
 layout: post
 title: "关键对话: 如何高效能沟通"
 description: ""
-category: "2018-04"
+category: "2018-05"
 tags: [对话，沟通]
 ---
 
