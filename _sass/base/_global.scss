@@ -81,6 +81,7 @@ dd {
 p, ol, ul, dl, .math-display {
   line-height: 1.5;
   margin-bottom: 1em;
+  padding-left: 2em;
 }
 .math-display {
   display: inline-block;
@@ -89,6 +90,13 @@ p, ol, ul, dl, .math-display {
 ol, ul {
   list-style-position: inside;
 }
+ul ol {
+  list-style-type: lower-roman;
+}
+.ul li {
+  padding-left: 2em;
+}
+
 hr {
   border: 0;
   border-top: 1px solid $border-color;
