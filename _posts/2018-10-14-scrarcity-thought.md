@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "喂，你的拉链网拉上了"
+title: "喂，你的拉链忘拉上了"
 description: ""
 category: "2018-10"
 tags: [生活，思考]
