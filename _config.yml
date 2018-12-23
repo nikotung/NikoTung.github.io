@@ -62,7 +62,7 @@ style:
   post_navigation: true
 
 # PAGINATION
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]
 paginate: 10
 paginate_path: "/p:num"
 
