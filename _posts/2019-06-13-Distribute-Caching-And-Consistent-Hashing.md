@@ -192,7 +192,7 @@ tags: [缓存,一致性哈希,架构]
     return rv;
 	}
 	
-首先 `getPrimary(final String k)` 中根据算法对key 进行hash，然后使用该hash值去圆环中查找。因为是通过`SortedMap`去模拟圆环，所有通过`tailMap`就可以获取到比该hash 值要大的数（如果在JDK1.6 中则可以直接通过 `ceilingKey`就可以获取了），如果存在则去第一个，如果不存在，则去整个圆环第一个。
+首先 `getPrimary(final String k)` 中根据算法对key 进行hash，然后使用该hash值去圆环中查找。因为是通过`SortedMap`去模拟圆环，所有通过`tailMap`就可以获取到比该hash 值要大的数（如果在JDK1.6 中则可以直接通过 `ceilingKey`就可以获取了），如果存在则取第一个，如果不存在，则取整个圆环第一个。
 
 以上就是ketama 算法的具体实现。
 
