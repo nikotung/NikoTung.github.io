@@ -13,7 +13,7 @@ tags: [Archlinux,install]
 
 ## Install Guide
 
-Basically, all the guide from [archlinux wiki](https://wiki.archlinux.org/title/Installation_guide) work quiet well for me.
+Basically, all the guides from [archlinux wiki](https://wiki.archlinux.org/title/Installation_guide) work quiet well for me.
 
 Notes:
 
@@ -25,7 +25,7 @@ Notes:
 * Desktop Environment, using [plasma KDE](https://wiki.archlinux.org/title/KDE#Plasma)
 
 
-## Issue run into during configuration
+## Issues run into during configuration
 
 #### signature from "lilac (build machine) <lilac@build.archlinuxcn.org>" is unknown trust
 
@@ -76,9 +76,9 @@ Install WeCom from [AUR](https://aur.archlinux.org/packages/com.qq.weixin.work.d
 
 If your WeCom can not display the Chinese properly,install the following fonts.
 
-	wqy-microhei - WenQuanYi Micro Hei font family (also known as Hei, Gothic or Dotum) is a sans-serif style derived from Droid Sans Fallback, it offers high quality CJK outline font and it is extremely compact (~5M).
-	wqy-zenhei - Hei Ti Style (sans-serif) Chinese Outline font embedded with bitmapped Song Ti (also supporting Japanese (partial) and Korean characters).
-	wqy-bitmapfont - Bitmapped Song Ti (serif) Chinese font.
+* wqy-microhei - WenQuanYi Micro Hei font family (also known as Hei, Gothic or Dotum) is a sans-serif style derived from Droid Sans Fallback, it offers high quality CJK outline font and it is extremely compact (~5M).
+* wqy-zenhei - Hei Ti Style (sans-serif) Chinese Outline font embedded with bitmapped Song Ti (also supporting Japanese (partial) and Korean characters).
+* wqy-bitmapfont - Bitmapped Song Ti (serif) Chinese font.
 	
 From [wiki](https://wiki.archlinux.org/title/Localization/Chinese)
 
