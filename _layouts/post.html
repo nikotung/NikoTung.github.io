@@ -1,42 +1,35 @@
 ---
 layout: default
 ---
-<article {% if page.feature-img %}class="feature-image"{% endif %}>
-  <header style="background-image: url('{{ site.baseurl }}/{{ page.feature-img }}')">
-    <h1 class="title">{{ page.title }}</h1>
-    <p class="meta">
-    {{ page.date | date: "%B %-d, %Y" }}
-    {% if page.author %} - {{ page.author }}{% endif %}
-    </p>
-  </header>
-  <section class="post-content">{{ content }}</section>
-</article>
-
-<!-- Post navigation -->
-{% if site.style.post_navigation %}
-<div id="post-nav">
-    {% if page.previous.url %}
-    <a id="prev-post" href="{{ site.baseurl }}{{ page.previous.url }}">
-      <span class="page-title">{{ page.previous.title }}</span>
-      <span class="nav-label">
-        <i class="fa fa-chevron-left"></i> {{ site.style.str_prev }}
-      </span>
-    </a>
-    {% endif %}
-    {% if page.next.url %}
-    <a id="next-post" href="{{ site.baseurl }}{{ page.next.url }}">
-       <span class="page-title">{{ page.next.title }}</span>
-       <span class="nav-label">
-        {{ site.style.str_next }} <i class="fa fa-chevron-right"></i>
-       </span>
-     </a>
-    {% endif %}
-</div>
+{% if page.mathjax %}
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 {% endif %}
-
-<!-- Disqus -->
-{% if site.style.disqus_shortname %}
-<div class="comments">
-  {% include disqus.html %}
+<div class="post-header">
+	<div class="post-date">{{ page.date | date: "%d.%m.%Y" }}</div>
+	<div class="post-share">
+		Share:&nbsp; 
+		<a href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/facebook.svg" class="social-icon"></a>
+		<a href="https://twitter.com/intent/tweet?source=tweetbutton&amp;original_referer={{site.url}}/{{page.slug}}&amp;text={{page.title}} - {{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/twitter.svg" class="social-icon"></a>
+		<a href="https://api.whatsapp.com/send?text={{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/whatsapp.svg" class="social-icon"></a>
+	</div>
 </div>
+
+<div class="blog-post-content">
+	<h1>{{page.title}}</h1>
+	{{ content }}
+</div>
+<div class="tags-container">
+	{% for tag in page.tags %}
+		<a href="{{ site.url }}/tags/#{{tag | cgi_escape}}" class="post-tag">{{tag}}</a>{% unless forloop.last %}, {% endunless %}
+	{% endfor %}
+</div>
+<div class="navigation">
+	{% if page.previous %}
+		<a class="prev" href="{{ page.previous | relative_url }}">< {{ page.previous.title }}</a>
+	{% endif %} {% if page.next %}
+	<a class="next" href="{{ page.next | relative_url }}">{{ page.next.title }} ></a>
 {% endif %}
+</div>
+{% include disqus.html %}

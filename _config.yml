@@ -1,75 +1,78 @@
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://blog.eiko.me" # the base hostname & protocol for your site
+# Site settings
+site: Niko
+title: Niko's blog
+keywords: blog
+description: >-
+  Thoughts and other
+lang: en-US
+timezone:  Asia/HongKong
+#google_verify:      XXX # Put your Google Verification here
+google_analytics:   UA-42600147-1 # Put your Google Analytics code
+#discus-identifier:  XXX
+
+# Author settings
+author:
+  name: Niko
+  bio: Software Engineer <br> Fitness <br> minimalism
+  picture: assets/images/profile.jpg 
+  github: nikotung # github username
+  twitter: nikotung # twitter username
+  email: n@eiko.me # email adress
 
 
+# URL settings
+url: "https//blog.eiko.me" # Domain Name of host. [username].github.io for github pages
+permalink: pretty
 
-# THEME-SPECIFIC CONFIGURATION
-style:
-  # Meta
-  title: Niko's Blog
-  avatar: avatar.png
-  gravatar: # Email MD5 hash
-  description: "The world is not in your books and maps,it's out there" # used by search engines
-
-  # Header and footer text
-  header_text: >
-     <p>The world is not in your books and maps,it's out there. --- The Hobbit: An Unexpected Journey</p>
-
-  header_text_feature_image:
-  footer_text: >
-   Powered by <a href="http://jekyllrb.com">Jekyll</a> with <a href="https://rohanchandra.github.io/project/type/">Type Theme</a>
-
-  # Icons
-  rss: false
-  email_address: "n@eiko.me"
-  behance:
-  bitbucket:
-  dribbble:
-  facebook:
-  flickr:
-  github: "NikoTung"
-  google_plus:
-  instagram:
-  linkedin:  # Full URL
-  pinterest:
-  reddit:
-  soundcloud:
-  stack_exchange:  # Full URL
-  steam:
-  tumblr:
-  twitter: "NikoTung"
-  wordpress:
-  youtube:
-
-  # Scripts
-  google_analytics:  "UA-42600147-1"
-  disqus_shortname: eikotung
-  katex: true # Enable if using math markup
-
-  # Localization strings
-  str_follow_on: "Follow on"
-  str_rss_follow: "Follow RSS feed"
-  str_email: "Email"
-  str_next: "下一篇"
-  str_prev: "上一篇"
-  str_continue_reading: "继续阅读"
-
-  # Colours, typography and padding
-  # Open the "_sass > base" folder, and open "_variables.scss"
-  google_fonts: "Source+Sans+Pro:400,700,700italic,400italic"
-  
-  # Post navigation
-  post_navigation: true
-
-# PAGINATION
-plugins: [jekyll-paginate]
-paginate: 10
-paginate_path: "/p:num"
-
-# BUILD SETTINGS
 markdown: kramdown
-highlighter: rouge
-sass:
-  sass_dir: _sass
-  style: :compressed
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 
+
+exclude:
+  - .jekyll-cache
+  - .obsidian
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.md
+  - README.md
+  - CONTRIBUTING.md
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-relative-links
+paginate: 20
+paginate_path: "/page/:num"
+
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:slug
+  
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+relative_links:
+  enabled:     true
+  collections: false
