@@ -4,7 +4,7 @@
 
 This blog is powered by [jekyllbootstrap](http://jekyllbootstrap.com)
 
-Theme by [type-theme](https://github.com/rohanchandra/type-theme)
+Theme by [Ephesus](https://github.com/onepase/Ephesus)
 
 
 
