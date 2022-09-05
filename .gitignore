@@ -13,3 +13,5 @@ Thumbs.db
 */_site/*
 _site/
 .sass-cache
+.jekyll-cache
+Gemfile.lock
