@@ -1,9 +1,8 @@
-
 --- 
 layout: post
 title: "工作上的文字沟通"
 description: ""
-category: "2022-09"
+category: "2021-07"
 tags: [沟通,文字]
 ---
 
@@ -29,6 +28,8 @@ tags: [沟通,文字]
 		* is responding to your long, well-written emails with much shorter responses
 
 	  > Then you’re their bitch.  
+
+![](http://2.bp.blogspot.com/-D8dfZJD-p6k/Up74Zqw429I/AAAAAAAAGgg/pyeaf_rWqlc/s640/unequal.png)
 
 
 而自己的一个体验就是，在讨论一个问题时，我把问题以1/2/3...这样列出来，希望对方进行解答。结果往往是等到一个简短的回答，不是说简短有什么问题，只是无法把这个问题对应都到哪个问题中，并且你提问时的前提往往被忽略。因为自己工作的原因，往往每个问题间是有关联或者前提关系。`如果......那么是......这样吗？如果不是，在......又应该如何呢？`，类似这样的问题。有时这种问题并不需要一一作答，只需要回答其中一个跟随的问题自然有答案或者已经不是问题了。每当收到这样的回复时，都让我苦笑。我反而对别人长时间才回复没有什么意见，只要不是什么紧急的事情，都会乐意等待，认为他在认真思考如何回复问题。当然微信上就是另外一回事了。  
