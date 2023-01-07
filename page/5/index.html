@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/09/23/Xcode-7-upgrade-sick/">Xcode 7 闹心一次的升级</a>
+      </h2>
+      <p class="article-date">September 23, 2015</p>
+      
+        
+  <a href="/tags#Xcode" >
+    <span class="tag-code">Xcode</span>
+  </a>
+
+  <a href="/tags#Exception BreakPoint" >
+    <span class="tag-code">Exception BreakPoint</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          事情源自于在家无聊，打开 App Store 看到 Xcode 可以升级到7,点了一下 Get ,然后发现，速度很不错，这么难得的机会当然是捉紧时间升级啦，果然很快就升级好，然后欢天喜地的出门了。没想到隐藏了这么多问题在这 Xcode 7里面。
+在用新的 Xcode 时，偶尔会卡顿，新版本嘛 ...
+        
+      </div>
+      <a class="more" href="/2015/09/23/Xcode-7-upgrade-sick/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/09/20/xcodeghost-note/">最近XcodeGhost 事件闹得挺火的</a>
+      </h2>
+      <p class="article-date">September 20, 2015</p>
+      
+      <div class="article-summary">
+        
+          这两天 XcodeGhost 事件闹得还真是挺火的，各种各样的安全分析，沸沸腾腾。关于前因后果，可以自己上网搜索。
+这件事情中，很多观点的分歧在于，这到底是谁的责任。Apple? 开发者?公司管理者？这里是各式各样的观点。
+这里我说说自己的感受：
+确实，在国内，无论是在 App Store  ...
+        
+      </div>
+      <a class="more" href="/2015/09/20/xcodeghost-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/08/18/A-Simple-local-pod/">一个简单的本地pod</a>
+      </h2>
+      <p class="article-date">August 18, 2015</p>
+      
+        
+  <a href="/tags#Cocoapods" >
+    <span class="tag-code">Cocoapods</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          如果你是一个 iOS 开发者，却没有听说过 CocoaPods 那么真的需要去了解一下。它是一个 iOS 第三方库的依赖管理工具，可以轻松便捷的管理这些库，而不用整天折腾项目文件。而现在 iOS 的各种各样的开源库遍地花开，基本上能满足你的日常需求，作为一个代码搬运工，这个工具就能帮我们节省 ...
+        
+      </div>
+      <a class="more" href="/2015/08/18/A-Simple-local-pod/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/08/17/iOS-AutoLayout-note/">AutoLayout 和 VFL-- 还债篇</a>
+      </h2>
+      <p class="article-date">August 17, 2015</p>
+      
+        
+  <a href="/tags#AutoLayout" >
+    <span class="tag-code">AutoLayout</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          AutoLayout（自动布局） 是 iOS 6 中带入的一个特性，本质就是为了能够解决多设备的多分辨率适配问题了。在其中起关键性作用的就是 constraint 。
+看看文档对 AutoLayout 的描述
+
+Auto Layout is a system that lets you la ...
+        
+      </div>
+      <a class="more" href="/2015/08/17/iOS-AutoLayout-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/08/15/Objective-C-category-extension-note/">Objective-C 的 categories 和 extension</a>
+      </h2>
+      <p class="article-date">August 15, 2015</p>
+      
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          我们都知道 Objective-C 中有 category 这个语言特性。能够让你在即使没有源代码的情况下，对一个已经存在的 class 增加一些新的方法。
+Category这个 feature 其实是非常有用的。因为在面向对象的语言中，一般需要增加新功能的话，常规的做法是子类化一下，然后新 ...
+        
+      </div>
+      <a class="more" href="/2015/08/15/Objective-C-category-extension-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/08/04/iOS-Animation-Layer-note/">iOS 动画 -- layer</a>
+      </h2>
+      <p class="article-date">August 4, 2015</p>
+      
+        
+  <a href="/tags#CALayer" >
+    <span class="tag-code">CALayer</span>
+  </a>
+
+  <a href="/tags#Animation" >
+    <span class="tag-code">Animation</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          iOS 动画这只是一个简单的验证了一下在 iOS 的动画中并没有真正的改变Layer的一些属性。
+在CALayer中有一个叫presentationLayer的一些属性。
+
+The layer object returned by this method provides a close a ...
+        
+      </div>
+      <a class="more" href="/2015/08/04/iOS-Animation-Layer-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/07/29/swift-funcion-closure/">swift学习笔记 -- 函数与闭包</a>
+      </h2>
+      <p class="article-date">July 29, 2015</p>
+      
+        
+  <a href="/tags#swift" >
+    <span class="tag-code">swift</span>
+  </a>
+
+  <a href="/tags#closure" >
+    <span class="tag-code">closure</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          每一门语言都离不开函数这个东西，swift当然就不会例外了。
+swift的函数命名方式跟Objective-C可以说是一脉相承，非常好的表述了函数实现的功能。swift的语法也是它能够像表述像c类型这种没有参数名字，也能表述像Objectivie-C一样的有内部和外部名字的参数形式。也能为函 ...
+        
+      </div>
+      <a class="more" href="/2015/07/29/swift-funcion-closure/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/07/20/swift-optional-value/">swift学习笔记 -- optional value ? and !</a>
+      </h2>
+      <p class="article-date">July 20, 2015</p>
+      
+        
+  <a href="/tags#optional value" >
+    <span class="tag-code">optional value</span>
+  </a>
+
+  <a href="/tags#swift" >
+    <span class="tag-code">swift</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在swift中，你可以通过var关键词去声明一个变量，通过let去声明一个常量。与OC一个不一样的地方是，在OC中声明一个变量的时候，如果没有赋默认值则就是一个默认的nil，直接去使用也不会报错。而在swift中你没有初始化一个变量，而去直接使用是会报错的，而且还是在编译期就报错了，因为sw ...
+        
+      </div>
+      <a class="more" href="/2015/07/20/swift-optional-value/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/05/19/Objective-C-GCD/">GCD -- Grand Central Dispatch</a>
+      </h2>
+      <p class="article-date">May 19, 2015</p>
+      
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+  <a href="/tags#GCD" >
+    <span class="tag-code">GCD</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在用Objective-C 进行多线程编程的话，或多或少都会涉及到GCD。它是在iOS4和OS X 10.6开始引入的，在这里对它做一个概括性的学习了解。
+什么是GCDGCD是Grand Central Dispatch的简称，是一个比较低层的并发编程的API。现在已经开源出来了libdis ...
+        
+      </div>
+      <a class="more" href="/2015/05/19/Objective-C-GCD/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/05/06/Objective-C-Block-glance/">Block 是什么来的</a>
+      </h2>
+      <p class="article-date">May 6, 2015</p>
+      
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+  <a href="/tags#Block" >
+    <span class="tag-code">Block</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天早上“复习”了一下Block,发现我竟然无法顺利的写出一个Local Block ,瞬间好吃惊，打击很大。
+其实一直都知道Objective-C的Block语法很难看，很恶心。但是没有想到恶心到我都忘记了(哈哈)。记得有一个网站fuckingblocksyntax。
+所以稍微复习一下这个 ...
+        
+      </div>
+      <a class="more" href="/2015/05/06/Objective-C-Block-glance/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/4/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/6/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

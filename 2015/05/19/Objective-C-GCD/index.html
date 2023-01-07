@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      GCD -- Grand Central Dispatch | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>GCD -- Grand Central Dispatch</h2>
+  <p class="post-date">2015-05-19</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>在用Objective-C 进行多线程编程的话，或多或少都会涉及到GCD。它是在iOS4和OS X 10.6开始引入的，在这里对它做一个概括性的学习了解。</p>
+<h3 id="什么是GCD"><a href="#什么是GCD" class="headerlink" title="什么是GCD"></a>什么是GCD</h3><p>GCD是Grand Central Dispatch的简称，是一个比较低层的并发编程的API。现在已经开源出来了<a target="_blank" rel="noopener" href="http://libdispatch.macosforge.org/">libdispatch</a>。GCD有点像NSOperationQueue,但是又不属于Cocoa Framework，允许程序分离到不同的task中去并发或者顺序执行。</p>
+<p>GCD的使用大部分都是基于block的，如果你不了解block的语法的话，可以看看Apple的<a target="_blank" rel="noopener" href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/Blocks/Articles/bxGettingStarted.html#//apple_ref/doc/uid/TP40007502-CH7-SW1">文档</a></p>
+<h3 id="GCD中的基本术语-—-Dispatch-Object-和-Dispatch-Queue"><a href="#GCD中的基本术语-—-Dispatch-Object-和-Dispatch-Queue" class="headerlink" title="GCD中的基本术语 — Dispatch Object 和 Dispatch Queue"></a>GCD中的基本术语 — Dispatch Object 和 Dispatch Queue</h3><p> <strong>Dispatch Object</strong> GCD虽然是c实现的，但是在Objective-C中也是面向对象的形式的去使用。GCD的对象称为<code>Dispatch Object</code>,ARC对其也是有效的的(主要是取决于你deploy版本)。</p>
+<p> <strong>Dispatch Queue</strong>。在GCD中是一个很基础也很重要的概念。它就是一个可以接收提交过来的任务，并且按顺序执行的一个对象，简单来说就可以字面理解一样就是一个队列。提交过来的任务可以串行也可以并行去执行，即有并行队列和串行队列。一个并行的队列可以根据当前系统的运行状态决定并行的数量，而串行每次只能执行一个任务，按顺序进行。</p>
+<h3 id="三种类型的Queue"><a href="#三种类型的Queue" class="headerlink" title="三种类型的Queue"></a>三种类型的Queue</h3><ul>
+<li><strong>The Main Queue</strong>: 这个其实就是主线程了，任何提交到Main Queue 来执行的任务最终就是在主线程中执行，所以这个就是一个串行的queue。可以通过<code>dispatch_get_main_queue()</code>取到</li>
+<li><strong>The Globle Queue</strong>: 是一个并发的Queue,有三种优先级别:high,default,low and background。可以通过<code>dispatch_get_global_queue</code>指定优先级来取得;</li>
+<li><strong>The Customer Queue</strong>: 通过<code>dispatch_queue_create</code>指定一个<code>dispatch_queue_attr_s</code>决定是并行还是串行的队列。</li>
+</ul>
+<h3 id="Queue的基本用法"><a href="#Queue的基本用法" class="headerlink" title="Queue的基本用法"></a>Queue的基本用法</h3><p>其实大部分GCD中提供出来的API都提供了这样同步(synchronous)和异步(asynchronous)这样两种使用方式。</p>
+<p>同步的用法：</p>
+<pre><code>    dipatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^&#123;
+        [object dosomethingHere];
+        &#125;) ;
+</code></pre>
+<p>异步的用法: </p>
+<pre><code>    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0) , ^&#123;
+        [object dosomethingHere];
+        &#125;);
+</code></pre>
+<p>非常简单的。</p>
+<h3 id="dispatch-group"><a href="#dispatch-group" class="headerlink" title="dispatch_group"></a>dispatch_group</h3><blockquote>
+<p>A dispatch group is a mechanism for monitoring a set of blocks. Your application can monitor the blocks in the group synchronously or asynchronously depending on your needs. By extension, a group can be useful for synchronizing for code that depends on the completion of other tasks.</p>
+</blockquote>
+<p>简单说它就是一个可以监控所有提交到group中的block的执行情况的机制。</p>
+<pre><code>    dispatch_group_async(dispatch_group_t group,
+        dispatch_queue_t queue,
+        dispatch_block_t block);
+</code></pre>
+<p>把block提交到queue，并把该block和group关联起来，这样在block执行完成后就可以通知到group，同步或者异步的方式</p>
+<pre><code>dispatch_group_wait(dispatch_group_t group, dispatch_time_t timeout); 
+//同步的话就是直接等待，返回0代表在timeout前所有block已经完成了
+
+dispatch_group_notify(dispatch_group_t group,
+    dispatch_queue_t queue,
+    dispatch_block_t block); //异步就通过设置一个block在完成后执行
+</code></pre>
+<p>在dispatch_group中，还有一个<code>dispatch_group_enter</code> , <code>dispatch_group_leave</code>这个两个API。看文档的时候，以为这两个API也会带一个block的参数。</p>
+<blockquote>
+<p>Calling this function indicates another block has joined the group through<br>  a means other than dispatch_group_async(). Calls to this function must be<br>  balanced with dispatch_group_leave().</p>
+</blockquote>
+<p>就是说你调用了这个enter的方法，就是说明了你以另外一种的方式把group的task计数增加了1，而且你必须要手动在调用leave去把计数减1。当group中的task的数量为0后，还是会调用dispatch_group_notify。</p>
+<p>这种使用方法给了我们另外的一种在等待多个异步操作完成后才能进行下一步的操作的情况下的一种实现方式。跟dispatch_group_async很类似。</p>
+<h3 id="Dispatch-Source"><a href="#Dispatch-Source" class="headerlink" title="Dispatch Source"></a>Dispatch Source</h3><p>Dispatch Source是一本比较低层的监控API。监控的事件有很多：</p>
+<ul>
+<li>Mach port send right state changes.</li>
+<li>Mach port receive right state changes.</li>
+<li>External process state change.</li>
+<li>File descriptor ready for read.</li>
+<li>File descriptor ready for write.</li>
+<li>Filesystem node event.</li>
+<li>POSIX signal.</li>
+<li>Custom timer.</li>
+<li>Custom event.</li>
+</ul>
+<p>在你初始化一个source的时候传入一个类型进去，就能代表去监控某种类型的事件，然后设置该事件触发后的回调事件，基本的使用方法就是这样，具体会有部分差别。</p>
+<p>一个需要主要的是<code>Dispatch Source</code>在初始化后是出于一种暂停的状态(suspended),所以要启动它需要手动调用<code>dispatch_resume(source)</code>。 </p>
+<blockquote>
+<p>Dispatch sources are created in a suspended state. After creating the<br>  source and setting any desired attributes (i.e. the handler, context, etc.),<br>  a call must be made to dispatch_resume() in order to begin event delivery.</p>
+</blockquote>
+<p>这里面的用法大部分都比较是底层的，可能需要另起一片文章去写了。这里件简单介绍一下。</p>
+<h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><p>Dispatch semaphores类似于一种生产-消费者这种模式(也可以用锁去理解)。有三个API <code>dispatch_semaphore_create</code>,<code>dispatch_semaphore_signal</code>和<code>dispatch_semaphore_wait</code>。通过signal会增加一个可以消费的信号量，wait就会减少一个。</p>
+<p>在创建的时候传进去的初始化值一般有0和大于0两种用法。0的话主要就是用于同步锁这样的一个需求，而大于0的话是用于管理有限资源，比如资源数有六个，然后传个6进去，就可以限定最多6个线程可以访问这六个资源。</p>
+<p>ps:可以通过terminal 用如下命令查看用法 : man dispatch_semaphore_create </p>
+<h3 id="Resume-amp-Suspension"><a href="#Resume-amp-Suspension" class="headerlink" title="Resume &amp; Suspension"></a>Resume &amp; Suspension</h3><p>Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。<code>dispatch_resume</code> <code>dispathc_suspend</code></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+  <a href="/tags#GCD" >
+    <span class="tag-code">GCD</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2015/05/06/Objective-C-Block-glance/">
+        <span class="nav-arrow">← </span>
+        
+          Block 是什么来的
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2015/07/20/swift-optional-value/">
+        
+          swift学习笔记 -- optional value ? and !
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGCD"><span class="toc-nav-text">什么是GCD</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#GCD%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD-%E2%80%94-Dispatch-Object-%E5%92%8C-Dispatch-Queue"><span class="toc-nav-text">GCD中的基本术语 — Dispatch Object 和 Dispatch Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84Queue"><span class="toc-nav-text">三种类型的Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Queue%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-nav-text">Queue的基本用法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#dispatch-group"><span class="toc-nav-text">dispatch_group</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Dispatch-Source"><span class="toc-nav-text">Dispatch Source</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Semaphores"><span class="toc-nav-text">Semaphores</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Resume-amp-Suspension"><span class="toc-nav-text">Resume &amp; Suspension</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2015/05/19/Objective-C-GCD/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

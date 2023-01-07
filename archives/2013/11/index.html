@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Archives</h2>
+  <p class="post-date">Archives</p>
+</div>
+<main class="app-body" id="archives">
+  
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2022
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2022/10/24/Memoirs-of-a-Loser/" class="archive-title">失敗者回憶錄</a>
+        <p class="archive-date">10-24</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2022/09/08/Thought-About-Comunicating-Over-Text/" class="archive-title">工作上的文字沟通</a>
+        <p class="archive-date">09-08</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2022/07/21/Ratelimiter-with-guava/" class="archive-title">Guava Ratelimiter</a>
+        <p class="archive-date">07-21</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2022/04/24/Retries-with-Idempotent/" class="archive-title">用幂等支持重试</a>
+        <p class="archive-date">04-24</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2022/03/17/What&#39;s-NAT/" class="archive-title">NAT 简介</a>
+        <p class="archive-date">03-17</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2021
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2021/11/06/Recent-Reading/" class="archive-title">最近读的几本书</a>
+        <p class="archive-date">11-06</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2021/09/20/Justice-What-is-The-Right-Thing-To-Do/" class="archive-title">正义：一场思辨之旅</a>
+        <p class="archive-date">09-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2021/08/01/Install-Archlinux/" class="archive-title">Install Archlinux</a>
+        <p class="archive-date">08-01</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2020
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2020/05/24/SHENZHEN-METRO-LINE-11/" class="archive-title">地铁十一号线</a>
+        <p class="archive-date">05-24</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2019
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2019/12/03/Do-not-Worried-be-Happy/" class="archive-title">活在当下</a>
+        <p class="archive-date">12-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/11/05/Do-Not-Talk-Abount-Dog-When-We-Are-Getting-Old/" class="archive-title">人到中年不聊狗</a>
+        <p class="archive-date">11-05</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/07/25/Simple-Redis-Cluster-With-Docker/" class="archive-title">用docker 在本地搭一个简易redis 集群</a>
+        <p class="archive-date">07-25</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/06/13/Distribute-Caching-And-Consistent-Hashing/" class="archive-title">分布式缓存及一致性哈希算法（ketama）</a>
+        <p class="archive-date">06-13</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/05/26/Four-Agreements/" class="archive-title">四个约定</a>
+        <p class="archive-date">05-26</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/02/27/macOS-Mojave-With-JMC/" class="archive-title">macOS Mojave 无法使用JMC(Java Mission Controller)</a>
+        <p class="archive-date">02-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2019/02/17/Thinking-In-Bet/" class="archive-title">信息不足时如何做出高明决策</a>
+        <p class="archive-date">02-17</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2018
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2018/12/23/Over-Design-Or-PreDesign/" class="archive-title">过度设计和过早设计</a>
+        <p class="archive-date">12-23</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/10/15/upgrade-google-drive-plan-from-china/" class="archive-title">升级Google drive</a>
+        <p class="archive-date">10-15</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/10/14/scrarcity-thought/" class="archive-title">喂，你的拉链忘拉上了</a>
+        <p class="archive-date">10-14</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/09/13/Wing-Lung-all-in-one-card-services/" class="archive-title">亲临香港开通永隆银行一卡通</a>
+        <p class="archive-date">09-13</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/08/27/How-To-Read-A-Book/" class="archive-title">如何阅读一本书</a>
+        <p class="archive-date">08-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/08/19/principles/" class="archive-title">原则</a>
+        <p class="archive-date">08-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/06/06/practic-serial-notes/" class="archive-title">刻意练习</a>
+        <p class="archive-date">06-06</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/05/21/Crucial-conversation/" class="archive-title">关键对话: 如何高效能沟通</a>
+        <p class="archive-date">05-21</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/04/15/scarcity-why-having-too-little-means-so-much/" class="archive-title">稀缺</a>
+        <p class="archive-date">04-15</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/04/10/why-I-go-to-quick-beauty/" class="archive-title">快剪</a>
+        <p class="archive-date">04-10</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/04/03/rework-after-work/" class="archive-title">事后反思</a>
+        <p class="archive-date">04-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/03/18/A-Concise-Guide-To-Macroeconomics/" class="archive-title">七天读懂宏观经济</a>
+        <p class="archive-date">03-18</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/03/04/The-Photo-Reading-Whole-Mind-System/" class="archive-title">高倍速阅读法</a>
+        <p class="archive-date">03-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/01/22/The-Common-Sense-About-Doing-Things/" class="archive-title">做事的常识</a>
+        <p class="archive-date">01-22</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2017
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2017/08/20/Thinking-In-Systems-Primer/" class="archive-title">《系统之美：决策者的系统思考》读书笔记</a>
+        <p class="archive-date">08-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2017/07/24/browser-cors/" class="archive-title">浏览器跨域</a>
+        <p class="archive-date">07-24</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2016
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2016/11/29/letsencrypt-https/" class="archive-title">利用 Letsencrypt 部署 https</a>
+        <p class="archive-date">11-29</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2016/07/21/NSDate-timezone-issue/" class="archive-title">NSDate 与时间戳转换时的一些问题</a>
+        <p class="archive-date">07-21</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2016/04/13/our-cat-tangyuan/" class="archive-title">我家汤圆</a>
+        <p class="archive-date">04-13</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2016/03/22/App-Version-and-build-number/" class="archive-title">App 版本号和build的一些记录</a>
+        <p class="archive-date">03-22</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2016/01/18/Review-2015/" class="archive-title">2015 年的简单回顾</a>
+        <p class="archive-date">01-18</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2015
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2015/12/03/itc-submit-issue-note/" class="archive-title">App 提交的一些问题</a>
+        <p class="archive-date">12-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/11/02/Become-A-Tech-Leader-Reading-Note/" class="archive-title">成为技术领导读书笔记</a>
+        <p class="archive-date">11-02</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/10/08/xcode-change-executable-file-name/" class="archive-title">Xcode 修改 App 的 executeable file name</a>
+        <p class="archive-date">10-08</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/09/23/Xcode-7-upgrade-sick/" class="archive-title">Xcode 7 闹心一次的升级</a>
+        <p class="archive-date">09-23</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/09/20/xcodeghost-note/" class="archive-title">最近XcodeGhost 事件闹得挺火的</a>
+        <p class="archive-date">09-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/08/18/A-Simple-local-pod/" class="archive-title">一个简单的本地pod</a>
+        <p class="archive-date">08-18</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/08/17/iOS-AutoLayout-note/" class="archive-title">AutoLayout 和 VFL-- 还债篇</a>
+        <p class="archive-date">08-17</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/08/15/Objective-C-category-extension-note/" class="archive-title">Objective-C 的 categories 和 extension</a>
+        <p class="archive-date">08-15</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/08/04/iOS-Animation-Layer-note/" class="archive-title">iOS 动画 -- layer</a>
+        <p class="archive-date">08-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/07/29/swift-funcion-closure/" class="archive-title">swift学习笔记 -- 函数与闭包</a>
+        <p class="archive-date">07-29</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/07/20/swift-optional-value/" class="archive-title">swift学习笔记 -- optional value ? and !</a>
+        <p class="archive-date">07-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/05/19/Objective-C-GCD/" class="archive-title">GCD -- Grand Central Dispatch</a>
+        <p class="archive-date">05-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/05/06/Objective-C-Block-glance/" class="archive-title">Block 是什么来的</a>
+        <p class="archive-date">05-06</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/04/22/URL-Loading-System-URLProtocol/" class="archive-title">URL Loading System -NSURLProtocol</a>
+        <p class="archive-date">04-22</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/03/04/book-record/" class="archive-title">&lt;&lt;程序员的修养--从优秀到卓越&gt;&gt; 语录</a>
+        <p class="archive-date">03-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/01/27/android-screen-resolution/" class="archive-title">Android分辨率的一些基础知识和理解</a>
+        <p class="archive-date">01-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/01/12/miui-note/" class="archive-title">miui</a>
+        <p class="archive-date">01-12</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/01/08/git-remove-remote-master-branch/" class="archive-title">git 删除远程master分支</a>
+        <p class="archive-date">01-08</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2014
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2014/11/17/Objective-C-Class-Object-And-MetaClass/" class="archive-title">Objective-C Class,Object and MetaClass</a>
+        <p class="archive-date">11-17</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/10/26/Android-BroadcastReceiver-Study/" class="archive-title">Android BroadcastReceiver初试</a>
+        <p class="archive-date">10-26</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/10/10/iOS-8-Launch-Screen/" class="archive-title">iOS 8 Launch Screen</a>
+        <p class="archive-date">10-10</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/09/04/git-config-ssh-keys/" class="archive-title">多个git仓库配置多个ssh key</a>
+        <p class="archive-date">09-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/09/02/git-command-a-time-gitignore/" class="archive-title">Git command a day - gitignore</a>
+        <p class="archive-date">09-02</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/08/30/learn-git-command-a-time-rebase-stash/" class="archive-title">Git command a day - rebase and stash</a>
+        <p class="archive-date">08-30</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/08/21/URL-ENCODE/" class="archive-title">URL编码和解码的问题</a>
+        <p class="archive-date">08-21</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/08/09/Code-Review-Note/" class="archive-title">Code Review 小记</a>
+        <p class="archive-date">08-09</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/07/04/Binary-World/" class="archive-title">二进制世界</a>
+        <p class="archive-date">07-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/04/27/HTTP-(Hypertext-Transfer-Protocol)/" class="archive-title">HTTP协议</a>
+        <p class="archive-date">04-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/04/10/iOS7-Background-Mode-API-And-Implement/" class="archive-title">iOS7多任务和Background Fetch</a>
+        <p class="archive-date">04-10</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/04/08/work-note/" class="archive-title">工作小记2014-04-08</a>
+        <p class="archive-date">04-08</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/03/31/iOS7-UINavigationController-PushViewController/" class="archive-title">重载UINavigationController导致iOS7的屏幕滑动返回手势失效</a>
+        <p class="archive-date">03-31</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/03/16/iOS-UI-Image-From-Cache/" class="archive-title">iOS控件素材读取</a>
+        <p class="archive-date">03-16</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/02/17/learn-git-command-a-time-refactor-remote-git/" class="archive-title">Git command a day - Git 迁移保留提交记录和分支</a>
+        <p class="archive-date">02-17</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2013
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2013/11/26/new-work-note/" class="archive-title">工作小记</a>
+        <p class="archive-date">11-26</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/11/13/Mac-Ftp-Usage-note/" class="archive-title">Mac下简单ftp使用</a>
+        <p class="archive-date">11-13</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/10/12/First-Response-Without-Keyboard-Present/" class="archive-title">First Response Without Keyboard Present</a>
+        <p class="archive-date">10-12</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/10/11/UIEdgeInsets-Learning/" class="archive-title">UIEdgeInsets 小记</a>
+        <p class="archive-date">10-11</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/10/09/Phonegap-install-problems/" class="archive-title">Mac OS X 安装phonegap的android和iOS的问题</a>
+        <p class="archive-date">10-09</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/09/29/learn-git-command-a-time-checkout-remote-branch/" class="archive-title">Git command a day - checkout remote branch</a>
+        <p class="archive-date">09-29</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/08/23/base64-encode/" class="archive-title">Base64 编码原理简介</a>
+        <p class="archive-date">08-23</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/08/08/ubuntu-install-mysql-note/" class="archive-title">Ubuntu Install Mysql Note</a>
+        <p class="archive-date">08-08</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/08/04/ubuntu-go-install-record/" class="archive-title">Ubuntu 安装go语言开发环境小记</a>
+        <p class="archive-date">08-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/07/30/Ubuntu-sublimetext/" class="archive-title">Ubuntu install sublimetext 2.0小记</a>
+        <p class="archive-date">07-30</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/07/22/ios-Unit-Test/" class="archive-title">IOS下單元測試</a>
+        <p class="archive-date">07-22</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2013/07/20/unit-test-result-macro-reference/" class="archive-title">Unit Test Result Macro Reference</a>
+        <p class="archive-date">07-20</p>
+      </div>
+    
+  </div>
+</section>
+  
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/archives/2013/11/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
+</script>
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

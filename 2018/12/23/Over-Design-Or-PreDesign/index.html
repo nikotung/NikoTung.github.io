@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      过度设计和过早设计 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>过度设计和过早设计</h2>
+  <p class="post-date">2018-12-23</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近一个多月工作上基本是以开会讨论为主，讨论前期设计。听起来前期进行这么详细的设计，至少是对业务，需求细节都已经很了解，其实并不完全是这样的。</p>
+<h3 id="情况介绍"><a href="#情况介绍" class="headerlink" title="情况介绍"></a>情况介绍</h3><p>新公司这边亚太地区的业务最近成立了，大规模的招人要做三个业务，产品和技术都在招。因为招人的顺序，研发的招聘相比于产品要快。研发招聘进来了，也不能在空转，要有节奏，可先于产品做一些设计。</p>
+<p>老板对于互联网的几个业务和工作的方式很熟悉，是一个互联网老兵。鉴于他以往的经历，以及对要做的三个业务的了解，认为这个三个业务在纵向上肯定会有交集，为了后续的业务的快速发展，组织架构划分了三个组：交易平台组，信息平台组和具体业务的“前端”组。</p>
+<p>现在是研发先到位了，根据这三个业务的了解，提前做一些ERD的设计。因为组织架构上的划分，交易平台组和信息平台组从一开始就要定位成能够支持三个业务线，提高业务的开发效率。现在公司中，正在规划的业务中，只有一个业务（暂时称为T）已经正式在线上跑。前提的ERD设计很自然的以已经在线上跑的业务员为参照物，进行一些抽象的设计。</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>在产品的具体业务负责人还没有到岗前，根据已有的业务做了一套抽象设计，然后和具体业务的开发不停地在讨论看看是否可以满足他们现有的业务，以及后续怎么把这个业务迁移过来，包括订单，商品等等。这个过程进行了多次的讨论。</p>
+<p>在研发讨论后，一致认为差不多了，加上产品的同事陆陆续续到岗了，就开始跟产品讨论这个设计。（这一步是不是觉得有点哪里不对劲）</p>
+<p>在这个讨论的过程中，有一位同事(称为S，是一个类顾问的角色)他是对T 业务很熟悉的产品，也做过对应的研发工作，主要是和他讨论更多的业务流程和细节，另外的产品同事更多的是还在了解业务过程中。讨论中除了讨论业务流程之外，还针对研发设计的ERD 的每一个字段去讨论，非常详细的业务细节。（这一步是不是觉得很奇怪，和产品讨论很具体的技术细节。）这个过程开了很多次讨论会，其中很多的概念都是技术在设计的时候提出的，产品在过程中也没有觉得不妥。</p>
+<h3 id="高潮"><a href="#高潮" class="headerlink" title="高潮"></a>高潮</h3><p>产品内部的同事分工后开始做原型了，做出来后，就开始跟研发一起评审产品的原型。这个过程中，研发更多的反应是，你这个设计跟我们之前确认的ERD 设计不符，很复杂，我们要改设计。过程中不停的发散，各种问题。大家对统一概念的理解，产品和技术不一致，导致冲突很多。产品说，既然这么复杂，我把某个功能砍掉吧，这时技术不乐意了，我们的设计不支持这样的，跟我们之前设计的ERD 又不一样了。产品又说：你们的过程就不对，技术怎么能先于产品设计ERD 呢？我们出了原型后，你们要我们根据之前的ERD 去修改原型，怎么能从一开始就让产品去适应技术。陷入了僵局。</p>
+<ul>
+<li>技术是否能先于产品做设计？这个我认为没有绝对的答案。主要还在与双方的协作和沟通。技术团队如果是一个快速响应变化，这本来不是个大问题，毕竟技术是为业务服务的。如果是一个需求变更时都无法沟通，接受的技术团队，提前设计可能是一个灾难。</li>
+<li>产品在讨论技术细节？产品能对技术细节了解当然是最好的。如果产品一开始不是以产品业务需求，而是以技术实现去讨论方向就偏了，产品就应该以产品的视角去展示业务需求，把具体的技术实现留给研发去决定。而不是一上来：我有个需求，你们只要帮我加一个表&#x2F;新增一个前端页面路由就可以实现，很简单的。</li>
+<li>统一领域语言。这个方法真的可以省去了沟通中的很多问题，避免鸡同鸭讲。而这个语言更应该是有产品这边提出，毕竟他们更接近，了解具体的业务。</li>
+<li>设计一个系统支持三个业务？架构都是演进的。即便要做阿里巴巴一样的业务，一开始，也不应该按照阿里巴巴现在这种架构去设计。我们现在没有一个人做过完整的三个业务线。一开始就做这么一个“支撑中台”的设计，很多边界都不清楚，如何能够设计清楚。业务线的分分合合，也是一个演进的过程，分久必合，合久必分。没必要在一开始就把架构设计这么复杂，一开始就花这么多时间去讨论，设计过度的去设计。</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#设计，工作" >
+    <span class="tag-code">设计，工作</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/10/15/upgrade-google-drive-plan-from-china/">
+        <span class="nav-arrow">← </span>
+        
+          升级Google drive
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/02/17/Thinking-In-Bet/">
+        
+          信息不足时如何做出高明决策
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">情况介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-nav-text">过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%AB%98%E6%BD%AE"><span class="toc-nav-text">高潮</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2018/12/23/Over-Design-Or-PreDesign/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

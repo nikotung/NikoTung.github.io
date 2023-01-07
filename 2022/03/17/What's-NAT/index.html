@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      NAT 简介 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>NAT 简介</h2>
+  <p class="post-date">2022-03-17</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近要在居家办公，但自己有不太想用公司的VPN，因为要装dlp 这种监控工具。所以在折腾看看有什么可以替代的工具，找到了 <a target="_blank" rel="noopener" href="https://tailscale.com/">tailscale</a> 这个工具，在看它的文档时有多处提到 [[NAT]]这个名字。</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Network_address_translation">NAT</a>,全称叫network address translation,网络地址解释&#x2F;网络地址转换，对应的还有一个PAT全称叫port address translation。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>IPv4 是一个32位，如182.283.322.255，的地址形式，在IP地址中又有分类，其中某些类型的地址是不可以在公网上进行通信的，这就导致这个IPv4 的池更少了，说IPv4 不够用也不是一两年的事情了，切换到IPv6也不是那么容易的事情。如果能够利用那些不能在公网上通信的IP 地址是不是就能缓解一下这个IP 池短缺的事情呢？</p>
+<p>在家里连上Wi-Fi时，通常都会分配一个192.168.1.x 这样的IP给到你的机器，而路由器的IP 通常是192.168.1.1。家庭网络里的设备基本也不会有公网IP的，那它又怎么在公网上跟别的机器进行通信呢？这时候NAT 的作用就体现了。</p>
+<p>NAT 和 PAT 会有静态(static)和动态(dynamic)两种说法。</p>
+<h2 id="static-NAT"><a href="#static-NAT" class="headerlink" title="static NAT"></a>static NAT</h2><p> <img src="/assets/2022-03-17-static-nat.png"></p>
+<p>上图中的路由器充当NAT，会做一个映射只要是由45.30.12.120 来的数据都会往10.10.10.5 这个内网机器发送。同样的当内网的机器要给外部机器通信经过路由器时都会做成一个映射修改数据的原地址。<br>这里的映射是双向的，双方都能互相通信，但是却不能节约IP 地址。假如你还有别的内网机器需要往外通信，那么你可能需要另外一个公网IP 来做绑定。</p>
+<h2 id="static-PAT"><a href="#static-PAT" class="headerlink" title="static PAT"></a>static PAT</h2><p> <img src="/assets/2022-03-17-static-pat.png"></p>
+<p>上图中的数据经过路由器时，端口会被转换。10.10.10.5:8080&lt;-&gt;45.30.12.120:80 和 10.10.10.6:443&lt;-&gt;45.30.12.121:443 两个映射。同样的这两个也是双向的，内网中有两个机器但是它们是共享一个公网IP 45.30.12.121。</p>
+<h2 id="dynamic-PAT"><a href="#dynamic-PAT" class="headerlink" title="dynamic PAT"></a>dynamic PAT</h2><p> <img src="/assets/2022-03-17-dynamic-pat.png"></p>
+<p>上图的情况跟静态 PAT 很像，但是路由器这边的转换，10.10.10.5:3333&lt;-&gt;43.134.193.51:7777 和 10.10.10.6:8888&lt;-&gt;43.134.193.51:8888 不是配置好的，是动态的，当数据来到路由器（outbound）时，路由器随机选择一个空闲端口然后和外部机器连接。既然这个映射是临时的，那么如果外网的机器要发起连接，当它的数据来到路由器时，因为没有映射表，路由器是无法知道往哪台机器上转发，那么它只能丢掉。所以这个情况下它是单向的，只能在内网机器发起了首次连接后才能收到外部机器的数据，因为这时路由器中有了一个临时的映射表。这里的一个就很像一些内网穿透的工具要做的事情。</p>
+<h2 id="dynamic-NAT"><a href="#dynamic-NAT" class="headerlink" title="dynamic NAT"></a>dynamic NAT</h2><p> <img src="/assets/2022-03-17-dynamic-nat.png"></p>
+<p>这里也跟dynamic PAT 很像，但是不同的是，数据经过路由器映射后IP 改变，而端口是不变的。比如 10.10.10.5:3333 要往 45.30.12.120:443发送数据，那么经过路由器映射后SRT最多有可能变成43.134.193.51:3333 或者 43.134.193.52:3333。路由器被配置最多有两个公网IP 可以共享，那么当这两个IP 被占用时，另外机器的数据到达路由器时将会被丢弃。同样的，也只有当路由器上有有效的映射时，外部的机器才可以跟内部机器通信。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#NAT" >
+    <span class="tag-code">NAT</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/11/06/Recent-Reading/">
+        <span class="nav-arrow">← </span>
+        
+          最近读的几本书
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/04/24/Retries-with-Idempotent/">
+        
+          用幂等支持重试
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#static-NAT"><span class="toc-nav-text">static NAT</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#static-PAT"><span class="toc-nav-text">static PAT</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dynamic-PAT"><span class="toc-nav-text">dynamic PAT</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dynamic-NAT"><span class="toc-nav-text">dynamic NAT</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2022/03/17/What&#39;s-NAT/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Series | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Series</h2>
+  <p class="post-date">Series by Categories</p>
+</div>
+
+
+
+
+<main class="app-body">
+  <div id="category-cloud">
+      
+        <a class="category2" data-name="category-2022-03">2022-03</a>
+      
+        <a class="category0" data-name="category-2021-11">2021-11</a>
+      
+        <a class="category1" data-name="category-2021-10">2021-10</a>
+      
+        <a class="category1" data-name="category-2021-09">2021-09</a>
+      
+        <a class="category0" data-name="category-2021-08">2021-08</a>
+      
+        <a class="category1" data-name="category-2021-07">2021-07</a>
+      
+        <a class="category1" data-name="category-2021-04">2021-04</a>
+      
+        <a class="category3" data-name="category-2020-05">2020-05</a>
+      
+        <a class="category2" data-name="category-2019-12">2019-12</a>
+      
+        <a class="category1" data-name="category-2019-11">2019-11</a>
+      
+        <a class="category2" data-name="category-2019-07">2019-07</a>
+      
+        <a class="category1" data-name="category-2019-06">2019-06</a>
+      
+        <a class="category1" data-name="category-2019-05">2019-05</a>
+      
+        <a class="category0" data-name="category-2019-02">2019-02</a>
+      
+        <a class="category1" data-name="category-2018-12">2018-12</a>
+      
+        <a class="category0" data-name="category-2018-10">2018-10</a>
+      
+        <a class="category1" data-name="category-2018-09">2018-09</a>
+      
+        <a class="category2" data-name="category-2018-08">2018-08</a>
+      
+        <a class="category1" data-name="category-2018-06">2018-06</a>
+      
+        <a class="category1" data-name="category-2018-05">2018-05</a>
+      
+        <a class="category0" data-name="category-2018-04">2018-04</a>
+      
+        <a class="category1" data-name="category-2018-03">2018-03</a>
+      
+        <a class="category3" data-name="category-2018-01">2018-01</a>
+      
+        <a class="category2" data-name="category-2017-08">2017-08</a>
+      
+        <a class="category1" data-name="category-2017-07">2017-07</a>
+      
+        <a class="category3" data-name="category-2016-11">2016-11</a>
+      
+        <a class="category2" data-name="category-2016-07">2016-07</a>
+      
+        <a class="category0" data-name="category-2016-04">2016-04</a>
+      
+        <a class="category1" data-name="category-2016-03">2016-03</a>
+      
+        <a class="category1" data-name="category-2016-01">2016-01</a>
+      
+        <a class="category1" data-name="category-2015-12">2015-12</a>
+      
+        <a class="category2" data-name="category-2015-11">2015-11</a>
+      
+        <a class="category1" data-name="category-2015-10">2015-10</a>
+      
+        <a class="category1" data-name="category-2015-09">2015-09</a>
+      
+        <a class="category0" data-name="category-2015-08">2015-08</a>
+      
+        <a class="category1" data-name="category-2015-07">2015-07</a>
+      
+        <a class="category2" data-name="category-2015-05">2015-05</a>
+      
+        <a class="category0" data-name="category-2015-04">2015-04</a>
+      
+        <a class="category1" data-name="category-2015-03">2015-03</a>
+      
+        <a class="category2" data-name="category-2015-01">2015-01</a>
+      
+        <a class="category3" data-name="category-2014-11">2014-11</a>
+      
+        <a class="category3" data-name="category-2014-10">2014-10</a>
+      
+        <a class="category3" data-name="category-2014-09">2014-09</a>
+      
+        <a class="category1" data-name="category-2014-08">2014-08</a>
+      
+        <a class="category1" data-name="category-2014-07">2014-07</a>
+      
+        <a class="category2" data-name="category-2014-04">2014-04</a>
+      
+        <a class="category1" data-name="category-2014-03">2014-03</a>
+      
+        <a class="category0" data-name="category-2014-02">2014-02</a>
+      
+        <a class="category3" data-name="category-2013-11">2013-11</a>
+      
+        <a class="category1" data-name="category-2013-10">2013-10</a>
+      
+        <a class="category2" data-name="category-2013-09">2013-09</a>
+      
+        <a class="category1" data-name="category-2013-08">2013-08</a>
+      
+        <a class="category2" data-name="category-2013-07">2013-07</a>
+      
+  </div>
+    
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2022-03">2022-03</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2022/03/17/What's-NAT/">NAT 简介</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-11">2021-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2021/11/06/Recent-Reading/">最近读的几本书</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-10">2021-10</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2022/10/24/Memoirs-of-a-Loser/">失敗者回憶錄</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-09">2021-09</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2021/09/20/Justice-What-is-The-Right-Thing-To-Do/">正义：一场思辨之旅</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-08">2021-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2021/08/01/Install-Archlinux/">Install Archlinux</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-07">2021-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2022/07/21/Ratelimiter-with-guava/">Guava Ratelimiter</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2022/09/08/Thought-About-Comunicating-Over-Text/">工作上的文字沟通</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2021-04">2021-04</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2022/04/24/Retries-with-Idempotent/">用幂等支持重试</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2020-05">2020-05</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2020/05/24/SHENZHEN-METRO-LINE-11/">地铁十一号线</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-12">2019-12</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/12/03/Do-not-Worried-be-Happy/">活在当下</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-11">2019-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/11/05/Do-Not-Talk-Abount-Dog-When-We-Are-Getting-Old/">人到中年不聊狗</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-07">2019-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/07/25/Simple-Redis-Cluster-With-Docker/">用docker 在本地搭一个简易redis 集群</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-06">2019-06</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/06/13/Distribute-Caching-And-Consistent-Hashing/">分布式缓存及一致性哈希算法（ketama）</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-05">2019-05</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/05/26/Four-Agreements/">四个约定</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2019-02">2019-02</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/02/17/Thinking-In-Bet/">信息不足时如何做出高明决策</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2019/02/27/macOS-Mojave-With-JMC/">macOS Mojave 无法使用JMC(Java Mission Controller)</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-12">2018-12</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/12/23/Over-Design-Or-PreDesign/">过度设计和过早设计</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-10">2018-10</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/10/14/scrarcity-thought/">喂，你的拉链忘拉上了</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/10/15/upgrade-google-drive-plan-from-china/">升级Google drive</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-09">2018-09</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/09/13/Wing-Lung-all-in-one-card-services/">亲临香港开通永隆银行一卡通</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-08">2018-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/08/19/principles/">原则</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/08/27/How-To-Read-A-Book/">如何阅读一本书</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-06">2018-06</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/06/06/practic-serial-notes/">刻意练习</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-05">2018-05</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/05/21/Crucial-conversation/">关键对话: 如何高效能沟通</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-04">2018-04</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/04/03/rework-after-work/">事后反思</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/04/10/why-I-go-to-quick-beauty/">快剪</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/04/15/scarcity-why-having-too-little-means-so-much/">稀缺</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-03">2018-03</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/03/04/The-Photo-Reading-Whole-Mind-System/">高倍速阅读法</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/03/18/A-Concise-Guide-To-Macroeconomics/">七天读懂宏观经济</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2018-01">2018-01</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2018/01/22/The-Common-Sense-About-Doing-Things/">做事的常识</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2017-08">2017-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2017/08/20/Thinking-In-Systems-Primer/">《系统之美：决策者的系统思考》读书笔记</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2017-07">2017-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2017/07/24/browser-cors/">浏览器跨域</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2016-11">2016-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2016/11/29/letsencrypt-https/">利用 Letsencrypt 部署 https</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2016-07">2016-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2016/07/21/NSDate-timezone-issue/">NSDate 与时间戳转换时的一些问题</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2016-04">2016-04</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2016/04/13/our-cat-tangyuan/">我家汤圆</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2016-03">2016-03</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2016/03/22/App-Version-and-build-number/">App 版本号和build的一些记录</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2016-01">2016-01</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2016/01/18/Review-2015/">2015 年的简单回顾</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-12">2015-12</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/12/03/itc-submit-issue-note/">App 提交的一些问题</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-11">2015-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/11/02/Become-A-Tech-Leader-Reading-Note/">成为技术领导读书笔记</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-10">2015-10</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/10/08/xcode-change-executable-file-name/">Xcode 修改 App 的 executeable file name</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-09">2015-09</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/09/20/xcodeghost-note/">最近XcodeGhost 事件闹得挺火的</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/09/23/Xcode-7-upgrade-sick/">Xcode 7 闹心一次的升级</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-08">2015-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/08/04/iOS-Animation-Layer-note/">iOS 动画 -- layer</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/08/15/Objective-C-category-extension-note/">Objective-C 的 categories 和 extension</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/08/17/iOS-AutoLayout-note/">AutoLayout 和 VFL-- 还债篇</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/08/18/A-Simple-local-pod/">一个简单的本地pod</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-07">2015-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/07/20/swift-optional-value/">swift学习笔记 -- optional value ? and !</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/07/29/swift-funcion-closure/">swift学习笔记 -- 函数与闭包</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-05">2015-05</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/05/06/Objective-C-Block-glance/">Block 是什么来的</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/05/19/Objective-C-GCD/">GCD -- Grand Central Dispatch</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-04">2015-04</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/04/22/URL-Loading-System-URLProtocol/">URL Loading System -NSURLProtocol</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-03">2015-03</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/03/04/book-record/"><<程序员的修养--从优秀到卓越>> 语录</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2015-01">2015-01</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/01/08/git-remove-remote-master-branch/">git 删除远程master分支</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/01/12/miui-note/">miui</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2015/01/27/android-screen-resolution/">Android分辨率的一些基础知识和理解</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-11">2014-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/11/17/Objective-C-Class-Object-And-MetaClass/">Objective-C Class,Object and MetaClass</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-10">2014-10</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/10/10/iOS-8-Launch-Screen/">iOS 8 Launch Screen</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/10/26/Android-BroadcastReceiver-Study/">Android BroadcastReceiver初试</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-09">2014-09</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/09/02/git-command-a-time-gitignore/">Git command a day - gitignore</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/09/04/git-config-ssh-keys/">多个git仓库配置多个ssh key</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-08">2014-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/08/09/Code-Review-Note/">Code Review 小记</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/08/21/URL-ENCODE/">URL编码和解码的问题</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/08/30/learn-git-command-a-time-rebase-stash/">Git command a day - rebase and stash</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-07">2014-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/07/04/Binary-World/">二进制世界</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-04">2014-04</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/04/08/work-note/">工作小记2014-04-08</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/04/10/iOS7-Background-Mode-API-And-Implement/">iOS7多任务和Background Fetch</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/04/27/HTTP-(Hypertext-Transfer-Protocol)/">HTTP协议</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-03">2014-03</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/03/16/iOS-UI-Image-From-Cache/">iOS控件素材读取</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/03/31/iOS7-UINavigationController-PushViewController/">重载UINavigationController导致iOS7的屏幕滑动返回手势失效</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2014-02">2014-02</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2014/02/17/learn-git-command-a-time-refactor-remote-git/">Git command a day - Git 迁移保留提交记录和分支</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2013-11">2013-11</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/11/13/Mac-Ftp-Usage-note/">Mac下简单ftp使用</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/11/26/new-work-note/">工作小记</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2013-10">2013-10</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/10/09/Phonegap-install-problems/">Mac OS X 安装phonegap的android和iOS的问题</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/10/11/UIEdgeInsets-Learning/">UIEdgeInsets 小记</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/10/12/First-Response-Without-Keyboard-Present/">First Response Without Keyboard Present</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2013-09">2013-09</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/09/29/learn-git-command-a-time-checkout-remote-branch/">Git command a day - checkout remote branch</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2013-08">2013-08</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/08/04/ubuntu-go-install-record/">Ubuntu 安装go语言开发环境小记</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/08/08/ubuntu-install-mysql-note/">Ubuntu Install Mysql Note</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/08/23/base64-encode/">Base64 编码原理简介</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+    <div class="category-list">
+      <h3 class="category-name" id="category-2013-07">2013-07</h3>
+      
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/07/20/unit-test-result-macro-reference/">Unit Test Result Macro Reference</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/07/22/ios-Unit-Test/">IOS下單元測試</a>
+          </li>
+        </ul>
+      
+        <ul class="category-preview">
+          <li>
+            <a href="/2013/07/30/Ubuntu-sublimetext/">Ubuntu install sublimetext 2.0小记</a>
+          </li>
+        </ul>
+      
+    </div>
+  
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/series/index.html'
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+    var category = location.hash.replace('#', '')
+    if (category) {
+      var categoryId = "#category-" + category;
+      $("html, body").animate({
+        scrollTop: $(categoryId).offset().top 
+      }, 400)
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      浏览器跨域 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>浏览器跨域</h2>
+  <p class="post-date">2017-07-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>前端时间公司后台接口都加上了Oauth，前端请求都需要加上Authorization 的头。但是前端同学说后台接口访问不了，有跨域问题。根据后端同学说项目已经实现了跨域请求的支持。所以就抽空研究了一下跨域。</p>
+<p>先看看后端同学是如何实现跨域的。</p>
+<pre><code>@WebFilter
+@Component
+public class FilterResponse implements Filter&#123;
+    @Override
+    public void destroy() &#123;			
+    &#125;
+    
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException &#123;
+        HttpServletResponse rep = (HttpServletResponse)response;
+        HttpServletRequest req = (HttpServletRequest)request;
+        rep.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, PUT, OPTIONS&quot;);
+        rep.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+        rep.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;Content-Type&quot;);
+        rep.setHeader(&quot;Access-Control-Allow-Credentials&quot;,&quot;true&quot;);
+        
+        chain.doFilter(request, response);
+    &#125;
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException &#123;			
+    &#125;
+&#125;
+</code></pre>
+<p>粗看一下感觉没有问题。这个写法网上一搜一大堆。</p>
+<h4 id="cors-Cross-origin-resource-sharing-定义"><a href="#cors-Cross-origin-resource-sharing-定义" class="headerlink" title="cors(Cross-origin resource sharing)定义"></a>cors(Cross-origin resource sharing)定义</h4><p>我们先看看跨域的定义。</p>
+<blockquote>
+<p>Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served.[1] A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos.[2] Certain “cross-domain” requests, notably Ajax requests, however are forbidden by default by the same-origin security policy.</p>
+</blockquote>
+<blockquote>
+<p>CORS defines a way in which a browser and server can interact to determine whether or not it is safe to allow the cross-origin request.[3] It allows for more freedom and functionality than purely same-origin requests, but is more secure than simply allowing all cross-origin requests. It is a recommended standard of the W3C</p>
+</blockquote>
+<p>来自<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">wiki</a></p>
+<p>简单来说就是在一个域名下访问另外一个域名的内容。如果单纯的从http 协议上去看是没有问题的，但是由于浏览器有同源策略的限制，访问的内容被浏览器拦截了。所以说这跨域是浏览器的一个安全机制问题，我们需要支持这个跨域就要遵循浏览器的规范。</p>
+<h4 id="cors-的场景"><a href="#cors-的场景" class="headerlink" title="cors 的场景"></a>cors 的场景</h4><p>出现跨域问题主要是没有遵循浏览器的规范，导致请求被拦截。而这其中的场景主要有这样两个:</p>
+<ul>
+<li>浏览器发出一个跨域请求(simple request)，后台返回的http 头部与请求的头部不匹配，通不过浏览器的跨域验证，返回结果被浏览器拦截</li>
+<li>浏览器即将发出一个跨域请求，浏览器检测到是一个跨域请求，此时浏览器会提前发送一个预判请求(preflight request,一个 OPTIONS请求)，检测即将发送的请求是否被允许跨域访问。如果预判请求返回的结果通不过跨域验证，则浏览器不会发送真实的请求。</li>
+</ul>
+<p>上面的两个场景中，一个是已经发送请求成功，但是结果被浏览器拦截，一个是真实的请求根本没有发送出去。</p>
+<p>现在我们就需要知道什么时候会出现上面的两个场景。</p>
+<h5 id="simple-request"><a href="#simple-request" class="headerlink" title="simple request"></a>simple request</h5><p>同时满足如下条件，则就是一个 simple request</p>
+<p>请求方法是如下几个</p>
+<ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+</ul>
+<p>请求头部是如下几个:(除了那些被限制的header)</p>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type(有额外条件)</li>
+<li>DPR</li>
+<li>Downlink</li>
+<li>Save-Data</li>
+<li>Viewport-width</li>
+<li>Width</li>
+</ul>
+<p>Content-Type 是如下几个:</p>
+<ul>
+<li>application&#x2F;x-www-form-urlencode</li>
+<li>multipart&#x2F;form-data</li>
+<li>text&#x2F;plain</li>
+</ul>
+<p>同时满足了上面三个条件，浏览器就会直接发请求，而不会发预判请求。最后通不通过跨域验证，要看后台返回的内容(header)。</p>
+<h5 id="preflight-request"><a href="#preflight-request" class="headerlink" title="preflight request"></a>preflight request</h5><p>只要满足以下其中的任何一个条件</p>
+<p>请求方法是如下几个:</p>
+<ul>
+<li>PUT</li>
+<li>DELETE</li>
+<li>CONNECT</li>
+<li>OPTIONS</li>
+<li>TRACE</li>
+<li>PATCH</li>
+</ul>
+<p>请求头部是如下几个:(除了那些被限制的header):</p>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type(有额外条件)</li>
+<li>DPR</li>
+<li>Downlink</li>
+<li>Save-Data</li>
+<li>Viewport-width</li>
+<li>Width</li>
+</ul>
+<p>Content-Type 是如下几个:</p>
+<ul>
+<li>application&#x2F;x-www-form-urlencode</li>
+<li>multipart&#x2F;form-data</li>
+<li>text&#x2F;plain</li>
+</ul>
+<p>满足了上面其中一个，浏览器就会先发预判请求。通不通过跨域验证，要看后台返回的内容(header)。通过后才能发真实请求。</p>
+<h4 id="浏览器如何验证通不通过跨域"><a href="#浏览器如何验证通不通过跨域" class="headerlink" title="浏览器如何验证通不通过跨域"></a>浏览器如何验证通不通过跨域</h4><p>在上面的第一种场景下，浏览器发出的请求会带有一个很重要的 header </p>
+<pre><code>Origin: http://localhost:9292
+</code></pre>
+<p>这个header 表明这个请求是从哪里发出来的，在哪个域名下。</p>
+<p>这时候如果服务器返回的响应头中没有下面的 header 就不会通过跨域验证，则结果会被拦截</p>
+<pre><code>Access-Control-Allow-Origin: *
+</code></pre>
+<p>这里返回 <code>*</code> 表明允许任何域名下的请求，这样它就会通过跨域验证。</p>
+<p>在第二种场景下，options 请求会带上如下的几个header </p>
+<pre><code>Access-Control-Request-Method:POST
+Host:www.eiko.me
+Origin:https://www.eiko.me/cors.html
+Referer:https://www.eiko.me/cors.html/
+</code></pre>
+<p>后台响应中包含了如下几个 header </p>
+<pre><code>Access-Control-Allow-Origin: https://www.eiko.me/cors.html
+Vary: Origin
+Access-Control-Allow-Methods: POST
+Access-Control-Allow-Headers: Origin, Accept, Content-Type
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 30
+</code></pre>
+<p>就会通过跨域验证</p>
+<p>简单说就是 Access-Control-Allow-* 中需要包含了 Access-Control-Request-* 中的内容了，才能通过验证。</p>
+<p>回到我们刚才的 Java 代码中，这样写确实没有什么问题的，覆盖了常用的 header 就没有什么大问题。我们接下来往下看。</p>
+<h4 id="带身份信息的请求-Requests-with-credentials"><a href="#带身份信息的请求-Requests-with-credentials" class="headerlink" title="带身份信息的请求(Requests with credentials)"></a>带身份信息的请求(Requests with credentials)</h4><p>在跨域请求时，浏览器默认是不会带上身份信息(cookie,authorization)，除非前端设定了,如:</p>
+<pre><code>withCredentials:true
+</code></pre>
+<p>如果浏览器返回的响应中包含如下 header :</p>
+<pre><code>Access-Control-Allow-Credentials: true
+</code></pre>
+<p>也会通过验证。</p>
+<p>但是这里要注意的是，后台响应中对于带有身份信息的请求时，详情的 <code>Access-Control-Allow-Origin</code>，就不能通过 <code>*</code> 这个符号来指定了，必须要指定一个真实的域名，这样才能通过验证。</p>
+<p>这样回到一开始的 Java 代码中就会发现，加了授权后</p>
+<pre><code>rep.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+</code></pre>
+<p>这段代码成为了问题。</p>
+<p>最后看看 spring 中自带的跨域支持一个代码片段</p>
+<pre><code>public String checkOrigin(String requestOrigin) &#123;
+    if (!StringUtils.hasText(requestOrigin)) &#123;
+        return null;
+    &#125;
+    if (ObjectUtils.isEmpty(this.allowedOrigins)) &#123;
+        return null;
+    &#125;
+
+    if (this.allowedOrigins.contains(ALL)) &#123;
+        if (this.allowCredentials != Boolean.TRUE) &#123;
+            return ALL;
+        &#125;
+        else &#123;
+            return requestOrigin;
+        &#125;
+    &#125;
+    for (String allowedOrigin : this.allowedOrigins) &#123;
+        if (requestOrigin.equalsIgnoreCase(allowedOrigin)) &#123;
+            return requestOrigin;
+        &#125;
+    &#125;
+
+    return null;
+&#125;
+</code></pre>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a target="_blank" rel="noopener" href="https://fetch.spec.whatwg.org/#http-cors-protocol">fetch</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.w3.org/TR/cors/#http-access-control-allow-origin">w3c</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">mozilla.org</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#http" >
+    <span class="tag-code">http</span>
+  </a>
+
+  <a href="/tags#浏览器" >
+    <span class="tag-code">浏览器</span>
+  </a>
+
+  <a href="/tags#跨域" >
+    <span class="tag-code">跨域</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2016/11/29/letsencrypt-https/">
+        <span class="nav-arrow">← </span>
+        
+          利用 Letsencrypt 部署 https
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2017/08/20/Thinking-In-Systems-Primer/">
+        
+          《系统之美：决策者的系统思考》读书笔记
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#cors-Cross-origin-resource-sharing-%E5%AE%9A%E4%B9%89"><span class="toc-nav-text">cors(Cross-origin resource sharing)定义</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#cors-%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-nav-text">cors 的场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#simple-request"><span class="toc-nav-text">simple request</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#preflight-request"><span class="toc-nav-text">preflight request</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%A6%82%E4%BD%95%E9%AA%8C%E8%AF%81%E9%80%9A%E4%B8%8D%E9%80%9A%E8%BF%87%E8%B7%A8%E5%9F%9F"><span class="toc-nav-text">浏览器如何验证通不通过跨域</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%B8%A6%E8%BA%AB%E4%BB%BD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%AF%B7%E6%B1%82-Requests-with-credentials"><span class="toc-nav-text">带身份信息的请求(Requests with credentials)</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2017/07/24/browser-cors/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

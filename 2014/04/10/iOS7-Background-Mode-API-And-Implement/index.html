@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      iOS7多任务和Background Fetch | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>iOS7多任务和Background Fetch</h2>
+  <p class="post-date">2014-04-10</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>iOS7增加了很多新的特性，这么多的特性我也是最近才开始研究起来，是不是有点慢了，传说中的iOS8都要出来了。</p>
+<p>一般来说App进入了后台后都会被系统挂起，不会执行任何的代码，而且如果当前在前台运行的app需要更多的内存时，在后台挂起的App随时都会被干掉。在iOS4起其实就已经支持了多任务的特性了，可以让App在后台长时间运行，当时Apple要求是：</p>
+<ul>
+<li>VoIP</li>
+<li>Audio</li>
+<li>Location</li>
+<li>Newsstand<br>这四种类型的App才应该这样做。而一般的App只需要在App进入后台申请后台运行一段时间，然后等着被系统挂起。</li>
+</ul>
+<p>在iOS7中增加了一个后台fetch的功能，系统会不定时的把你的App唤醒给你30秒的后台运行时间，你必须要在30秒内完成操作，不然你的App接下来获得后台运行的机会越来越少，甚至会被挂起。</p>
+<p>###App的状态</p>
+<ul>
+<li>Not running：app还没有被启动或者app已经启动过了但是被系统干掉；</li>
+<li>inactive：app运行在前台，但是没有接收任何事件，这个状态是很短暂的，可能是由于app将要切换到不同的状态；</li>
+<li>active：app运行在前台也能接收所有的事件，这是在前台运行的app的正常状态；</li>
+<li>Background：app进入到后台并在执行一些代码，这可能是短暂的由前台切换到后台时的一个状态，这是大部分app进入到后台并在将被系统挂起前的一个状态。一些需要长时间后台运行的app这个状态的时间就会比较长。一个被用户手动启动的app当按home键后会直接进入到background而不是inactive；</li>
+<li>Suspended：app进入到后台，但是不会执行任何代码，这是app只是被挂起了，但还是会占有内存，但是一旦系统的内存不足时，app随时会被干掉</li>
+</ul>
+<p>###检查当前设备是否支持多任务(Determining Whether Multitasking Is Available)<br>在<code>UIDevice</code>有这么一个属性<code>multitaskingSupported</code>可以标明是否支持多任务</p>
+<pre><code>UIDevice* device = [UIDevice currentDevice];
+if ([device respondsToSelector:@selector(isMultitaskingSupported)])
+   backgroundSupported = device.multitaskingSupported;
+</code></pre>
+<p>###有限时间长的后台运行（finite－length）<br>当用户按了home键后，App的delegate<code>applicationDidEnterBackground:</code> 方法就会被调用。该方法有5秒钟时间去运行，该方法尽量要在5秒钟内退出。如果我们有更长时间的事情操作，这时我们就应该向系统申请更长的后台运行时间。下面的两个方法都可以申请后台运行时间：</p>
+<pre><code>- (UIBackgroundTaskIdentifier)beginBackgroundTaskWithExpirationHandler:(void(^)(void))handler  NS_AVAILABLE_IOS(4_0);
+- (UIBackgroundTaskIdentifier)beginBackgroundTaskWithName:(NSString *)taskName expirationHandler:(void(^)(void))handler NS_AVAILABLE_IOS(7_0);
+</code></pre>
+<p>一个是iOS4以上可以用，一个是iOS7以上可以用。这两个方法都带有一个<code>block</code>的参数，这个<code>block</code>就是当这个后台运行结束后就会被调用，在这个<code>block</code>中必须要调用<code>- (void)endBackgroundTask:(UIBackgroundTaskIdentifier)identifier NS_AVAILABLE_IOS(4_0);</code>,因为这个<code>block</code>如果是被系统调用，说明这个后台运行的时间快要结束了，防止你的任务还没有完成，为了保险需要在<code>block</code>中调用。</p>
+<p>Sample</p>
+<pre><code>- (void)applicationDidEnterBackground:(UIApplication *)application
+&#123;
+    bgTask = [application beginBackgroundTaskWithExpirationHandler:^&#123;
+        
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    &#125;];
+ 
+    // Start the long-running task and return immediately.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;
+ 
+        // Do the work associated with the task, preferably in chunks.
+ 
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    &#125;);
+&#125;
+</code></pre>
+<p>###长时间后台运行(Long-Running Background Tasks)<br>对于那些需要长时间在后台运行的App，需要向系统申请对应的权限，一般来说我们都是在info.plist文件中的<code>UIBackgroundModes</code>增加对应的值就好了，如audio，location。</p>
+<p>这个主要说一个iOS7新增的Background Fetch，因为其它的都还没有真正用过。</p>
+<p>#####Fetching Small Amounts of Content Regularly</p>
+<p>在iOS7中，App可以在后台定时的去获取网络信息，但是需要申请权限，其实就是在info.plist的<code>UIBackgroundModes</code>中增加一个<code>fetch</code>的值就好了，如果是用xcode5的话可以直接在xcode的targets中的Capabilities中直接勾选。</p>
+<p>首先我们要在app启动的时候设置后台获取的间隔<code>[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</code>。看起来是可以自己设置自己需要的间隔，实际上我们根本没法确定系统让我们后台激活的间隔是什么。</p>
+<p>当App进入后台后，获得后台执行权限的时候，UIApplication的delegate就会被调用。</p>
+<pre><code>//ios7 background fetch feature
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+&#123;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^&#123;
+        [[JVMessageManager sharedInstance] fetchMessagesInBackgroundModeWith:completionHandler];
+        //handler everything here 
+    &#125;);
+&#125;
+</code></pre>
+<p>这个后台运行的时间最多也就只有三十秒，所以必须要在三十秒内完成，不然App就很有可能被挂起了。当我们的后台任务完成后必须要显式的调用completeHandler。这是一个block接收一个<code>UIBackgroundFetchResult</code>的类型参数。</p>
+<pre><code>typedef NS_ENUM(NSUInteger, UIBackgroundFetchResult) &#123;
+UIBackgroundFetchResultNewData,
+UIBackgroundFetchResultNoData,
+UIBackgroundFetchResultFailed
+&#125; NS_ENUM_AVAILABLE_IOS(7_0);
+</code></pre>
+<p>不确定这三个值对下一次后台运行的时间有什么影响。</p>
+<p>这样我们就能够完成了一个iOS7的后台获取的功能了。</p>
+<p>在调试的时候，我们可以通过Xcode的Debug菜单下的Simulate Background Fetch 来触发，当然也可以通过在edit scheme中Duplicate Scheme然后勾上Backgroung Fetch这个选项就好了。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#iOS开发" >
+    <span class="tag-code">iOS开发</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2014/04/08/work-note/">
+        <span class="nav-arrow">← </span>
+        
+          工作小记2014-04-08
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2014/04/27/HTTP-(Hypertext-Transfer-Protocol)/">
+        
+          HTTP协议
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2014/04/10/iOS7-Background-Mode-API-And-Implement/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

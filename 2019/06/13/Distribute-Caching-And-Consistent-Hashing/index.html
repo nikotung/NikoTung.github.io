@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      分布式缓存及一致性哈希算法（ketama） | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>分布式缓存及一致性哈希算法（ketama）</h2>
+  <p class="post-date">2019-06-13</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>在实际的系统开发中，当流量增大时，通常会使用缓存技术去减少数据库的访问来减少数据库的压力。而随着流量越来越大，缓存的量也就越来越大，这时也会引用到分布式缓存。</p>
+<h3 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h3><p>所谓的分布式缓存就是用一堆机器构成一个大的缓存池，每一台机器缓存一部分数据，这样也能达到水平伸缩的效果。比如说一台机器能够支撑20G的数据缓存，需要支撑100G，则可以使用5台机器。举个例子，假如用户登录系统后需要把用户的信息放入到缓存中，系统的行为如下：</p>
+<p><img src="/assets/2019-06-13-cache-1.png"></p>
+<p>在服务A 中，用户登录了，并且把用户信息缓存到缓存机器A中，用户登录后访问服务B时，服务B就可以拿到用户的缓存信息。</p>
+<p>这里的问题是：service A 怎么选择存放用户的缓存信息，service B 怎么知道某个用户的缓存信息存放在哪个缓存机器。最简单的策略就是随机查询一个缓存机器，但是这个策略有两个问题：</p>
+<ul>
+<li>很容易就会导致缓存没有命中，毕竟是随机的。</li>
+<li>缓存数据会在多台机器上重复存放</li>
+</ul>
+<p>这时只要做到同一个数据来源，能够保证访问的是同一台机器，这样就可以解决上面的问题。最简单的方式就是对访问的数据进行hash，然后对机器进行编号（0到N-1），最后对可用的机器数量进行取模。上面的例子中，如果对用户的id做hash。这时后，只要你的缓存机器不变动，增加或减少，就能够分布式缓存了。</p>
+<pre><code>    i = Hash(key) % N (N为可用机器数量)
+</code></pre>
+<p>一旦你缓存机器变动了，就会引起大规模的缓存命中失败，hash(key) % (N-1),hash(key) % (N+1),减一台或者加一台，就会有大量的缓存丢失了。</p>
+<p>这种做法导致了系统的容错性（出错后的可用情况）和扩展性（增加机器后服务能力是否可以提高）变得很差。一致性hansh就是为了解决这个问题的。</p>
+<h3 id="一致性哈希"><a href="#一致性哈希" class="headerlink" title="一致性哈希"></a>一致性哈希</h3><p>一致性哈希方法如下图：</p>
+<p><img src="/assets/2019-06-13-cache-2.png"></p>
+<p>一致性hash将整个哈希值空间组织成一个虚拟的圆环，它的值空间为0-2^32-1(32位无符号整型)，整个空间按顺时针组织，0和2^32-1在零点重合。它首先对缓存节点的机器进行hash (一般是ip或主机名)计算，将hash 值落到圆环上。</p>
+<p>每当有key 要存储的时候，按照同样的哈希算法求得hash 值并落到圆环上，以此位置起点顺时针方向找到第一台缓存机器，则为该key 存放的节点。</p>
+<h3 id="容错性和扩展性"><a href="#容错性和扩展性" class="headerlink" title="容错性和扩展性"></a>容错性和扩展性</h3><p>假设现在机器A 宕机了，受影响的也就只有E和F，被重新定向到机器B。</p>
+<p><img src="/assets/2019-06-13-cache-3.png"></p>
+<p>假设现在流量继续上升，增加了一台机器D,受影响的也就只有E, 被重定向到机器D上去。例如上图</p>
+<p>所以，无论是增加机器还是删除机器，最终影响的都只是部分数据。</p>
+<h3 id="虚节点"><a href="#虚节点" class="headerlink" title="虚节点"></a>虚节点</h3><p>有一致性哈希有对机器进行hash，然后落在圆环上，当机器比较少的时候，会出现机器分布不均匀的情况，导致部分机器分布的数据很少，大部分落在另外的机器上。例如下面</p>
+<p><img src="/assets/2019-06-13-cache-4.png"></p>
+<p>在虚拟节点下，一个机器可以分成100-200个节点，这样一台机器就有很多个虚拟节点分布在圆环上，最终指向同一个机器，这样就可以保证节点均匀分布。</p>
+<p>譬如，对机器A 划分两百个虚拟节点，可以对“machineA#1”,”machineA#2”…”machineA#200”这样生成hash值并分配到圆环上。只要使用同样的hash 算法，中间只是增加了一个映射到真实节点的过程。</p>
+<h3 id="hash-算法"><a href="#hash-算法" class="headerlink" title="hash 算法"></a>hash 算法</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/couchbase/spymemcached">spymemcached</a>中用到的hash 算法有以下几种</p>
+<ul>
+<li>NATIVE_HASH</li>
+<li>CRC_HASH</li>
+<li>FNV1_64_HASH</li>
+<li>FNV1A_64_HASH</li>
+<li>FNV1_32_HASH</li>
+<li>FNV1A_32_HASH</li>
+<li>KETAMA_HASH</li>
+</ul>
+<p>我们这里看一下<a target="_blank" rel="noopener" href="https://www.metabrew.com/article/libketama-consistent-hashing-algo-memcached-clients">KETAMA_HASH</a></p>
+<blockquote>
+<blockquote>
+<p>How it works</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Take your list of servers (eg: 1.2.3.4:11211, 5.6.7.8:11211, 9.8.7.6:11211)</li>
+<li>Hash each server string to several (100-200) unsigned ints</li>
+<li>Conceptually, these numbers are placed on a circle called the continuum. (imagine a clock face that goes from 0 to 2^32)</li>
+<li>Each number links to the server it was hashed from, so servers appear at several points on the continuum, by each of the numbers they hashed to.</li>
+<li>To map a key-&gt;server, hash your key to a single unsigned int, and find the next biggest number on the continuum. The server linked to that number is the correct server for that key.</li>
+<li>If you hash your key to a value near 2^32 and there are no points on the continuum greater than your hash, return the first server in the continuum.</li>
+</ul>
+<p>简单来说就是把缓存的机器做100-200次hash，最后这些hash 值都会落在圆环上，每一个hash 值都会记录它的真实机器。对于要操作的key，使用同样的hash 方式，根据hash 值找到在圆环上跟它最接近的上界，就是要操作的节点（就是一个ceil 方式），如果你的hash 值在2^32附近找不到节点，则把第一个作为它的操作节点。</p>
+<p>这么一看跟我们上面说的就没啥区别了，这里主要是看看它的hash ketama算法。</p>
+<p>在spymemcached 中提供了两种内置的算法来查找机器的位置，它们都实现了<code>NodeLocator</code>,分别是：</p>
+<ul>
+<li>缓存机器取模法：<code>ArrayModNodeLocator</code></li>
+<li>一致性哈希算法：<code>KetamaNodeLocator</code></li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre><code>protected void setKetamaNodes(List&lt;MemcachedNode&gt; nodes) &#123;
+TreeMap&lt;Long, MemcachedNode&gt; newNodeMap =
+        new TreeMap&lt;Long, MemcachedNode&gt;();
+int numReps = config.getNodeRepetitions();
+int nodeCount = nodes.size();
+int totalWeight = 0;
+if (isWeightedKetama) &#123;
+    for (MemcachedNode node : nodes) &#123;
+        totalWeight += weights.get(node.getSocketAddress());
+    &#125;
+&#125;
+for (MemcachedNode node : nodes) &#123;
+  if (isWeightedKetama) &#123;
+      int thisWeight = weights.get(node.getSocketAddress());
+      float percent = (float)thisWeight / (float)totalWeight;
+      int pointerPerServer = (int)((Math.floor((float)(percent * (float)config.getNodeRepetitions() / 4 * (float)nodeCount + 0.0000000001))) * 4);
+      for (int i = 0; i &lt; pointerPerServer / 4; i++) &#123;
+          for(long position : ketamaNodePositionsAtIteration(node, i)) &#123;
+              newNodeMap.put(position, node);
+              getLogger().debug(&quot;Adding node %s with weight %s in position %d&quot;, node, thisWeight, position);
+          &#125;
+      &#125;
+  &#125; else &#123;
+      // Ketama does some special work with md5 where it reuses chunks.
+      // Check to be backwards compatible, the hash algorithm does not
+      // matter for Ketama, just the placement should always be done using
+      // MD5
+      if (hashAlg == DefaultHashAlgorithm.KETAMA_HASH) &#123;
+          for (int i = 0; i &lt; numReps / 4; i++) &#123;
+              for(long position : ketamaNodePositionsAtIteration(node, i)) &#123;
+                newNodeMap.put(position, node);
+                getLogger().debug(&quot;Adding node %s in position %d&quot;, node, position);
+              &#125;
+          &#125;
+      &#125; else &#123;
+          for (int i = 0; i &lt; numReps; i++) &#123;
+              newNodeMap.put(hashAlg.hash(config.getKeyForNode(node, i)), node);
+          &#125;
+      &#125;
+  &#125;
+&#125;
+    assert newNodeMap.size() == numReps * nodes.size();
+    ketamaNodes = newNodeMap;
+&#125;
+
+private List&lt;Long&gt; ketamaNodePositionsAtIteration(MemcachedNode node, int iteration) &#123;
+  List&lt;Long&gt; positions = new ArrayList&lt;Long&gt;();
+  byte[] digest = DefaultHashAlgorithm.computeMd5(config.getKeyForNode(node, iteration));
+  for (int h = 0; h &lt; 4; h++) &#123;
+      Long k = ((long) (digest[3 + h * 4] &amp; 0xFF) &lt;&lt; 24)
+          | ((long) (digest[2 + h * 4] &amp; 0xFF) &lt;&lt; 16)
+          | ((long) (digest[1 + h * 4] &amp; 0xFF) &lt;&lt; 8)
+          | (digest[h * 4] &amp; 0xFF);
+      positions.add(k);
+  &#125;
+  return positions;
+&#125;
+</code></pre>
+<p>来看看具体的实现方法<code>setKetamaNodes(List&lt;MemcachedNode&gt; nodes)</code>首先这里的<code>MemcachedNode</code>就是真实的缓存机器，它里面封装了很多东西，包括操作，连接等等。<code>TreeMap</code>用来模拟圆环，它是一个红黑树的一个实现，里面的节点都是有序的。</p>
+<pre><code>int numReps = config.getNodeRepetitions();
+</code></pre>
+<p>这里首先获取配置，表示每一个节点要做多少次hash，也就是生成多少个虚拟节点，默认是160个。</p>
+<p>这里有两种不同的处理，一个是在有配置权重后，首先计算真实节点的总权重，然后根据真实节点的权重占比计算出虚拟节点的占比（也就是数量）。在<code>ketamaNodePositionsAtIteration(MemcachedNode node, int iteration)</code> 的</p>
+<pre><code>config.getKeyForNode(node, iteration)
+</code></pre>
+<p>会生成一个key 类似<code>127.0.0.1:11311-0</code>。然后通过MD5生成这个key的摘要，因为MD5后的摘要是16位，这里是通过每4位一组，使用位移运算生成一个32位的整数，作为一个虚拟节点，这样就每一个key 会有四个，然后在根据上面的逻辑，比如非权重的，就会有 numReps&#x2F;4 * 4 就有160 个虚拟节点了。</p>
+<p>所以以上整个初始化过程是比较简单的实现，ketama 算法就是通过MD5做分组来生成虚拟节点。</p>
+<p>现在看看获取时候的代码实现：</p>
+<pre><code>public MemcachedNode getPrimary(final String k) &#123;
+MemcachedNode rv = getNodeForKey(hashAlg.hash(k));
+assert rv != null : &quot;Found no node for key &quot; + k;
+return rv;
+&#125;
+  
+
+MemcachedNode getNodeForKey(long hash) &#123;
+final MemcachedNode rv;
+if (!ketamaNodes.containsKey(hash)) &#123;
+  // Java 1.6 adds a ceilingKey method, but I&#39;m still stuck in 1.5
+  // in a lot of places, so I&#39;m doing this myself.
+  SortedMap&lt;Long, MemcachedNode&gt; tailMap = getKetamaNodes().tailMap(hash);
+  if (tailMap.isEmpty()) &#123;
+    hash = getKetamaNodes().firstKey();
+  &#125; else &#123;
+    hash = tailMap.firstKey();
+  &#125;
+&#125;
+rv = getKetamaNodes().get(hash);
+return rv;
+&#125;
+</code></pre>
+<p>首先 <code>getPrimary(final String k)</code> 中根据算法对key 进行hash，然后使用该hash值去圆环中查找。因为是通过<code>SortedMap</code>去模拟圆环，所有通过<code>tailMap</code>就可以获取到比该hash 值要大的数（如果在JDK1.6 中则可以直接通过 <code>ceilingKey</code>就可以获取了），如果存在则取第一个，如果不存在，则取整个圆环第一个。</p>
+<p>以上就是ketama 算法的具体实现。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consistent_hashing">Consistent hashing</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.metabrew.com/article/libketama-consistent-hashing-algo-memcached-clients">libketama: Consistent Hashing library for memcached clients</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/couchbase/spymemcached">spymemcached</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#缓存" >
+    <span class="tag-code">缓存</span>
+  </a>
+
+  <a href="/tags#一致性哈希" >
+    <span class="tag-code">一致性哈希</span>
+  </a>
+
+  <a href="/tags#架构" >
+    <span class="tag-code">架构</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/05/26/Four-Agreements/">
+        <span class="nav-arrow">← </span>
+        
+          四个约定
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/07/25/Simple-Redis-Cluster-With-Docker/">
+        
+          用docker 在本地搭一个简易redis 集群
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98"><span class="toc-nav-text">分布式缓存</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C"><span class="toc-nav-text">一致性哈希</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%B9%E9%94%99%E6%80%A7%E5%92%8C%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-nav-text">容错性和扩展性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%99%9A%E8%8A%82%E7%82%B9"><span class="toc-nav-text">虚节点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hash-%E7%AE%97%E6%B3%95"><span class="toc-nav-text">hash 算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-nav-text">代码实现</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2019/06/13/Distribute-Caching-And-Consistent-Hashing/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

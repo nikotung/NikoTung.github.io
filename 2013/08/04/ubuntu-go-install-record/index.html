@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Ubuntu 安装go语言开发环境小记 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Ubuntu 安装go语言开发环境小记</h2>
+  <p class="post-date">2013-08-04</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>新手上路，最近在学习go语言开发，在配置开发环境时遇到了一些问题，今天就暂时做一下记录。有于是在折腾安装成功后才写这篇文章的，所以不会有太多的案发现场证据，如截图什么之类的。我的安装环境是在ubuntu13.04桌面版。</p>
+<p>由于我之前是使用apt-get安装的，安装完后发现版本是1.0.2，并不是我希望的1.1.1版，因此才有了下面的折腾。</p>
+<h3 id="apt-get安装"><a href="#apt-get安装" class="headerlink" title="apt-get安装"></a>apt-get安装</h3><p>用这种方式安装是最简单的，但是安装出来的结果不是最新版的go，所以安装后我把给删除了,而且这种方式默认的安装路径是在&#x2F;usr&#x2F;lib&#x2F;go下面。</p>
+<pre><code>            #  may need admin permission
+            apt-get install golang 
+</code></pre>
+<h3 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h3><h5 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h5><p>源代码安装的话，需要自己编译首先需要安装一些编译的工具。</p>
+<pre><code>            # admin permission may needed
+            apt-get install bison ed gawk gcc libc6-dev make
+</code></pre>
+<p>go语言的源代码获取，很多人都建议使用go的源码管理工具Mercurial去获取。但是因为国内的环境问题，我还是建议你直接上网把适合自己机器的源代码下载来然后自己解压安装。我就是这样做的。</p>
+<h5 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h5><p>下载了源代码后，把源代码解压到你要安装的目录下，我这里安装的是&#x2F;usr&#x2F;local&#x2F;,通过下面的命令就可以把压缩包解压到你想要安装的目录</p>
+<pre><code>            tar -C /usr/local -xzf go1.1.1.linux-amd64.tar.gz
+</code></pre>
+<h5 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h5><p>解压后最重要的是设置gopath，这是最重要的，在后面项目编译中都需要用到。去到home目录下打开.bashrc文件输入如下变量：</p>
+<pre><code>            export GOROOT=/usr/local/go
+            export GOARCH=amd64
+            export GOOS=linux
+            export PATH=$&#123;PATH&#125;:/usr/local/go/bin
+            export GOPATH=~/Gits/gostudy
+</code></pre>
+<p>其中GOROOT是你安装的路径，GOARCH是根据你下载的包不同而不同的我这里是64位,GOOS根据你系统不一样而不一样其实还是根据包不同了，<br>PATH,这个是最重要的了，我们需要把安装路径加到PATH中去并在后面加上&#x2F;bin即把“$GOROOT&#x2F;bin”加到PATH中去。<br>GOPATH这个是你项目的路径，这个在后面可以改，可以每一个项目一个GOPATH，但是你要通过：叠加，不然始终还是只有一个的。<br>我个人的话就是只设置了一个GOPATH，因为目前我的GOPATH目录下面全都是go语言的项目，只需要在GOPATH下面新建一个src文件夹存放项目源代码就可以了。</p>
+<p>保存后，需要使用那个如下命令才能使gopath生效</p>
+<pre><code>            source .bashrc
+</code></pre>
+<p>如无意外，这是你在终端中输入go就会看到相关的go命令。这就说明你的go是安装成功了。</p>
+<p>上面说到我只设置了一个gopath，所有的项目都放在gopath下的src下，这其中我也遇到了一些编译的问题出现，也记录一下。<br>我一开始是在src下建立一个gotest的项目，但是gotest下面就是一些包或者说是文件夹,我在gotest下面有一个qfile文件夹，该文件夹下面就是程序入口的go文件（只有一个）。这是我就会直接编译gotest，但是这时是编译不成功的。只能通过下面这样才能编译成功。</p>
+<pre><code>            go build gotest/qfile 
+</code></pre>
+<p>在实际开发中，我们每写一个bao最后都把该包给install一下，编译是先把每一个包给编译一下，最后才build程序入口的主包，最后通过install就可以在bin目录下生成可执行文件。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#开发工具" >
+    <span class="tag-code">开发工具</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2013/07/30/Ubuntu-sublimetext/">
+        <span class="nav-arrow">← </span>
+        
+          Ubuntu install sublimetext 2.0小记
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2013/08/08/ubuntu-install-mysql-note/">
+        
+          Ubuntu Install Mysql Note
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#apt-get%E5%AE%89%E8%A3%85"><span class="toc-nav-text">apt-get安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-nav-text">源码安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step1"><span class="toc-nav-text">step1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step2"><span class="toc-nav-text">step2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step-3"><span class="toc-nav-text">step 3</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2013/08/04/ubuntu-go-install-record/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

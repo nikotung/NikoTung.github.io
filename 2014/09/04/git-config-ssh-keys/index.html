@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      多个git仓库配置多个ssh key | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>多个git仓库配置多个ssh key</h2>
+  <p class="post-date">2014-09-04</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>都知道连接git仓库，一般来说有这么几个方式：</p>
+<ul>
+<li>https</li>
+<li>ssh</li>
+<li>Subversion (这是github特有的吧)</li>
+</ul>
+<p>https的话可能要经常输入密码，ssh就是在初次使用的时候配置一下key,以后就不需要再输入密码了。在一些托管平台中，一些私有的项目中默认的都是建议用ssh，这样是会稍微安全一点，当然一个比较好的做法是要定时更新ssh key把一些已经不用的key去掉。</p>
+<p>如果我们在一台电脑上第一次使用git时，如果用了ssh的方式去clone一个项目，会出现这样的一个问题：无法建立安全链接。</p>
+<pre><code>Cloning into &#39;XXX&#39;...
+The authenticity of host &#39;github.com (207.97.227.239)&#39; can&#39;t be established.
+RSA key fingerprint is e3:ee:82:78:fb:c0:ca:24:65:69:ba:bc:47:24:6f:d4.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;github.com,207.97.227.239&#39; (RSA) to the list of known hosts.
+Connection closed by 112.124.6.106
+fatal: Could not read from remote repository.
+</code></pre>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>首先我们在本地生成一个RSA的私钥，然后把公钥取出来放到远程仓库的ssh公钥key中去</p>
+<pre><code>$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
+Enter passphrase (empty for no passphrase): [Press enter]
+Enter same passphrase again: [Press enter]
+The key fingerprint is:
+b8:45:68:90:10:b0:61:5e:cf:05:7e:b8:5e:b4:7f:75 Nizh2008@gmail.com
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+|ooo+.o..         |
+|oo. =.o.         |
+|..   =oo.        |
+|     .+o.        |
+|     ..oS    . E |
+|    . .o.   . .  |
+|     ..  . .     |
+|          .      |
+|                 |
++-----------------+
+</code></pre>
+<p>把ssh key增加到ssh－agent中去</p>
+<pre><code>ssh-add ~/.ssh/id_rsa
+</code></pre>
+<p>如果没有意外，你就会看到一个identify….的信息</p>
+<p>接下来在.ssh目录下面应该多了两个文件：<code>id_rsa</code>,<code>id_rsa.pub</code>,我们需要的就是把公钥取出来</p>
+<pre><code>cat ~/.ssh/id_rsa.pub
+</code></pre>
+<p>把打印出来的串，一字不漏的拷贝下来放到你的git仓库账号中去。</p>
+<p>再接下来，做一下测试</p>
+<pre><code>$ ssh -T git@github.com
+The authenticity of host &#39;github.com (207.97.227.239)&#39; can&#39;t be established.
+# RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+# Are you sure you want to continue connecting (yes/no)? [enter yes]
+Hi yourusername! You&#39;ve successfully authenticated, but GitHub does not
+# provide shell access.
+</code></pre>
+<p>不用管输出的什么错误，需要确认的地方直接yes就好了。你看到你的名字就说明成功了。</p>
+<p>这样我们就可以用ssh的方式使用git了。</p>
+<p>但是这并不是我最近遇到的问题。</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>前两天注册了开源中国的<a target="_blank" rel="noopener" href="http://git.oschina.net/">代码托管平台</a>,主要是它免费提供私有仓库的托管，而我用私有仓库又不是非常的频繁，所以就试用一下。当我在上面建立了项目，想要clone下来的时候发现没法建立链接，原来我没有为开源中国的git建立ssh key，而我本地已经有了.ssh下面的id_rsa文件。所以必须要配置多套的ssh key。</p>
+<h3 id="多个ssh-key解决方案"><a href="#多个ssh-key解决方案" class="headerlink" title="多个ssh key解决方案"></a>多个ssh key解决方案</h3><p>在上面我们提到生成RSA私钥时，需要我们输入保存私钥的文件名，而我是直接就回车键，这样我就用了默认的文件&#x2F;Users&#x2F;you&#x2F;.ssh&#x2F;id_rsa。所以在生成多个ssh key时要指定不同的文件。这里我就用了&#x2F;Users&#x2F;you&#x2F;.ssh&#x2F;oschina_rsa</p>
+<p>还是一样，要把oschina_rsa加到SSH Agent中</p>
+<pre><code>ssh-add ~/.ssh/oschina_rsa
+</code></pre>
+<p>好了之后我们要在.ssh下面加一个配置文件config，用于配置不同的git服务器。内容如下:</p>
+<pre><code># github
+Host github.com
+HostName github.com
+User git
+IdentityFile ~/.ssh/id_rsa
+IdentitiesOnly yes
+
+# oschina 
+Host git.oschina.net
+Host git.oschina.net
+User git
+IdentityFile ~/.ssh/oschina_rsa
+IdentitiesOnly yes
+</code></pre>
+<p>这样我们就可以使用不同的ssh key去访问不同的git仓库。</p>
+<p>把配置文件写好后，我还是建议做一下测试(上面有提到)。测试成功后，我们的使用才会比较顺利。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ul>
+<li><a target="_blank" rel="noopener" href="http://stormzhang.github.io/other/2013/10/16/github-multiply-ssh-key/">多个github帐号切换</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.github.com/articles/generating-ssh-keys">Generating SSH Keys</a></li>
+<li><a target="_blank" rel="noopener" href="http://superuser.com/questions/272465/using-multiple-ssh-public-keys">Using Multiple SSH Public Keys</a></li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#ssh key" >
+    <span class="tag-code">ssh key</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2014/09/02/git-command-a-time-gitignore/">
+        <span class="nav-arrow">← </span>
+        
+          Git command a day - gitignore
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2014/10/10/iOS-8-Launch-Screen/">
+        
+          iOS 8 Launch Screen
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-nav-text">解决办法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-nav-text">原因</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%A4%9A%E4%B8%AAssh-key%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-nav-text">多个ssh key解决方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2014/09/04/git-config-ssh-keys/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

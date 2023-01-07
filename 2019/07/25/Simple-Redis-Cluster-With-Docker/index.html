@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      用docker 在本地搭一个简易redis 集群 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>用docker 在本地搭一个简易redis 集群</h2>
+  <p class="post-date">2019-07-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>根据Redis cluster 的高可用规范，一个集群最少有6个节点，其中三个master，三个slave。那如果我们在本地测试的时候，有没有可能只有三个master 就可以呢？</p>
+<blockquote>
+<p>Note that the minimal cluster that works as expected requires to contain at least three master nodes. For your first tests it is strongly suggested to start a six nodes cluster with three masters and three slaves.</p>
+</blockquote>
+<p>其实是可以的，只需要三个master 节点，要做的需要就是：</p>
+<ul>
+<li>用docker 启动三个redis ；</li>
+<li>在其中一个redis 中使用cluster meet 命令；</li>
+<li>在每一个redis 上分配slots</li>
+</ul>
+<h3 id="docker-启动Redis"><a href="#docker-启动Redis" class="headerlink" title="docker 启动Redis"></a>docker 启动Redis</h3><p>在用docker 启动Redis 时需要先做一下两件事情：</p>
+<ul>
+<li>创建一个docker 网络：<code>docker network create redis_cluster</code></li>
+<li>创建Redis 集群节点配置文件：redis.conf，</li>
+</ul>
+<p>如下是文件内容。</p>
+<pre><code>port 6379
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+appendonly yes
+</code></pre>
+<p>之后我们就可以启动三个Redis 实例了。</p>
+<pre><code>docker run --name redis-1 --net redis_cluster -v $PWD/cluster-config.conf:/usr/local/etc/redis/redis.conf  -p 6379:6379 -d redis:5.0.3-alpine3.9 redis-server /usr/local/etc/redis/redis.conf &amp;&amp; \
+docker run --name redis-2 --net redis_cluster -v $PWD/cluster-config.conf:/usr/local/etc/redis/redis.conf  -p 6380:6379 -d redis:5.0.3-alpine3.9 redis-server /usr/local/etc/redis/redis.conf &amp;&amp; \
+docker run --name redis-3 --net redis_cluster -v $PWD/cluster-config.conf:/usr/local/etc/redis/redis.conf  -p 6381:6379 -d redis:5.0.3-alpine3.9 redis-server /usr/local/etc/redis/redis.conf
+</code></pre>
+<p>在启动Redis 实例时，通过–net 指定了网络，redis-server 命令指定了Redis 的配置文件。这样这三个节点都是以集群的模式启动。<code>1:M 22 Jul 2019 02:54:52.082 * Running mode=cluster, port=6379.</code></p>
+<h3 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h3><p>上面一步只是把集群的三个节点启动了，还没有创建集群，现在需要把三个节点加入到一个集群中。</p>
+<p>因为三个节点都加入了<code>redis_cluster</code> 这个，需要先找到对应的ip。</p>
+<pre><code>docker inspect redis-1
+docker inspect redis-2
+</code></pre>
+<p>我这里的ip 分别是：172.21.0.2，172.21.0.3</p>
+<p>在redis-3节点中分别输入如下命令:</p>
+<pre><code>CLUSTER MEET 172.21.0.3 6379
+CLUSTER MEET 172.21.0.2 6379
+</code></pre>
+<p>这时候三个节点都加入到redis-3 的集群中去了，但是集群还没有启动起来。因为slots 还没有分配。</p>
+<pre><code>2bd6c5250d0113eab7aca7b288e84aaf5ced49da 172.21.0.2:6379@16379 master - 0 1564021852248 0 connected
+065d5b869cd765a171580f035ed23a113c63ec60 172.21.0.4:6379@16379 myself,master - 0 1564021851000 1 connected
+2bb4a925953cee563b80373ba87f31176aba7f6a 172.21.0.3:6379@16379 master - 0 1564021851742 2 connected
+
+cluster_state:fail
+cluster_slots_assigned:0
+cluster_slots_ok:0
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:3
+cluster_size:0
+cluster_current_epoch:2
+cluster_my_epoch:1
+cluster_stats_messages_ping_sent:6
+cluster_stats_messages_pong_sent:9
+cluster_stats_messages_meet_sent:2
+cluster_stats_messages_sent:17
+cluster_stats_messages_ping_received:9
+cluster_stats_messages_pong_received:8
+cluster_stats_messages_received:17
+</code></pre>
+<h3 id="分配槽点"><a href="#分配槽点" class="headerlink" title="分配槽点"></a>分配槽点</h3><p>我们要把0-5000 到槽点分配到redis-1 节点，5001-10000 分配到redis-2 槽点，10001-16383 分配到redis-3节点。分别进入三个多节点容器中执行如下命令就可以了。</p>
+<pre><code># redis-1
+redis-cli -h 127.0.0.1 cluster addslots $(seq 0 5000)
+
+# redis-2
+redis-cli -h 127.0.0.1 cluster addslots $(seq 5001 10000)
+
+# redis-3 
+redis-cli -h 127.0.0.1 cluster addslots $(seq 10001 16383)
+</code></pre>
+<p>槽点分配完后，集群就会自动上线了。执行一下 <code>CLUSTER INFO</code> 看看：</p>
+<pre><code>cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:3
+cluster_size:3
+cluster_current_epoch:2
+cluster_my_epoch:1
+cluster_stats_messages_ping_sent:612
+cluster_stats_messages_pong_sent:615
+cluster_stats_messages_meet_sent:2
+cluster_stats_messages_sent:1229
+cluster_stats_messages_ping_received:615
+cluster_stats_messages_pong_received:614
+cluster_stats_messages_received:1229
+</code></pre>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://redis.io/topics/cluster-tutorial">cluster-tutorial</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#缓存" >
+    <span class="tag-code">缓存</span>
+  </a>
+
+  <a href="/tags#Redis" >
+    <span class="tag-code">Redis</span>
+  </a>
+
+  <a href="/tags#集群" >
+    <span class="tag-code">集群</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/06/13/Distribute-Caching-And-Consistent-Hashing/">
+        <span class="nav-arrow">← </span>
+        
+          分布式缓存及一致性哈希算法（ketama）
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/11/05/Do-Not-Talk-Abount-Dog-When-We-Are-Getting-Old/">
+        
+          人到中年不聊狗
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-%E5%90%AF%E5%8A%A8Redis"><span class="toc-nav-text">docker 启动Redis</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8A%A0%E5%85%A5%E9%9B%86%E7%BE%A4"><span class="toc-nav-text">加入集群</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%88%86%E9%85%8D%E6%A7%BD%E7%82%B9"><span class="toc-nav-text">分配槽点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2019/07/25/Simple-Redis-Cluster-With-Docker/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Install Archlinux | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Install Archlinux</h2>
+  <p class="post-date">2021-08-01</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h2><ul>
+<li>Lenovo ThinkPad E14</li>
+</ul>
+<h2 id="Install-Guide"><a href="#Install-Guide" class="headerlink" title="Install Guide"></a>Install Guide</h2><p>Basically, all the guides from <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide">archlinux wiki</a> work quiet well for me.</p>
+<p>Notes:</p>
+<ul>
+<li>I didn’t use a swap partion, swapfile instead,<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Swap#Swap_file">wiki</a></li>
+</ul>
+<h2 id="Post-installation"><a href="#Post-installation" class="headerlink" title="Post-installation"></a>Post-installation</h2><ul>
+<li>Desktop Environment, using <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/KDE#Plasma">plasma KDE</a></li>
+</ul>
+<h2 id="Issues-run-into-during-configuration"><a href="#Issues-run-into-during-configuration" class="headerlink" title="Issues run into during configuration"></a>Issues run into during configuration</h2><h4 id="signature-from-“lilac-build-machine-x6c-x69-108-97-99-x40-x62-x75-x69-x6c-x64-46-x61-114-99-x68-108-x69-110-x75-x78-99-x6e-46-111-114-x67-“-is-unknown-trust"><a href="#signature-from-“lilac-build-machine-x6c-x69-108-97-99-x40-x62-x75-x69-x6c-x64-46-x61-114-99-x68-108-x69-110-x75-x78-99-x6e-46-111-114-x67-“-is-unknown-trust" class="headerlink" title="signature from “lilac (build machine) &#x6c;&#x69;&#108;&#97;&#99;&#x40;&#x62;&#x75;&#x69;&#x6c;&#x64;&#46;&#x61;&#114;&#99;&#x68;&#108;&#x69;&#110;&#x75;&#x78;&#99;&#x6e;&#46;&#111;&#114;&#x67;“ is unknown trust"></a>signature from “lilac (build machine) <a href="mailto:&#x6c;&#x69;&#108;&#97;&#99;&#x40;&#x62;&#x75;&#x69;&#x6c;&#x64;&#46;&#x61;&#114;&#99;&#x68;&#108;&#x69;&#110;&#x75;&#x78;&#99;&#x6e;&#46;&#111;&#114;&#x67;">&#x6c;&#x69;&#108;&#97;&#99;&#x40;&#x62;&#x75;&#x69;&#x6c;&#x64;&#46;&#x61;&#114;&#99;&#x68;&#108;&#x69;&#110;&#x75;&#x78;&#99;&#x6e;&#46;&#111;&#114;&#x67;</a>“ is unknown trust</h4><p>You may run into this issue while installing from AUR, just update the archlinux key ring.</p>
+<pre><code>sudo pacman -S archlinuxcn-keyring
+</code></pre>
+<h3 id="mount-a-second-disk"><a href="#mount-a-second-disk" class="headerlink" title="mount a second disk"></a>mount a second disk</h3><p>mount a second disk and make it auto mount after restart.</p>
+<p>First, find the identify of your disks <code>lsblk -f</code>, you will see the UUID of your disk.</p>
+<pre><code>NAME        FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda                                                                                
+└─sda1      ext4   1.0   data  3ca0dbc1-fa30-44dc-900c-2c5d66a51a33  843.1G     3% /home/niko/data
+nvme0n1                                                                            
+├─nvme0n1p1 vfat   FAT32       3F7C-4045                                           
+└─nvme0n1p2 ext4   1.0         5bb27951-03e8-42cc-9294-9fcb1ff1ef93    163G    25% /
+</code></pre>
+<p>Second, update the fstab content in <code>/etc/fstab</code>,add a new line to the file.</p>
+<pre><code>UUID=3ca0dbc1-fa30-44dc-900c-2c5d66a51a33      /home/niko/data  ext4            rw,relatime     0 1
+</code></pre>
+<ul>
+<li>UUID: the uuid of your disk from the first step</li>
+<li>dir: the directory to which your disk mount</li>
+</ul>
+<p>Detail from <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Fstab#Identifying_filesystems">wiki</a></p>
+<h3 id="install-fcitx5"><a href="#install-fcitx5" class="headerlink" title="install fcitx5"></a>install fcitx5</h3><p>Setup the environment in the <code>~/.pam_enviroment</code>. Detail from <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">wiki</a></p>
+<pre><code>GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE  DEFAULT=fcitx
+XMODIFIERS    DEFAULT=@im=fcitx
+INPUT_METHOD  DEFAULT=fcitx
+SDL_IM_MODULE DEFAULT=fcitx
+</code></pre>
+<h3 id="install-WeCom"><a href="#install-WeCom" class="headerlink" title="install WeCom"></a>install WeCom</h3><p>Install WeCom from <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/com.qq.weixin.work.deepin/?O=0&PP=10">AUR</a></p>
+<pre><code>git clone https://aur.archlinux.org/com.qq.weixin.work.deepin.git
+makepkg  # build ,make sure you install the build package
+pacman -U com.qq.weixin.work.deepin-3.1.6.3605deepin6-2-x86_64.pkg.tar.zst
+7z x /opt/apps/com.qq.weixin.work.deepin/files/helper_archive.7z # if you can not find any files in ~/.deepinwine/deepin-wine-helper
+</code></pre>
+<p>If your WeCom can not display the Chinese properly,install the following fonts.</p>
+<ul>
+<li>wqy-microhei - WenQuanYi Micro Hei font family (also known as Hei, Gothic or Dotum) is a sans-serif style derived from Droid Sans Fallback, it offers high quality CJK outline font and it is extremely compact (~5M).</li>
+<li>wqy-zenhei - Hei Ti Style (sans-serif) Chinese Outline font embedded with bitmapped Song Ti (also supporting Japanese (partial) and Korean characters).</li>
+<li>wqy-bitmapfont - Bitmapped Song Ti (serif) Chinese font.</li>
+</ul>
+<p>From <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Localization/Chinese">wiki</a></p>
+<pre><code>pacman -S wqy-miccrohei
+pacman -S wqy-zenhei
+pacman -S wqy-bitmapfont
+</code></pre>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Archlinux" >
+    <span class="tag-code">Archlinux</span>
+  </a>
+
+  <a href="/tags#install" >
+    <span class="tag-code">install</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/05/24/SHENZHEN-METRO-LINE-11/">
+        <span class="nav-arrow">← </span>
+        
+          地铁十一号线
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/09/20/Justice-What-is-The-Right-Thing-To-Do/">
+        
+          正义：一场思辨之旅
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Device"><span class="toc-nav-text">Device</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Install-Guide"><span class="toc-nav-text">Install Guide</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Post-installation"><span class="toc-nav-text">Post-installation</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Issues-run-into-during-configuration"><span class="toc-nav-text">Issues run into during configuration</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#signature-from-%E2%80%9Clilac-build-machine-x6c-x69-108-97-99-x40-x62-x75-x69-x6c-x64-46-x61-114-99-x68-108-x69-110-x75-x78-99-x6e-46-111-114-x67-%E2%80%9C-is-unknown-trust"><span class="toc-nav-text">signature from “lilac (build machine) lilac@build.archlinuxcn.org“ is unknown trust</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#mount-a-second-disk"><span class="toc-nav-text">mount a second disk</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#install-fcitx5"><span class="toc-nav-text">install fcitx5</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#install-WeCom"><span class="toc-nav-text">install WeCom</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/08/01/Install-Archlinux/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

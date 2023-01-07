@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Base64 编码原理简介 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Base64 编码原理简介</h2>
+  <p class="post-date">2013-08-23</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近想到把在项目中用到的一些ios开发中标准库的类别实现进行收集，进行整理，方面以后使用。这是地址<a target="_blank" rel="noopener" href="https://github.com/NikoTung/KNAdition">KNAdition</a>,很大部分都是网上找到的，所在我想得自己先了解才好放上来吧。今天就看到了一个关于base64编码的一个方法，之前很早就听说过，但是具体原理却不甚解，趁着今天有空就学习一下。</p>
+<p>其实base64就算你不知道，但是你们也经常用到了。它并不算一种加密的算法，只不过是通过一种编码方式把要发送的内容转换成人类不能直接识别的串，方便于传输。该编码的实现需要一些位移的运算，所以需要一些计算机基本知识。</p>
+<p>其中说到的是bytes和bit，一个字节8个比特位的，如果你忘了，实现时会有点问题的吧。我开始别人代码时也纠结了。希望没有人遇到我这种情况，都都怪基础不扎实。</p>
+<p>Base64就是有一个由64个字符组成的码表，最终生成的字符均从这个码表中可以找到，但是据说这个码表根据不同的实现，选择是不一样的，主要是62和63啦，这里就不深究了，详情看这里的<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Base64">WIKI</a></p>
+<p>以下是码表：来源于<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Base64">wiki</a><br><img src="/assets/2013-08-23-base64.png"></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>一句话说了就是：把3个字节变成4个字节。</p>
+<p>3个字节24位（3 * 8）变成4个字节24位，每个字节取6位，然后高位补0.示例：</p>
+<p>10100101 10110110 10111110 </p>
+<p>把这24bit连在一起，然后从左到右，顺序取6位。取出来的每个一个6位在高位补0,最终变成:</p>
+<p>101001 011011 011010 111110</p>
+<p>2的6次方就是64了,想必这就是base64的由来了。</p>
+<p>以下是一个简单的例子:</p>
+<p>以git三个字符为例,g i t三个字符对应的ASCII码为：103  105 116.对应的二进制数值为：</p>
+<p>01100111  01101001  01110100</p>
+<p>选择后：</p>
+<p>00011001  00110110  00100101  00110100</p>
+<p>转成整形后为:25 54 37  52从上面的码表中获取到对应的字符为：Z2l0.所以就是git通过base64编码后变成了Z2l0</p>
+<p>所以从上面看，只要输入的字节为3的倍数，即可以被3整除，输出的字节数为输入的4&#x2F;3.如果不是3的倍数，最后剩下的也就是只有1或者2个字节剩余。如果只剩一个字节，这时在转码是会有2个比特位剩下，这两个比特位后面补4个0,最后组成6个比特.这时的输出，每两个00用一个&#x3D;代替。如果只剩下两个字节，在转换时会有4个比特位剩下，这四个比特位后面补两个0，最后组成6个比特位.</p>
+<p>所以如果你输入的字节位n则输出的字节最多为：（n+2）* 4&#x2F;3. 当n%3的余数为1时，输出的结果会有两个’&#x3D;&#x3D;’在结尾；当余数位2时，输出的结果有一个’&#x3D;’在结尾。</p>
+<pre><code>            //base64 encode
+            - (NSString*) createEncodedString:(NSData*)data
+            &#123;
+                static char table[] = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
+
+                const int size = ((data.length + 2)/3)*4;  //max output size
+                uint8_t output[size];
+
+                const uint8_t* input = (const uint8_t*)[data bytes];
+                for (int i = 0; i &lt; data.length; i += 3)
+                &#123;
+                    int value = 0;
+                    for (int j = i; j &lt; (i + 3); j++)
+                    &#123;
+                         value &lt;&lt;= 8;  //每一个输入都进行位移8
+                        if (j &lt; data.length)
+                            value |= (0xFF &amp; input[j]);
+                    &#125;
+
+                    const int index = (i / 3) * 4;
+                    output[index + 0] = table[(value &gt;&gt; 18) &amp; 0x3F];  //右移十八位，通过&amp;去右边六位
+                    output[index + 1] = table[(value &gt;&gt; 12) &amp; 0x3F];
+                    output[index + 2] = (i + 1) &lt; data.length ? table[(value &gt;&gt; 6) &amp; 0x3F] : &#39;=&#39;;
+                    output[index + 3] = (i + 2) &lt; data.length ? table[(value &gt;&gt; 0) &amp; 0x3F] : &#39;=&#39;;
+            &#125;
+
+            return [[NSString alloc] initWithBytes:output length:size encoding:NSASCIIStringEncoding];
+            &#125; 
+</code></pre>
+<h3 id="updated-2013-08-29"><a href="#updated-2013-08-29" class="headerlink" title="updated 2013-08-29"></a>updated 2013-08-29</h3><h4 id="base64解码"><a href="#base64解码" class="headerlink" title="base64解码"></a>base64解码</h4><p>解码的过程就是一个逆向的过程,首先是要对你的输入做一个判断，确认每一个字符都是在码表的范围内，如果不是可以选择跳过。每一次均可以通过移位和&amp;运算把编码时高位增加的那两位去掉，最后拼成8位。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#base64" >
+    <span class="tag-code">base64</span>
+  </a>
+
+  <a href="/tags#objective-c" >
+    <span class="tag-code">objective-c</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2013/08/08/ubuntu-install-mysql-note/">
+        <span class="nav-arrow">← </span>
+        
+          Ubuntu Install Mysql Note
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2013/09/29/learn-git-command-a-time-checkout-remote-branch/">
+        
+          Git command a day - checkout remote branch
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#updated-2013-08-29"><span class="toc-nav-text">updated 2013-08-29</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#base64%E8%A7%A3%E7%A0%81"><span class="toc-nav-text">base64解码</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2013/08/23/base64-encode/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

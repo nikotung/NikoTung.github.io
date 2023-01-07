@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      swift学习笔记 -- optional value ? and ! | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>swift学习笔记 -- optional value ? and !</h2>
+  <p class="post-date">2015-07-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>在swift中，你可以通过<code>var</code>关键词去声明一个变量，通过<code>let</code>去声明一个常量。与OC一个不一样的地方是，在OC中声明一个变量的时候，如果没有赋默认值则就是一个默认的<code>nil</code>，直接去使用也不会报错。而在swift中你没有初始化一个变量，而去直接使用是会报错的，而且还是在编译期就报错了，因为swift中不会在声明一个对象的时候有一个<code>nil</code>的默认值。</p>
+<p>在swift中还引入了一个叫<strong>optionals</strong>的这样的变量。你可以这么理解：</p>
+<ul>
+<li>它有一个值，并且等于x</li>
+<li>或者它根本就没有一个值</li>
+</ul>
+<p>表明它可能是一个缺省值。这种概念在OC中不存在的，而且也跟OC中跟它比较接近的nil也不一样。在OC中nil是一个指向空对象的指针,所以只能用于对象，而在swift中应该是一个语意上的概念，能用于任何对象。</p>
+<p>可以通过下面的方法，在变量的类型后面添加一个？去标明改变量是一个<code>optional</code>的值(变量与?间不能有空格)。</p>
+<pre><code>var value : String? //nil
+value?.hashValue // nil
+var optional : String? = &quot;hash&quot;  //hash
+optional?.hashValue    //4799450059810186505
+</code></pre>
+<p>如果你在声明的时候没有给<code>optional</code>赋初值，那么它就默认为nil(跟变量不一样的)</p>
+<p>有一个地方需要注意的是?其实就是一个语法糖。<code>optional</code>其实是一个<code>enum</code>。</p>
+<pre><code>enum Optional&lt;T&gt; : _Reflectable, NilLiteralConvertible &#123;
+    case None
+    case Some(T)
+
+    /// Construct a `nil` instance.
+    init()
+
+    /// Construct a non-`nil` instance that stores `some`.
+    init(_ some: T)
+
+    /// If `self == nil`, returns `nil`.  Otherwise, returns `f(self!)`.
+    func map&lt;U&gt;(@noescape f: (T) -&gt; U) -&gt; U?
+
+    /// Returns `nil` if `self` is nil, `f(self!)` otherwise.
+    func flatMap&lt;U&gt;(@noescape f: (T) -&gt; U?) -&gt; U?
+
+    /// Returns a mirror that reflects `self`.
+    func getMirror() -&gt; MirrorType
+
+    /// Create an instance initialized with `nil`.
+    init(nilLiteral: ())
+&#125;
+</code></pre>
+<p>它有两个类型，一个是<code>None</code>一个是<code>Some(T)</code>,这样应该就比较好理解<code>optional</code>的含义了。它有两个构造函数<code>init()</code>和<code>init(_ some : T)</code>。?的语法糖的作用就是这样</p>
+<ul>
+<li>如果你在声明一个<code>optional</code>时，没有赋初值，那么它就调用了一个<code>init()</code>构造函数返回一个<code>nil</code></li>
+<li>如果你在声明一个<code>optional</code>时，赋了初值，那么它就调用了<code>init(_ some : T)</code>返回一个<code>T</code>类型的的实例</li>
+</ul>
+<p>在访问<code>optional</code>变量时，可以通过if 语句去判断它是不是nil，(&#x3D;&#x3D; nil 或者 !&#x3D; nil)</p>
+<pre><code>if value != nil &#123;
+    print(&quot;the value variable contain some value&quot;)
+&#125;
+</code></pre>
+<p>当你百分百确认<code>optinal</code>变量是有值的时候，你可以通过在变量后面添加感叹号!去访问 </p>
+<pre><code>if optional != nil &#123;
+    print(&quot;value of optional \(optional!)&quot;)
+&#125;
+</code></pre>
+<p>这种就成为强制拆包，强行返回<code>optional</code>声明时的<code>T</code>类型数据。如果你用强制拆包!时，<code>optional</code>却还没有值，那么app就会crash了，触发了一个运行时的错误。</p>
+<p>Apple建议使用一种叫<code>optinal binding</code>的方法去访问<code>optional</code>变量。主要就是通过if&#x2F;while语句，去检查<code>optinal</code>并它取出来把它放到一个变量或者常量中，如果转换成功就会执行一下步，而且在这里面就不再需要用!去访问变量了。</p>
+<pre><code>if let actualValue = value &#123;
+    print(&quot;the actual value is \(actualValue)&quot;)
+&#125;
+</code></pre>
+<p>隐式拆包(implicitly unwrapped optional)。有时候，一个<code>optional</code>的值一旦被设好了，就会一直存在，这时候可以在声明的时候用!而不是？去修饰，在后续的使用过程中就可以直接访问了。这种比较常见的是用于一个类的属性中。</p>
+<pre><code>let assumedString : String! = &quot;an implicitly unwrapped optional&quot; 
+print(&quot;the assumed string is \(assumedString)&quot;)
+</code></pre>
+<p>在函数&#x2F;方法的调用中，一个返回optional的方法再去调用别的方法时，一旦返回optional的方法返回了nil，后面的调用都会返回nil。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#optional value" >
+    <span class="tag-code">optional value</span>
+  </a>
+
+  <a href="/tags#swift" >
+    <span class="tag-code">swift</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2015/05/19/Objective-C-GCD/">
+        <span class="nav-arrow">← </span>
+        
+          GCD -- Grand Central Dispatch
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2015/07/29/swift-funcion-closure/">
+        
+          swift学习笔记 -- 函数与闭包
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2015/07/20/swift-optional-value/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

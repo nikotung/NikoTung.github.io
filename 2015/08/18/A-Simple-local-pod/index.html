@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      一个简单的本地pod | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>一个简单的本地pod</h2>
+  <p class="post-date">2015-08-18</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>如果你是一个 iOS 开发者，却没有听说过 <a target="_blank" rel="noopener" href="http://cocoapods.org/">CocoaPods</a> 那么真的需要去了解一下。它是一个 iOS 第三方库的依赖管理工具，可以轻松便捷的管理这些库，而不用整天折腾项目文件。而现在 iOS 的各种各样的开源库遍地花开，基本上能满足你的日常需求，作为一个代码搬运工，这个工具就能帮我们节省太多的时间了。</p>
+<p>这里我本着学习如何创建私有 pod 的过程，创建了一个本地的 pod 。这个本地 pod 很简单的，就是一个专门管理支付宝的 SDK 用的，而且我只在本地建立一个 git 的项目，并没有建立远端的 specs repo。</p>
+<h4 id="第一步创建-Podspec-文件"><a href="#第一步创建-Podspec-文件" class="headerlink" title="第一步创建 Podspec 文件"></a>第一步创建 Podspec 文件</h4><p>Podspec 文件是啥了，看看官方文档怎么说的。</p>
+<blockquote>
+<p>A Podspec, or Spec, describes a version of a Pod library. One Pod, over the course of time, will have many Specs. It includes details about where the source should be fetched from, what files to use, the build settings to apply, and other general metadata such as its name, version, and description.</p>
+</blockquote>
+<p>一句话，就是一个库的描述文件。很简单就通过<code>pod spec create &lt;name&gt;</code> 这个命令，指定 pod 的名字就可以在本地创建一个 Podspec 文件，创建出来的文件是一个模版，需要的信息，模版中都有，只需要把它替换成自己的就行了。	主要就是包括下面的几个模块内容:</p>
+<ul>
+<li>Root specification : 是描述这个库的某一个版本的基本信息，版本，作者，来源等等，里面有些是要必填的(可以验证是否有哪些缺失)</li>
+<li>Platform : 库所支持的平台(iOS OS), 以及最低的发布环境。</li>
+<li>Build settings : 编译时的一些属性设置</li>
+<li>File patterns : 一种匹配模式，决定哪些文件，framwork , library等会引入或不引入到 pod 中</li>
+<li>Subspecs : 所以依赖的子库</li>
+<li>Multi-Platform support : 多平台支持 iOS , OS X，watch OS</li>
+</ul>
+<h4 id="为-Podspec-文件添加库的描述"><a href="#为-Podspec-文件添加库的描述" class="headerlink" title="为 Podspec 文件添加库的描述"></a>为 Podspec 文件添加库的描述</h4><p>这个其实就可以简单的根据模版去修改。而因为我只是在本地建立的 git 项目，所以在 source 这个里面稍微有点不一样，这个一般来说是指向远端的代码管理服务器，比如</p>
+<pre><code>spec.source = &#123; :git =&gt; &#39;https://github.com/AFNetworking/AFNetworking.git&#39;,
+            :tag =&gt; spec.version.to_s &#125;
+</code></pre>
+<p>而我这里只能这样填</p>
+<pre><code>  spec.source = &#123; :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s &#125;
+</code></pre>
+<p>还有一个是，最好给项目打个 tag ，这个在 source 里面用到了。不然会有警告的。<br>如果有依赖的系统的 library，填写的时候要把 lib 的前缀去掉。</p>
+<h4 id="验证-Podspec-文件是否正确"><a href="#验证-Podspec-文件是否正确" class="headerlink" title="验证 Podspec 文件是否正确"></a>验证 Podspec 文件是否正确</h4><p>pod 本身就提供了验证的功能，简单运行命令 </p>
+<pre><code>pod spec lint AliPay.podspec 
+</code></pre>
+<p>一般会加上一个参数</p>
+<pre><code>pod spec lint AliPay.podspec --verbose
+</code></pre>
+<p>这样出错了，会提示我们具体的原因。</p>
+<p>把我的 Podspec 文件内容贴上来</p>
+<pre><code>Pod::Spec.new do |s|
+
+  s.name         = &quot;AliPay&quot;
+  s.version      = &quot;0.0.1&quot;
+  s.summary      = &quot;支付宝的支付SDK&quot;
+
+  s.description  = &lt;&lt;-DESC
+                   支付宝的支付SDK,建立一个pod去管理
+                   DESC
+
+  s.homepage         = &quot;https://github.com/NikoTung&quot;
+
+
+  s.license      = &#123; :type =&gt; &#39;MIT&#39; , :file =&gt; &quot;LICENSE.md&quot; &#125;
+
+  s.author             = &#123; &quot;Niko&quot; =&gt; &quot;Nizh2008@gmail.com&quot; &#125;
+  s.source           = &#123; :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s &#125;
+
+
+  s.platform     = :ios, &#39;7.0&#39;
+
+  #  When using multiple platforms
+  # s.watchos.deployment_target = &quot;2.0&quot;
+
+
+  
+  # s.source       = &#123; :git =&gt; &quot;http://EXAMPLE/AliPay.git&quot;, :tag =&gt; &quot;0.0.1&quot; &#125;
+
+  s.vendored_frameworks = &#39;Framework/AlipaySDK.Framework&#39;
+  s.resource = &quot;Resource/AlipaySDK.bundle&quot;
+
+  s.frameworks = &quot;SystemConfiguration&quot;, &quot;CoreTelephony&quot;
+  s.libraries = &#39;z&#39;
+
+
+end
+    
+</code></pre>
+<h4 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h4><p>有一天浏览了一下 <a target="_blank" rel="noopener" href="https://github.com/CocoaPods/CocoaPods">CocoaPods</a>的库发现已经有人做了这个事情，把支付宝的 <a target="_blank" rel="noopener" href="https://github.com/beiliubei/AliPay">SDK</a> 放到 pod 中去了。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a target="_blank" rel="noopener" href="https://guides.cocoapods.org/making/specs-and-specs-repo.html">Specs and the Specs Repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://guides.cocoapods.org/syntax/podspec.html#specification">Podspec Syntax Reference</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Cocoapods" >
+    <span class="tag-code">Cocoapods</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2015/08/17/iOS-AutoLayout-note/">
+        <span class="nav-arrow">← </span>
+        
+          AutoLayout 和 VFL-- 还债篇
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2015/09/20/xcodeghost-note/">
+        
+          最近XcodeGhost 事件闹得挺火的
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%88%9B%E5%BB%BA-Podspec-%E6%96%87%E4%BB%B6"><span class="toc-nav-text">第一步创建 Podspec 文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%BA-Podspec-%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%BA%93%E7%9A%84%E6%8F%8F%E8%BF%B0"><span class="toc-nav-text">为 Podspec 文件添加库的描述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%AA%8C%E8%AF%81-Podspec-%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE"><span class="toc-nav-text">验证 Podspec 文件是否正确</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Update"><span class="toc-nav-text">Update</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2015/08/18/A-Simple-local-pod/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Git command a day - rebase and stash | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Git command a day - rebase and stash</h2>
+  <p class="post-date">2014-08-30</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近公司出了一些规范，就是如何在并行开发时控制代码的合并。</p>
+<p>所以开始要对git有更多的了解，在这过程中发现git真的非常非常强大，不愧为神器啊。而我自己连入门级别都敢说了，真的是很惭愧啊。</p>
+<p>这里就说两个命令的基本功能。</p>
+<h3 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h3><p>相信很多人都有过这样的经历，自己正在开发一个新的feature，突然间被别人打断。没错，就是要修 bug了。这时候，代码写了一半，又不想提交，但是不提交就没法切分支。这时候就是stash发挥作用的时候了。</p>
+<p>这时候，您只需要在命令行中敲入，如下:</p>
+<pre><code>git stash
+</code></pre>
+<p>这时候你可以随意切换分支了。	</p>
+<p>这样你的修改就会被暂存下来了，它只是记录了你的修改状态，而不会对整个git tree有任何的影响，而且你还能随时恢复，还不限分支。</p>
+<p>既然暂存了，就必须得可以恢复的。在恢复前，我们肯定希望看看之前有哪些暂存，然后再根据自己想要的恢复。</p>
+<pre><code>git stash list
+</code></pre>
+<p>这样就可以把所有的暂存记录列出来。</p>
+<pre><code>stash@&#123;0&#125;: GitHub: stashing before switching to feature/stash_test
+stash@&#123;1&#125;: WIP on feature/backup: 77d577e 
+</code></pre>
+<p>我这里就有了两条暂存记录了。如果想要恢复暂存的话，就选择自己想要的，然后：</p>
+<pre><code>git stash apply stash@&#123;1&#125; #这里恢复了第二条记录，如果不指定的话会默认恢复最近的一条暂存
+git stash drop stash@&#123;1&#125;  #这里把暂存删掉
+</code></pre>
+<p>如果你想在恢复暂存的同时就把暂存删掉的话，可以</p>
+<pre><code>git stash pop 
+</code></pre>
+<p>如果我们在恢复前看到有很多暂存，但是发现自己都忘了每一条暂存都修改了什么内容。所以我们希望可以看到每一条暂存的修改详情</p>
+<pre><code>git stash show -u
+git stash show stash@&#123;0&#125; -u 
+</code></pre>
+<p>这样就可以看到暂存的diff 了</p>
+<p>上面的就是我最近用到的关于stash的功能了。</p>
+<h3 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h3><p>关于rebase的功能，是在太强大了。如果你熟练掌握了它，是熟练哦，你就可以为所欲为，偷天换日了。</p>
+<p>因为有时候需要强制的串行（就是让commit tree好看），我这边经常要用到另个功能： rev-parse,merge-base</p>
+<pre><code>git rev-parse origin/master
+ed8f0f4760530b0b04b701e523ba35cd8b6490c0
+
+git merge-base origin/master origin/feature/writting
+ed8f0f4760530b0b04b701e523ba35cd8b6490c0
+</code></pre>
+<p>rev-parse ：可以找出某一个分支的最新commit</p>
+<p>merge-base: 找出两个分支的最近的公共基点</p>
+<p>如果两个id是一致的，这样提merge request时就能保证串行了。</p>
+<p>rebase的基本用法</p>
+<p>当你在自己的分支上做开发了，也提交了好几个commit，最后完成了。怎被合到master去，这时候发现master已经被别人合过很多遍了，而你需要你自己的提交嫁接在master分支上最新的commit去，这时候：</p>
+<pre><code>git rebase origin/master
+</code></pre>
+<p> 如果没有冲突，就是一个forward－fast的合并了。</p>
+<p> 如果有冲突，当然要自己解决啦。解决完后不需要commit了，只需要这样:</p>
+<pre><code> git rebase --continue
+</code></pre>
+<p> 如果再用冲突，再解决，再</p>
+<pre><code> git rebase --continue
+</code></pre>
+<p> 直到完全合并完成。</p>
+<p> 如果你rebase到一半，不想干了，怎么办？那就不干吧，简单了。</p>
+<pre><code> git rebase --abort
+</code></pre>
+<p> 这样rebase就终止了，一切回到解放前了。</p>
+<p> 最近用的就是这些了。</p>
+<h3 id="Reference-翻墙效果更好"><a href="#Reference-翻墙效果更好" class="headerlink" title="Reference(翻墙效果更好)"></a>Reference(翻墙效果更好)</h3><p> <a target="_blank" rel="noopener" href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase">Git-rebase 小筆記</a></p>
+<p> <a target="_blank" rel="noopener" href="http://makandracards.com/makandra/11565-git-how-to-look-at-the-stash">How to look at the stash</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#stash" >
+    <span class="tag-code">stash</span>
+  </a>
+
+  <a href="/tags#rebase" >
+    <span class="tag-code">rebase</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2014/08/21/URL-ENCODE/">
+        <span class="nav-arrow">← </span>
+        
+          URL编码和解码的问题
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2014/09/02/git-command-a-time-gitignore/">
+        
+          Git command a day - gitignore
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Stash"><span class="toc-nav-text">Stash</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#rebase"><span class="toc-nav-text">rebase</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Reference-%E7%BF%BB%E5%A2%99%E6%95%88%E6%9E%9C%E6%9B%B4%E5%A5%BD"><span class="toc-nav-text">Reference(翻墙效果更好)</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2014/08/30/learn-git-command-a-time-rebase-stash/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

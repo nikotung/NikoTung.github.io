@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/08/30/learn-git-command-a-time-rebase-stash/">Git command a day - rebase and stash</a>
+      </h2>
+      <p class="article-date">August 30, 2014</p>
+      
+        
+  <a href="/tags#stash" >
+    <span class="tag-code">stash</span>
+  </a>
+
+  <a href="/tags#rebase" >
+    <span class="tag-code">rebase</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近公司出了一些规范，就是如何在并行开发时控制代码的合并。
+所以开始要对git有更多的了解，在这过程中发现git真的非常非常强大，不愧为神器啊。而我自己连入门级别都敢说了，真的是很惭愧啊。
+这里就说两个命令的基本功能。
+Stash相信很多人都有过这样的经历，自己正在开发一个新的feature ...
+        
+      </div>
+      <a class="more" href="/2014/08/30/learn-git-command-a-time-rebase-stash/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/08/21/URL-ENCODE/">URL编码和解码的问题</a>
+      </h2>
+      <p class="article-date">August 21, 2014</p>
+      
+        
+  <a href="/tags#URL" >
+    <span class="tag-code">URL</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          这个问题其实很早之前都有遇到过，一直没有记录下来。恰好今天有被我遇到了，看来我是要跟它耗上了。
+URL编码我们都知道URL只能使用英文字，阿拉伯数字和一些标点符号。其它的必须要经过编码后才能使用。这就是URL编码了。
+因此，我们使用URL时都会对其进行一个编码，这样即是为了可控，也是为了安全 ...
+        
+      </div>
+      <a class="more" href="/2014/08/21/URL-ENCODE/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/08/09/Code-Review-Note/">Code Review 小记</a>
+      </h2>
+      <p class="article-date">August 9, 2014</p>
+      
+        
+  <a href="/tags#杂谈" >
+    <span class="tag-code">杂谈</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          团队中能够进行Code Review是一件很好的事情，真的。
+目前团队中走的是敏捷开发，但是分工依然是明细的，前端做前端，后端做后端，前端不管后端，后端不管前端。或者这么说吧，前后端的开发语言不一样，在做Code Review的时候，就是前端说不明白，后端听不明白（或者不想听）。总而言之就是 ...
+        
+      </div>
+      <a class="more" href="/2014/08/09/Code-Review-Note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/07/04/Binary-World/">二进制世界</a>
+      </h2>
+      <p class="article-date">July 4, 2014</p>
+      
+        
+  <a href="/tags#翻译" >
+    <span class="tag-code">翻译</span>
+  </a>
+
+  <a href="/tags#二进制" >
+    <span class="tag-code">二进制</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          原文链接地址Binary World
+
+ Hello 大家好！
+在这片文章中，我会说一下二进制。文章会覆盖大部分的重要概念和操作，并给大家带来一些关于什么时候，怎么使用以及如何在日常工作中使用二进制的样例。如果你正在寻找一篇关于二进制的教程，恭喜你，来到这里。
+让我们深入二进制的世界吧
+文章 ...
+        
+      </div>
+      <a class="more" href="/2014/07/04/Binary-World/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/04/27/HTTP-(Hypertext-Transfer-Protocol)/">HTTP协议</a>
+      </h2>
+      <p class="article-date">April 27, 2014</p>
+      
+        
+  <a href="/tags#HTTP" >
+    <span class="tag-code">HTTP</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在iOS开发时，很多时候都要用到网络请求。在我的经验中大部分是HTTP的请求，很看过一些网络请求使用和一些第三方开源库如AFNetworking，就很快的可以使用HTTP和服务端进行交互了，所以就一直停留在这个层面，没有具体的了解HTTP这个协议。最近需要实现使用HTTP实现上传文件的功能， ...
+        
+      </div>
+      <a class="more" href="/2014/04/27/HTTP-(Hypertext-Transfer-Protocol)/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/04/10/iOS7-Background-Mode-API-And-Implement/">iOS7多任务和Background Fetch</a>
+      </h2>
+      <p class="article-date">April 10, 2014</p>
+      
+        
+  <a href="/tags#iOS开发" >
+    <span class="tag-code">iOS开发</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          iOS7增加了很多新的特性，这么多的特性我也是最近才开始研究起来，是不是有点慢了，传说中的iOS8都要出来了。
+一般来说App进入了后台后都会被系统挂起，不会执行任何的代码，而且如果当前在前台运行的app需要更多的内存时，在后台挂起的App随时都会被干掉。在iOS4起其实就已经支持了多任务的 ...
+        
+      </div>
+      <a class="more" href="/2014/04/10/iOS7-Background-Mode-API-And-Implement/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/04/08/work-note/">工作小记2014-04-08</a>
+      </h2>
+      <p class="article-date">April 8, 2014</p>
+      
+        
+  <a href="/tags#杂谈" >
+    <span class="tag-code">杂谈</span>
+  </a>
+
+  <a href="/tags#成长" >
+    <span class="tag-code">成长</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          到今天，新工作的试用期算是刚过了，没想到这么快就半年了，时间真的过得太快了。按照规矩，还是要做一下记录的。
+最近因为在项目中有一些技术上的需求，觉得有点扯淡，所以有感而发的。觉得扯淡不一定就是我是正确的:
+
+违背了我一直以为正确的开发模式，直接套用一些其它项目，如服务端，的开发模式;
+为了一 ...
+        
+      </div>
+      <a class="more" href="/2014/04/08/work-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/03/31/iOS7-UINavigationController-PushViewController/">重载UINavigationController导致iOS7的屏幕滑动返回手势失效</a>
+      </h2>
+      <p class="article-date">March 31, 2014</p>
+      
+        
+  <a href="/tags#iOS开发" >
+    <span class="tag-code">iOS开发</span>
+  </a>
+
+  <a href="/tags#iOS dev" >
+    <span class="tag-code">iOS dev</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          iOS7中苹果对UINavigationController增加了向右滑动返回上一页的的屏幕手势，方便了操作，其实是iPhone5太长了上面的返回按钮不好按啦。
+由于在项目中需要需要自定义导航栏的返回按钮，就对UINavigationBar和UINavigationController进行了 ...
+        
+      </div>
+      <a class="more" href="/2014/03/31/iOS7-UINavigationController-PushViewController/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/03/16/iOS-UI-Image-From-Cache/">iOS控件素材读取</a>
+      </h2>
+      <p class="article-date">March 16, 2014</p>
+      
+        
+  <a href="/tags#iOS开发" >
+    <span class="tag-code">iOS开发</span>
+  </a>
+
+  <a href="/tags#iOS dev" >
+    <span class="tag-code">iOS dev</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          ###缘由
+自从iPhone4 问世后，iOS开发时的素材我们都会准备两套，一套是用于非高清的屏幕，一套用于高清屏幕(是前者的两倍)。一般来说，这些素材的图片我们都是在开发的阶段就准备好了，设计的同学会随时提供出来。在这种情况下，都不会有什么问题，但是如果这些素材要从网上下载而来的话，会有什 ...
+        
+      </div>
+      <a class="more" href="/2014/03/16/iOS-UI-Image-From-Cache/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/02/17/learn-git-command-a-time-refactor-remote-git/">Git command a day - Git 迁移保留提交记录和分支</a>
+      </h2>
+      <p class="article-date">February 17, 2014</p>
+      
+        
+  <a href="/tags#git" >
+    <span class="tag-code">git</span>
+  </a>
+
+  <a href="/tags#migration" >
+    <span class="tag-code">migration</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近的项目需要进行一个迁移，然后希望迁移的时候保留所有的提交记录和分支，迁移后新的项目还要进行目录结构的调整。
+一开始以为很简单的只是需要把remote origin的URL重新指向新的项目就可以了，但是发现比想象中麻烦多了。
+初试一开始我真的就这么做了，把remote origin的URL ...
+        
+      </div>
+      <a class="more" href="/2014/02/17/learn-git-command-a-time-refactor-remote-git/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/6/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/8/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/11/26/new-work-note/">工作小记</a>
+      </h2>
+      <p class="article-date">November 26, 2013</p>
+      
+        
+  <a href="/tags#工作" >
+    <span class="tag-code">工作</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          这次来上海工作已经有两个多月了，算是一个新的开始。今天产品刚上线，遇到了一些故障，在这里也记录一下。
+以前是在一家小的公司工作，产品上线根本没有流程可言，基本上由工程师主导（说的就是我自己）。如果中途出现什么问题，要么产品直接下架，要么服务直接就暂停了。这绝对是太流氓了，所以根本就做不起来。 ...
+        
+      </div>
+      <a class="more" href="/2013/11/26/new-work-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/11/13/Mac-Ftp-Usage-note/">Mac下简单ftp使用</a>
+      </h2>
+      <p class="article-date">November 13, 2013</p>
+      
+        
+  <a href="/tags#Mac" >
+    <span class="tag-code">Mac</span>
+  </a>
+
+  <a href="/tags#工具杂谈" >
+    <span class="tag-code">工具杂谈</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天研究了一下iOS的in-house发布方式，发现还是比较简单的。在研究过程中要用到ftp上传文件进行测试，于是发现在mac中已经预置了ftp工具，通过Finder可以简单的连接到ftp服务器。通过命令行可以进行一些简单的操作，如下载，上传等。把这些东西记录一下。
+通过Finder连接ft ...
+        
+      </div>
+      <a class="more" href="/2013/11/13/Mac-Ftp-Usage-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/10/12/First-Response-Without-Keyboard-Present/">First Response Without Keyboard Present</a>
+      </h2>
+      <p class="article-date">October 12, 2013</p>
+      
+        
+  <a href="/tags#objective-c" >
+    <span class="tag-code">objective-c</span>
+  </a>
+
+  <a href="/tags#iOS开发" >
+    <span class="tag-code">iOS开发</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在iOS开发中，我们大多数是通过UITextField,UITextView来响应输入的，而且这也满足了绝大部分的需求了。由于需要实现一个响应输入（成为firstreponse），而又不显示系统键盘，今天就大概看了一下文档。
+文档介绍得很详细，开发者完全可以自己实现自己的输入系统，只要你su ...
+        
+      </div>
+      <a class="more" href="/2013/10/12/First-Response-Without-Keyboard-Present/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/10/11/UIEdgeInsets-Learning/">UIEdgeInsets 小记</a>
+      </h2>
+      <p class="article-date">October 11, 2013</p>
+      
+        
+  <a href="/tags#UIEdgeInsets" >
+    <span class="tag-code">UIEdgeInsets</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天出于好奇，想自己写一个UITabBarController,于是就开始动手,于是也就遇到了在tabbar中如何只用一个控件就能把图片和标题显示成标准的baritem一样。
+看到了UIButton既有有图片又有标题，于是就从它动手。
+如果我们对一个button既设置了图片又设置了标题的话， ...
+        
+      </div>
+      <a class="more" href="/2013/10/11/UIEdgeInsets-Learning/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/10/09/Phonegap-install-problems/">Mac OS X 安装phonegap的android和iOS的问题</a>
+      </h2>
+      <p class="article-date">October 9, 2013</p>
+      
+        
+  <a href="/tags#phonegap" >
+    <span class="tag-code">phonegap</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          目测以后要用到phonegap进行跨平台开发，今天有空就先把开发环境给搭建起来，来个简单的入门。去到phonegap的官网，看到对初学者的安装是有比较全面的文档，第一感觉还是不错的。
+基本的环境要求还是比较容易安装的，只要按照文档进行就可以了，如node.js,命令行等。
+这基本的安装完毕后 ...
+        
+      </div>
+      <a class="more" href="/2013/10/09/Phonegap-install-problems/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/09/29/learn-git-command-a-time-checkout-remote-branch/">Git command a day - checkout remote branch</a>
+      </h2>
+      <p class="article-date">September 29, 2013</p>
+      
+        
+  <a href="/tags#git" >
+    <span class="tag-code">git</span>
+  </a>
+
+  <a href="/tags#checkout" >
+    <span class="tag-code">checkout</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近开始要频繁使用git了，这些文章在于纪录使用的一些命令，以及遇到的一些问题。
+###checkout 远程分支###
+每当我门需要参与一个项目，或者把拿一些开源的项目来用时，第一步总是需要把它们拿到本地，所以我们首先都会clone下来。
+当你把一个项目clone下来后，使用git bra ...
+        
+      </div>
+      <a class="more" href="/2013/09/29/learn-git-command-a-time-checkout-remote-branch/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/08/23/base64-encode/">Base64 编码原理简介</a>
+      </h2>
+      <p class="article-date">August 23, 2013</p>
+      
+        
+  <a href="/tags#base64" >
+    <span class="tag-code">base64</span>
+  </a>
+
+  <a href="/tags#objective-c" >
+    <span class="tag-code">objective-c</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近想到把在项目中用到的一些ios开发中标准库的类别实现进行收集，进行整理，方面以后使用。这是地址KNAdition,很大部分都是网上找到的，所在我想得自己先了解才好放上来吧。今天就看到了一个关于base64编码的一个方法，之前很早就听说过，但是具体原理却不甚解，趁着今天有空就学习一下。
+其 ...
+        
+      </div>
+      <a class="more" href="/2013/08/23/base64-encode/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/08/08/ubuntu-install-mysql-note/">Ubuntu Install Mysql Note</a>
+      </h2>
+      <p class="article-date">August 8, 2013</p>
+      
+        
+  <a href="/tags#Mysql" >
+    <span class="tag-code">Mysql</span>
+  </a>
+
+  <a href="/tags#database" >
+    <span class="tag-code">database</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          Recently,I am learning server and web development.So I need to install a database on my ubuntusystem and I choosed mysql for my first try.Now I re ...
+        
+      </div>
+      <a class="more" href="/2013/08/08/ubuntu-install-mysql-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/08/04/ubuntu-go-install-record/">Ubuntu 安装go语言开发环境小记</a>
+      </h2>
+      <p class="article-date">August 4, 2013</p>
+      
+        
+  <a href="/tags#开发工具" >
+    <span class="tag-code">开发工具</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          新手上路，最近在学习go语言开发，在配置开发环境时遇到了一些问题，今天就暂时做一下记录。有于是在折腾安装成功后才写这篇文章的，所以不会有太多的案发现场证据，如截图什么之类的。我的安装环境是在ubuntu13.04桌面版。
+由于我之前是使用apt-get安装的，安装完后发现版本是1.0.2，并 ...
+        
+      </div>
+      <a class="more" href="/2013/08/04/ubuntu-go-install-record/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2013/07/30/Ubuntu-sublimetext/">Ubuntu install sublimetext 2.0小记</a>
+      </h2>
+      <p class="article-date">July 30, 2013</p>
+      
+        
+  <a href="/tags#开发工具" >
+    <span class="tag-code">开发工具</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天把笔记本装上了Ubuntu现在才开始用，感觉已经很落后了。安装完后，第一时间把我最喜欢的文本编辑器sublimetext给安装了，安装过程就今天记录以下。
+安装Ubuntu的过程就不说了，我用的是wubi安装，非常非常简单。
+安装过程遇到的问题基本是在这里找到答案的。原文
+首先到官网中下 ...
+        
+      </div>
+      <a class="more" href="/2013/07/30/Ubuntu-sublimetext/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/7/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/9/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

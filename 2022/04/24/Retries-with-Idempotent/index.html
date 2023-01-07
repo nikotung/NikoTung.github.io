@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      用幂等支持重试 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>用幂等支持重试</h2>
+  <p class="post-date">2022-04-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>公司的银行核心系统是一个购买的系统，由外包公司负责，该公司是一家专做银行核心系统的上市公司。经过几次跟他们对接后发现，虽然是上市公司，但实际上并没有外面看去那么光鲜，一个重试的支持都没有。</p>
+<h2 id="为什么要重试"><a href="#为什么要重试" class="headerlink" title="为什么要重试"></a>为什么要重试</h2><p>网络是不稳定的，会出现抖动、延迟等，这些可能做过后台系统开发的人都有共识的。网络一旦出现不稳定，在你发出去的请求还有收到响应就已经超时了，对于调用方来说其实能做的事情就不多了，要么去重试、要么去查询刚才的请求是否成功。<br>在现在的微服务架构下，很有一种orchestration 的编排方式。业务系统中往往会有一个biz层或者contoller 层，它会中间调度很多个各种各种各样的服务来完成一个业务的，因为要调用的服务会很多中间有一个服务超时，那么对于用户来说就是超时了。<br>体验上让用户重试一下也许会更好。对于调用方来说，如果出现超时的情况，直接重试一下，那么它在处理网络请求的时候就会简单多了。</p>
+<h2 id="重试需要什么前提"><a href="#重试需要什么前提" class="headerlink" title="重试需要什么前提"></a>重试需要什么前提</h2><p>一个操作能否支持重试就要看它多次操作是否会产生side effects。举个例子来说，比如银行转账，在发起转账时因为网络的原因第一次提交失败了，然后进行了一次重试，最后发现生成了两笔转账，那么这就产生了side effect。<br>一个操作可以重试，它最终的结果最终对资源产生 at most once 的操作，最多一个次。</p>
+<p>刚才转账的例子来说，一旦出现超时，客户端很难决定接下来要怎么做的，简单重试那么就会造成资金的损失。当然可以留给对账去处理，用最终的一致性去保证，这里就会要引入很多的补偿逻辑了。</p>
+<h2 id="幂等"><a href="#幂等" class="headerlink" title="幂等"></a>幂等</h2><p>一个操作支持幂等，那么对于同一个请求进行多次重试也不会产生side effect。</p>
+<h3 id="幂等key"><a href="#幂等key" class="headerlink" title="幂等key"></a>幂等key</h3><p>要支持幂等，那么要识别出哪些请求可能是潜在的重试请求，并把它拦截下来。一个常规的做法就是根据请求的入参，按照一定的规则生成一个hash，只要hash 是一致的那么就认为它是重试的请求，这个过程完全由服务端去处理。这个方法在某些情况下，<br>虽然是一样的入参但是对于调用方来说可能就是对资源的两次操作，那么入参可能需要加一些随机的入参或者时间戳等，来保证hash 的冲突减少。<br>另外一种就是由调用方主动提供一个token 当作幂等key，服务提供者会记录这个token，只要是有重复的token 存在就可以认为是重试的请求。从业务系统的角度来讲，这个token 就可以用业务的唯一id了。</p>
+<h3 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h3><p>继续刚才转装的例子，在重试时，服务端识别到是一个重复的请求，那么它改怎么返回呢？一个类似AreadyExist 的错误码？还是按照接口正常的调用时，把结果返回给重试的请求？<br>从客户端的角度来讲，在它重试后拿到一个AreadyExist 的code，它也无法进行它下一步的操作。正常来说只有在正常操作拿到结果后才能进行下一步的操作。这么看来按照正常调用的结果返回，对于使用方说就比较友好了，更符合对于重试的理解。</p>
+<p>在这个重试的过程中，还是需要区分请求客户端的错误还是服务端的错误。如果请求的入参本来就是错误的，即便再怎么重试也不可能最终获得成功的。</p>
+<h3 id="幂等key-的保存时长"><a href="#幂等key-的保存时长" class="headerlink" title="幂等key 的保存时长"></a>幂等key 的保存时长</h3><p>常规的业务系统来说，一般都直接把key 就持久化，也不一定会物理删除。在某些系统下，在重试的过程中，有可能前面的请求早就成功了，但是在收到重试请求时，之前请求的资源却被删除了，那么怎么返回呢？能识别它是重试的请求吗？<br>这种情况下需要根据不同的系统来做决定了，也许可以返回报错，也可以把它识别为重试请求，并把正常结果返回。如果是不会永久保存记录的情况下，可能要对幂等key 的保存设计一个时长。</p>
+<h3 id="如果调用方改掉了幂等key-呢"><a href="#如果调用方改掉了幂等key-呢" class="headerlink" title="如果调用方改掉了幂等key 呢"></a>如果调用方改掉了幂等key 呢</h3><p>既然是由调用方决定的key，如果它在重试时改表了幂等用的token，把它当作一个新的请求也是合理的。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#幂等" >
+    <span class="tag-code">幂等</span>
+  </a>
+
+  <a href="/tags#重试" >
+    <span class="tag-code">重试</span>
+  </a>
+
+  <a href="/tags#API" >
+    <span class="tag-code">API</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/03/17/What's-NAT/">
+        <span class="nav-arrow">← </span>
+        
+          NAT 简介
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/07/21/Ratelimiter-with-guava/">
+        
+          Guava Ratelimiter
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%8D%E8%AF%95"><span class="toc-nav-text">为什么要重试</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%87%8D%E8%AF%95%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E5%89%8D%E6%8F%90"><span class="toc-nav-text">重试需要什么前提</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B9%82%E7%AD%89"><span class="toc-nav-text">幂等</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B9%82%E7%AD%89key"><span class="toc-nav-text">幂等key</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%93%8D%E5%BA%94"><span class="toc-nav-text">响应</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B9%82%E7%AD%89key-%E7%9A%84%E4%BF%9D%E5%AD%98%E6%97%B6%E9%95%BF"><span class="toc-nav-text">幂等key 的保存时长</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%A6%82%E6%9E%9C%E8%B0%83%E7%94%A8%E6%96%B9%E6%94%B9%E6%8E%89%E4%BA%86%E5%B9%82%E7%AD%89key-%E5%91%A2"><span class="toc-nav-text">如果调用方改掉了幂等key 呢</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2022/04/24/Retries-with-Idempotent/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

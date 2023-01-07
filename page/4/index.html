@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2017/08/20/Thinking-In-Systems-Primer/">《系统之美：决策者的系统思考》读书笔记</a>
+      </h2>
+      <p class="article-date">August 20, 2017</p>
+      
+        
+  <a href="/tags#系统思考" >
+    <span class="tag-code">系统思考</span>
+  </a>
+
+  <a href="/tags#决策" >
+    <span class="tag-code">决策</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近在读完了一本决策相关的书籍《系统之美:决策者的系统思考》。在这里把读书笔记整理一下。
+这本书是作者德内拉•梅多斯，一个系统思考者大师的手稿整理出版的。里面包含了系统的定义，系统的3大特征、8大陷阱与对策、12大变革方式以及15大生存法则，算是一本深入浅出的系统思考的读物。
+系统的基础系统 ...
+        
+      </div>
+      <a class="more" href="/2017/08/20/Thinking-In-Systems-Primer/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2017/07/24/browser-cors/">浏览器跨域</a>
+      </h2>
+      <p class="article-date">July 24, 2017</p>
+      
+        
+  <a href="/tags#http" >
+    <span class="tag-code">http</span>
+  </a>
+
+  <a href="/tags#浏览器" >
+    <span class="tag-code">浏览器</span>
+  </a>
+
+  <a href="/tags#跨域" >
+    <span class="tag-code">跨域</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          前端时间公司后台接口都加上了Oauth，前端请求都需要加上Authorization 的头。但是前端同学说后台接口访问不了，有跨域问题。根据后端同学说项目已经实现了跨域请求的支持。所以就抽空研究了一下跨域。
+先看看后端同学是如何实现跨域的。
+@WebFilter
+@Component
+pub ...
+        
+      </div>
+      <a class="more" href="/2017/07/24/browser-cors/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2016/11/29/letsencrypt-https/">利用 Letsencrypt 部署 https</a>
+      </h2>
+      <p class="article-date">November 29, 2016</p>
+      
+        
+  <a href="/tags#Letsencrypt" >
+    <span class="tag-code">Letsencrypt</span>
+  </a>
+
+  <a href="/tags#https" >
+    <span class="tag-code">https</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          得益于 Letsnecrypt，我们可以快速免费的给自己的网站加上 https。对于个人网站，个人博客来说绝对是好事一桩,只需要简单的按照文档非常简单的就能给自己加上全站https。它本身就是一个 CA,给我们提供免费证书，还能自动更新。只需要有自己的一台vps ，一个域名，就可以了。
+简单 ...
+        
+      </div>
+      <a class="more" href="/2016/11/29/letsencrypt-https/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2016/07/21/NSDate-timezone-issue/">NSDate 与时间戳转换时的一些问题</a>
+      </h2>
+      <p class="article-date">July 21, 2016</p>
+      
+        
+  <a href="/tags#NSDate" >
+    <span class="tag-code">NSDate</span>
+  </a>
+
+  <a href="/tags#时区" >
+    <span class="tag-code">时区</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          前天一位同事问我为啥这样一段代码运行后拿到的对象不是他想要的日期，而且还跟 Android 不一样 
+NSDate *birthday = [NSDate dateWithTimeIntervalSince1970:-2209017600000/1000];
+//输出是 : 1899-12- ...
+        
+      </div>
+      <a class="more" href="/2016/07/21/NSDate-timezone-issue/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2016/04/13/our-cat-tangyuan/">我家汤圆</a>
+      </h2>
+      <p class="article-date">April 13, 2016</p>
+      
+        
+  <a href="/tags#猫" >
+    <span class="tag-code">猫</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          我家的可爱的加菲猫－汤圆。
+就在4月12日，汤圆失足从楼上阳台掉下去了，陪伴了大半年的她就这么离我们而去了。
+早上起来，没有发现她像往常一样，蹲在房门，跟着进洗手间，室友就觉得奇怪了，就开始在屋子里面找，两个房间，厨房，大厅都找遍了还是没有看到她，再到楼上楼下去找，还是没有发现，预感她不知道 ...
+        
+      </div>
+      <a class="more" href="/2016/04/13/our-cat-tangyuan/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2016/03/22/App-Version-and-build-number/">App 版本号和build的一些记录</a>
+      </h2>
+      <p class="article-date">March 22, 2016</p>
+      
+        
+  <a href="/tags#version" >
+    <span class="tag-code">version</span>
+  </a>
+
+  <a href="/tags#build" >
+    <span class="tag-code">build</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          App 的发布难免会跟版本号打交道，怎样才能比较好的处理版本号和build number 之间的关系呢？
+命名的样式(scheme)像4.1.2 或者4.0，这种格式的版本号是很常见的,major.minor[.build[.revision]],这就是我们常说的版本号。我们用的都是三段式的 ...
+        
+      </div>
+      <a class="more" href="/2016/03/22/App-Version-and-build-number/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2016/01/18/Review-2015/">2015 年的简单回顾</a>
+      </h2>
+      <p class="article-date">January 18, 2016</p>
+      
+      <div class="article-summary">
+        
+          2016年的第一篇文章，主题难免是要交给回顾，总结2015的，但是拖到现在也是有点不好意思的。
+先把我能记起来的一些事情，列一下。
+
+开始健身
+在点评升P了
+离开点评，到深圳，加入创业公司
+终于动手可以写 Android 代码
+开始读书，大概有十来本吧
+开始认识自己，改变自己
+学会打德州扑克 ...
+        
+      </div>
+      <a class="more" href="/2016/01/18/Review-2015/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/12/03/itc-submit-issue-note/">App 提交的一些问题</a>
+      </h2>
+      <p class="article-date">December 3, 2015</p>
+      
+        
+  <a href="/tags#itunesconnect" >
+    <span class="tag-code">itunesconnect</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          好久没有提交过App ,最近两年基本上没有用过新版的 iTunes connect。这两天在准备提交，也遇到了一些问题，这里就简单纪录一下吧。以免再踩同样的坑。
+尽量不要用 Xcode 上的提交功能，反正没有成功过，每一次都是卡在 “Sending API usage to itunes c ...
+        
+      </div>
+      <a class="more" href="/2015/12/03/itc-submit-issue-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/11/02/Become-A-Tech-Leader-Reading-Note/">成为技术领导读书笔记</a>
+      </h2>
+      <p class="article-date">November 2, 2015</p>
+      
+        
+  <a href="/tags#Reading" >
+    <span class="tag-code">Reading</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          这段时间，读书是断断续续，主要是工作有点忙。&lt;成为技术领导&gt;，这本书最近也是断断续续看来，现在来整理一些笔记，说是笔记，其实更像是书摘。
+这本书前面的几张读起来还可以，到了后面将近结束的一部分有点晦涩，虽然很多是讲故事的形式，但是理解起来很吃力费劲。
+因为主要是书摘，思维导图什么 ...
+        
+      </div>
+      <a class="more" href="/2015/11/02/Become-A-Tech-Leader-Reading-Note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/10/08/xcode-change-executable-file-name/">Xcode 修改 App 的 executeable file name</a>
+      </h2>
+      <p class="article-date">October 8, 2015</p>
+      
+        
+  <a href="/tags#Xcode" >
+    <span class="tag-code">Xcode</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          十一期间，把系统重装了一遍，Xcode 也重新装了一遍。重新打开打开项目的时候发现无法编译安装到模拟器和真机上。原来是修改 info.plist 文件导致的问题。
+之前就是因为Xcode 的一次升级导致了各种奇怪的问题，就非常郁闷了。想着十一没啥事情，恰逢 OS X 船长发布，就把机器清理了 ...
+        
+      </div>
+      <a class="more" href="/2015/10/08/xcode-change-executable-file-name/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/3/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/5/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

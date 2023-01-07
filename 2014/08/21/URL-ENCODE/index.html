@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      URL编码和解码的问题 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>URL编码和解码的问题</h2>
+  <p class="post-date">2014-08-21</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>这个问题其实很早之前都有遇到过，一直没有记录下来。恰好今天有被我遇到了，看来我是要跟它耗上了。</p>
+<h3 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h3><p>我们都知道URL只能使用英文字，阿拉伯数字和一些标点符号。其它的必须要经过编码后才能使用。这就是URL编码了。</p>
+<p>因此，我们使用URL时都会对其进行一个编码，这样即是为了可控，也是为了安全起见。为了安全也不应该重复编码。（问题就是出现在这里）</p>
+<h3 id="App前端"><a href="#App前端" class="headerlink" title="App前端"></a>App前端</h3><p>我们现在的app中的架构中是通过一个自定义的URL scheme去打开一个页面（Scheme这个技术无论是在iOS还是Android中都是支持的），因此我们要打开一个新的页面前都是需要构造一个我们的架构中支持的的URL。这个跟一般的URL没什么区别，其中这个URL可以传递参数，app的架构把这些参数通过key-value的形式单个取出来。</p>
+<p>因为是通过URI的方式传值，因此App中每取一个值都会对其进行URL解码。</p>
+<p>其中这里面就涉及到一些URL的解析过程了，这里就不去细说了。</p>
+<p>在我们自定义的URL中有可能传递一个参数，就叫url，是一个http的url，而且这个url后面还带有自己的参数。这时候的url解析就要注意了。</p>
+<p>这里我举个例子</p>
+<p>比如这样的一个url</p>
+<p>niko:&#x2F;&#x2F;niko?user&#x3D;niko&amp;gendor&#x3D;1&amp;url&#x3D;<a target="_blank" rel="noopener" href="http://www.baidu.com/?kw=query&user=niko">http://www.baidu.com?kw=query&amp;user=niko</a></p>
+<p>从我们自己的理解来说应该对这个url的query参数解析出来是这样的</p>
+<pre><code>user=niko
+gendor=1
+url=http://www.baidu.com?kw=query&amp;user=niko
+</code></pre>
+<p>为了能够达到我们的期望，做法就是把url这个参数对应的值进行URL编码（这个编码是全局的编码即任何一个字符都会被编码，就像js中的encodeURIComponent），app中去url的值时进行一个解码，这样一个编码一个解码相对应，就不会影响我们的取值使用了。</p>
+<h3 id="App后端"><a href="#App后端" class="headerlink" title="App后端"></a>App后端</h3><p>由于我们的URL是由后端传过来的，这里的URL是指符合我们架构的URL。后端在传过来时，为了App能够正常解析出来，就会对url这样的参数进行全局的编码。</p>
+<p>这样我们的前后，我们前后端一直相安无事。</p>
+<p>直到最近。</p>
+<h3 id="App升级"><a href="#App升级" class="headerlink" title="App升级"></a>App升级</h3><p>最近App的架构做了一些修改，即App中取出了url要使用时，比如用来打开一个webview，就会对url进行一个编码（这个编码只会对常见的字符编码，就像js中的encodeURI），然后再去请求。</p>
+<p>PS：在iOS中，如果一个url的string中有中文等字符是无法通过[NSURL URLWithString:xxxx]，生成一个NSURL对象的。</p>
+<p>然后我们发现，我们对应业务的有一些打开url的页面无法正常加载。</p>
+<p>后来通过调试发现，原来后端在生成传给App的URL时，做了这样的一个处理：在生成URL的url的参数时，对这些参数进行了一个编码（encodeURI），然后在生成了整个url时又进行了一次编码（encodeURIComponent）。就这样url的参数被进行了两次编码。</p>
+<p>这时后App中取出url来后再次编码才去使用，最终url的参数还是被编码了两次，导致了某些url无法加载。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><ul>
+<li>对于这种url中嵌套url的做法，尽量不要，实在需要的话一定要两边订好如何编码解码；</li>
+<li>避免对url重复编码，避免摆乌龙；</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html">关于URL编码</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#URL" >
+    <span class="tag-code">URL</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2014/08/09/Code-Review-Note/">
+        <span class="nav-arrow">← </span>
+        
+          Code Review 小记
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2014/08/30/learn-git-command-a-time-rebase-stash/">
+        
+          Git command a day - rebase and stash
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#URL%E7%BC%96%E7%A0%81"><span class="toc-nav-text">URL编码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#App%E5%89%8D%E7%AB%AF"><span class="toc-nav-text">App前端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#App%E5%90%8E%E7%AB%AF"><span class="toc-nav-text">App后端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#App%E5%8D%87%E7%BA%A7"><span class="toc-nav-text">App升级</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-nav-text">结论</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-text">参考</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2014/08/21/URL-ENCODE/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

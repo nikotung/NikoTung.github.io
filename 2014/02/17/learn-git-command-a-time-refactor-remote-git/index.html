@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Git command a day - Git 迁移保留提交记录和分支 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Git command a day - Git 迁移保留提交记录和分支</h2>
+  <p class="post-date">2014-02-17</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近的项目需要进行一个迁移，然后希望迁移的时候保留所有的提交记录和分支，迁移后新的项目还要进行目录结构的调整。</p>
+<p>一开始以为很简单的只是需要把remote origin的URL重新指向新的项目就可以了，但是发现比想象中麻烦多了。</p>
+<h4 id="初试"><a href="#初试" class="headerlink" title="初试"></a>初试</h4><p>一开始我真的就这么做了，把remote origin的URL修改后直接push上去，以为就可以了。因为这样把所有的commit记录和分支都保留了。接下来就要改目录结构，问题来了。因为原来的项目中有太多的东西是不需要了，可以删掉。由于这时的每一个操作的是在每一个分支上操作的，如果在一个分支上删除了，其它分支跟着这么做到时merge时就会出现各种问题，最痛苦莫过于项目文件有冲突。后来再想想，这样做不好吧，再找找其它办法。</p>
+<p>如果能够把我要的文件全部通过git 命令取出来，其它不需要的直接删掉或者去掉git跟踪，这样就最好了。</p>
+<h4 id="把需要的文件从git中抽出来"><a href="#把需要的文件从git中抽出来" class="headerlink" title="把需要的文件从git中抽出来"></a>把需要的文件从git中抽出来</h4><p>第一件事要做的当然是备份啦，不备份后果自负哈。</p>
+<p>由于我很多feature的分支是在本地的，我又不想删掉它们。所以我的办法有点笨，我在本地新建一个文件夹A，把项目拷贝到那边去，因为我还是在试验阶段，当然不会随便动原来的项目。拷贝完后通过命令行进入A下的项目。</p>
+<pre><code>git remote rm origin //其实是为了保险起见，不会污染远程仓库
+git filter-branch --subdirectory-filter &lt;directory &gt; -- --all   //最重要就是这句了
+</code></pre>
+<p>输出结果大概如下：</p>
+<pre><code>Rewrite 3b61e04975f6d4875137434028b13edf981458a1 (125/125)
+Ref &#39;refs/heads/xx1&#39; was rewritten
+Ref &#39;refs/heads/xx2&#39; was rewritten
+Ref &#39;refs/heads/xx3&#39; was rewritten
+Ref &#39;refs/heads/feature/xx4&#39; was rewritten
+Ref &#39;refs/heads/feedback/xx5 was rewritten
+Ref &#39;refs/heads/master&#39; was rewritten
+Ref &#39;refs/heads/xx6&#39; was rewritten
+Ref &#39;refs/heads/xx7&#39; was rewritten
+Ref &#39;refs/heads/xx8&#39; was rewritten
+Ref &#39;refs/heads/xx9&#39; was rewritten
+Ref &#39;refs/heads/xx10&#39; was rewritten
+Ref &#39;refs/heads/xx.0.1&#39; was rewritten
+Ref &#39;refs/tags/xx11&#39; was rewritten
+Ref &#39;refs/tags/xx12&#39; was rewritten
+Ref &#39;refs/tags/xx13&#39; was rewritten
+Ref &#39;refs/tags/RELEASE-0.0.1&#39; was rewritten
+Ref &#39;refs/tags/RELEASE-0.0.2&#39; was rewritten
+</code></pre>
+<p>第二句命令通过filter-branch 把git中的tree进行处理–subdirectory-filter是一个重写条件指定是根据目录(directory)去重新 –all就是应用于所有的分支。通过这个命令就可以把不在&lt; directoy &gt;目录下的文件全部删掉并把该目录下的的文件全部移到了git的根目录下。这时候如果你发现了有一些目录不在 &lt; directory &gt;下但是却还没有被删去，不用担心，在终端跑一下<code>git status</code> 你会发现那些文件还没有被git track进来，所以直接把它们删掉也没关系了。</p>
+<h4 id="重新设置remote-url"><a href="#重新设置remote-url" class="headerlink" title="重新设置remote url"></a>重新设置remote url</h4><p>由于我在上面把origin删掉了，所以这里就是直接的 <code>git remote add origin &lt;your new repo&gt;</code></p>
+<p>如果你没有删掉origin的话，这时可以直接 <code>git remote set-url origin &lt;your new repo&gt;</code></p>
+<p>到最后按照正常的git flow来操作就好了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="http://gitref.org/remotes/">Git Reference</a></p>
+<p><a target="_blank" rel="noopener" href="http://gbayer.com/development/moving-files-from-one-git-repository-to-another-preserving-history/">Moving Files From One Git Repository to Another,Preserving History</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#git" >
+    <span class="tag-code">git</span>
+  </a>
+
+  <a href="/tags#migration" >
+    <span class="tag-code">migration</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2013/11/26/new-work-note/">
+        <span class="nav-arrow">← </span>
+        
+          工作小记
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2014/03/16/iOS-UI-Image-From-Cache/">
+        
+          iOS控件素材读取
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%88%9D%E8%AF%95"><span class="toc-nav-text">初试</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%8A%8A%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E4%BB%8Egit%E4%B8%AD%E6%8A%BD%E5%87%BA%E6%9D%A5"><span class="toc-nav-text">把需要的文件从git中抽出来</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%87%8D%E6%96%B0%E8%AE%BE%E7%BD%AEremote-url"><span class="toc-nav-text">重新设置remote url</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-text">参考</span></a>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2014/02/17/learn-git-command-a-time-refactor-remote-git/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

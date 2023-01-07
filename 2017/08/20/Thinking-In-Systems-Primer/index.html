@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      《系统之美：决策者的系统思考》读书笔记 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>《系统之美：决策者的系统思考》读书笔记</h2>
+  <p class="post-date">2017-08-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近在读完了一本决策相关的书籍<a target="_blank" rel="noopener" href="https://www.amazon.cn/%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%BE%8E-%E5%86%B3%E7%AD%96%E8%80%85%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83-%E5%BE%B7%E5%86%85%E6%8B%89%E2%80%A2%E6%A2%85%E5%A4%9A%E6%96%AF/dp/B008ZWL2OS/ref=sr_1_1?ie=UTF8&qid=1503235524&sr=8-1&keywords=%E7%B3%BB%E7%BB%9F%E4%B9%8B%E7%BE%8E">《系统之美:决策者的系统思考》</a>。在这里把读书笔记整理一下。</p>
+<p>这本书是作者德内拉•梅多斯，一个系统思考者大师的手稿整理出版的。里面包含了系统的定义，系统的3大特征、8大陷阱与对策、12大变革方式以及15大生存法则，算是一本深入浅出的系统思考的读物。</p>
+<h4 id="系统的基础"><a href="#系统的基础" class="headerlink" title="系统的基础"></a>系统的基础</h4><p>系统并不是仅仅是一些事物的简单集合，而是有一组相互连接的要素构成的，能够实现某个目标的整体。</p>
+<p>这里面提到了有三个点：连接，要素和目标。这三个就是系统的三大要素，有了这三个才能称之为系统。</p>
+<ul>
+<li>连接</li>
+<li>要素</li>
+<li>功能或目标</li>
+</ul>
+<p>没有任何内在连接或功能的随机组合就不是一个系统。比如你单纯的看沙漠中的沙子，路边的碎石，它们就构成不了一个系统。</p>
+<p>系统思考中的关注点有：</p>
+<p>由要素通过某种规则关联起来，完成某个功能，由关注要素到透视游戏规则。</p>
+<p>从细究要素，转向探寻系统内在的连接关系，即研究那些把要素整合在一起的关系。简单说就是寻找内在规则，内在动力。</p>
+<p>书中特别提到的几个要素：存量，流量。</p>
+<ul>
+<li>存量:在任何时刻都能观察，感知，计数和测量的系统要素</li>
+<li>流量:是一段时间内改变的状况</li>
+</ul>
+<p>存量的变化是缓慢的，它确保了系统的稳定性。系统的响应是滞后的，它给系统的留有调整空间。</p>
+<p>当某一个存量的变化影响到与其相关的流入量或流出量时，反馈回路就形成了。这也是系统的运作基础。存量影响了流入&#x2F;流出量，而流入／流出量反过来也影响了存量。</p>
+<ul>
+<li>调节回路:保持存量稳定趋向一个目标进行调节或者校正的作用</li>
+<li>增强回路:强化原有系统的变化态势。</li>
+</ul>
+<h4 id="系统的3大特征"><a href="#系统的3大特征" class="headerlink" title="系统的3大特征"></a>系统的3大特征</h4><ul>
+<li>适应力</li>
+<li>自组织</li>
+<li>层次性</li>
+</ul>
+<p>适应力又可以分为：元适应力和元元适应力。</p>
+<p>适应力是系统运作的一个基础，正因为适应力的存在系统才可以正常地发挥和维护各种功能。</p>
+<p>自组织：系统所具备的这种使其自身结构更为复杂的能力，被称为“自组织”(self-organization)。</p>
+<p>自组织特性会产生出异质性和不可预测性，系统由可能演变成全新的结构，发展全身的行为模式。</p>
+<p>在新结构不断产生，复杂性还逐渐增加的过程中，自组织系统经常生成一定的层级或层次性。</p>
+<p>系统和子系统的这种包含和生成关系，称为层次性。</p>
+<h4 id="系统之奇"><a href="#系统之奇" class="headerlink" title="系统之奇"></a>系统之奇</h4><p>我们所认识的世界都不是真实的世界。</p>
+<p>各种各样的时间源源不断地吸引着我们的注意力，也时常让我们感到惊讶，因为我们看待世界的方式几乎没有预见性，也不能揭示其内在的原因。</p>
+<p>因此在系统思考时需要:</p>
+<ul>
+<li>恰当地划分边界：所谓边界，只是认为的区分，是人们出于观察，思考，理解，表达和交流等方面的需要，而在心理上设定的或社会一般公认的虚拟边界。（抛开剂量谈毒性都是耍流氓，一个道理）</li>
+<li>看清各种限制因素：从根本上讲，关键不是追求持续成长，而是选择在哪些因素的限制之下维持生存。</li>
+<li>有限理性:我们往往意识不到自己掌握的信息不全面，反而认为很全面而盲目的自信。系统中的每一个决策都存在有限理性。</li>
+</ul>
+<h4 id="8大陷阱与对策"><a href="#8大陷阱与对策" class="headerlink" title="8大陷阱与对策"></a>8大陷阱与对策</h4><h5 id="政策阻力-治标不治本"><a href="#政策阻力-治标不治本" class="headerlink" title="政策阻力:治标不治本"></a>政策阻力:治标不治本</h5><p><strong>当系统中多个参与者有不同的目标，从而将系统存量往不同方向拉时，结果就是“政策阻力”。任何新政策，尤其是当它恰好管用时，都会让存量远离其他参与者的目标，因而会产生额外的抵抗，其结果是大家都不愿意看到的，但每个人都要付出相当的努力去维持它。一般来说，目标与实际状况之间的差异越大，行动的压力或强度就越大。当各个子系统的目标不同或不一致时，就会产生变革的阻力。</strong></p>
+<p>应对政策阻力的最有效的方式是，设法将各个子系统的目标协调一致，通常是设立一个更大的总体目标，让所有参与者突破各自的有限理性。</p>
+<h5 id="公地悲剧"><a href="#公地悲剧" class="headerlink" title="公地悲剧"></a>公地悲剧</h5><p><strong>对于人们共同分享的，有限的资源，很容易出现开发(或消耗)逐步升级或增长的态势，这时就容易陷入”公地悲剧”陷阱。</strong></p>
+<p>任何一个系统也离不开资源的使用者，他们有很强的增长动力，且增长速度不被系统的状况所影响。</p>
+<p>对策有:</p>
+<ul>
+<li>教育劝诫</li>
+<li>将公共资源私有化</li>
+<li>对公共资源进行管制</li>
+</ul>
+<h5 id="目标侵蚀"><a href="#目标侵蚀" class="headerlink" title="目标侵蚀"></a>目标侵蚀</h5><p>一些系统不只是对试图改变它的政策措施具有阻力，竭力维持在一个大家都不愿意看到的不良状态，更为糟糕的是，它们还在持续恶化。这就是目标侵蚀的基模。</p>
+<p><strong>绩效标准受过去绩效的影响，尤其是当人们对过去的绩效评价偏负，也就是过于关注坏消息时，将启动一个恶个恶性循环，使得目标和系统的绩效水平不断下滑。这就是目标侵蚀。</strong></p>
+<p>因为没有完成目标，而逐渐对目标失控。(温水煮青蛙也就是这个道理)</p>
+<p>对策：保持一个绝对的绩效标准，杜绝“破罐子破摔”。更好的状况是将绩效标准设定为过去的最佳水平，从而不断地提高自己的目标，并以此激励自己，追求更高的绩效。系统结构没有变化，但由于运转方向不同，便能成为一个良性循环，做得越来越好。</p>
+<h5 id="竞争升级"><a href="#竞争升级" class="headerlink" title="竞争升级"></a>竞争升级</h5><p><strong>当系统中一个存量的状态是取决于另一个存量的状态，并试图超越对方时，就构成一个增强回路，使得系统陷入升级的陷阱，变现为军备竞赛，财富攀比，口水仗，声音或者暴力升级等现象。由于竞争升级已指数级形式变化，它能以非常令人惊异的速度导致竞争激化。如果什么都不做，这一循环也不可能真的一直发展下去。最后的结果将是一方被挤到或者两败俱伤</strong>。</p>
+<p>对策：应对这一陷阱的最佳方式是避免陷入这一结构中(预防为主)。如果已经深陷其中，一方可以选择单方面让步，从而切断增强回路的运作；或者双方进行协商，引入一些调节回路，对竞争进行一些限制。</p>
+<ul>
+<li>情侣间的争吵导致分手</li>
+</ul>
+<h5 id="富者愈富-竞争排斥"><a href="#富者愈富-竞争排斥" class="headerlink" title="富者愈富:竞争排斥"></a>富者愈富:竞争排斥</h5><p><strong>如果在系统中，竞争体的赢家会持续地强化其进一步获胜的手段，这就形成了一个增强回路。如果这一回路不受限制地运转下去，赢家最终会通吃，输家则会被消灭。这就是富者愈富</strong>。</p>
+<p>从系统上看，时常竞争的本质是消除市场竞争。</p>
+<p>对策:</p>
+<ul>
+<li>多元化</li>
+<li>通过植入一个反馈回路，避免任何一个竞争者完全控制，使富者愈富的反馈回路处于可控的状态。</li>
+<li>通过设定游戏规则或机制，定期校正竞技场，防止一家独大。</li>
+</ul>
+<p>现实中的反垄断法，遗产税。</p>
+<h5 id="转嫁负担-上瘾"><a href="#转嫁负担-上瘾" class="headerlink" title="转嫁负担:上瘾"></a>转嫁负担:上瘾</h5><p>当面对一个系统性问题时，如果采用的解决方案根本无助于解决潜在的根本问题，只是缓解(或掩饰)了问题的症状时，就会产生转嫁负担：上瘾和依赖性的状况。不管是麻痹个人感官的物质还是把潜在的麻烦隐藏起来的政策，人们选择的干预行动都不能解决真正的问题。</p>
+<p><strong>如果选择并实施的干预措施，导致系统原本的自我调适能力萎缩或受到侵蚀，就会引发一个破坏性的增强回路。系统自我调适能力越差，就需要越多的干预措施，而这会使得系统的自我调适变得更差，不得不更多地依赖外部干预者</strong>。</p>
+<p>对策：应对这一陷阱最好的办法是提前预防，防止跌入陷阱。一定要意识到只是缓解症状或演示信号的政策或做法都不能真正地解决问题。因此要将关注点从短期的救济转移到长期的结构性重建上来。</p>
+<h5 id="规避规则"><a href="#规避规则" class="headerlink" title="规避规则"></a>规避规则</h5><p><strong>采取一些迂回或变通的措施，虽然在名义上遵守或不违反规则的条文要求，但是在本质上规避了系统的原本意图</strong>。</p>
+<p>对策：设计或重新设计规则，从规避规则的行为中获得创造性反馈，使其发挥积极的作用，实现规则的本来目的。</p>
+<h5 id="目标错位"><a href="#目标错位" class="headerlink" title="目标错位"></a>目标错位</h5><p><strong>系统行为对于反馈回路的目标特别敏感。如果目标定义不准确或不完整，即使系统忠实地执行了所有运作规则，其产生的结果却不一定是我们真正想要的。</strong></p>
+<p>如果目标定义不当，不能测量应该被测量的东西，不能真实地反应系统的状态，那么系统就不能产生期望的结果。</p>
+<p>对策：恰当地设定目标及指标，以反映系统真正的福利。一定要特别小心，不要将努力与结果混淆，否则系统将只产出特定的努力，而不是你期望的结果。</p>
+<h4 id="与系统共舞-生存法则"><a href="#与系统共舞-生存法则" class="headerlink" title="与系统共舞(生存法则)"></a>与系统共舞(生存法则)</h4><ul>
+<li>跟上系统的节拍：在你想以任何方式去干预系统之前，首先要观察它是如何运作的。</li>
+<li>把你的心智模式展现在阳光下：把模型也拿出来，放到阳光下，让它们尽可能地精确，用各种证据对其进行检验，如果没有得到证据的支撑，也应该勇于舍弃。</li>
+<li>相信并分享信息</li>
+<li>谨慎地使用语言，并用系统的概念去丰富语言</li>
+<li>关注重要的，而不是容易衡量的</li>
+<li>为反馈系统制定带有反馈功能的政策</li>
+<li>追求整体利益</li>
+<li>聆听系统的智慧</li>
+<li>界定系统的职责</li>
+<li>保持谦逊，做一个学习者</li>
+<li>庆祝复杂性</li>
+<li>扩展时间的范围</li>
+<li>打破各种清规戒律</li>
+<li>扩大关切的范围</li>
+<li>不要降低”善”的标准</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#系统思考" >
+    <span class="tag-code">系统思考</span>
+  </a>
+
+  <a href="/tags#决策" >
+    <span class="tag-code">决策</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2017/07/24/browser-cors/">
+        <span class="nav-arrow">← </span>
+        
+          浏览器跨域
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/01/22/The-Common-Sense-About-Doing-Things/">
+        
+          做事的常识
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="toc-nav-text">系统的基础</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%843%E5%A4%A7%E7%89%B9%E5%BE%81"><span class="toc-nav-text">系统的3大特征</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%A5%87"><span class="toc-nav-text">系统之奇</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#8%E5%A4%A7%E9%99%B7%E9%98%B1%E4%B8%8E%E5%AF%B9%E7%AD%96"><span class="toc-nav-text">8大陷阱与对策</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%94%BF%E7%AD%96%E9%98%BB%E5%8A%9B-%E6%B2%BB%E6%A0%87%E4%B8%8D%E6%B2%BB%E6%9C%AC"><span class="toc-nav-text">政策阻力:治标不治本</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%85%AC%E5%9C%B0%E6%82%B2%E5%89%A7"><span class="toc-nav-text">公地悲剧</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%9B%AE%E6%A0%87%E4%BE%B5%E8%9A%80"><span class="toc-nav-text">目标侵蚀</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%AB%9E%E4%BA%89%E5%8D%87%E7%BA%A7"><span class="toc-nav-text">竞争升级</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%AF%8C%E8%80%85%E6%84%88%E5%AF%8C-%E7%AB%9E%E4%BA%89%E6%8E%92%E6%96%A5"><span class="toc-nav-text">富者愈富:竞争排斥</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%BD%AC%E5%AB%81%E8%B4%9F%E6%8B%85-%E4%B8%8A%E7%98%BE"><span class="toc-nav-text">转嫁负担:上瘾</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%A7%84%E9%81%BF%E8%A7%84%E5%88%99"><span class="toc-nav-text">规避规则</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%9B%AE%E6%A0%87%E9%94%99%E4%BD%8D"><span class="toc-nav-text">目标错位</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%85%B1%E8%88%9E-%E7%94%9F%E5%AD%98%E6%B3%95%E5%88%99"><span class="toc-nav-text">与系统共舞(生存法则)</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2017/08/20/Thinking-In-Systems-Primer/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

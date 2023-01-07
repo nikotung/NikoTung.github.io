@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      swift学习笔记 -- 函数与闭包 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>swift学习笔记 -- 函数与闭包</h2>
+  <p class="post-date">2015-07-29</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>每一门语言都离不开函数这个东西，swift当然就不会例外了。</p>
+<p>swift的函数命名方式跟Objective-C可以说是一脉相承，非常好的表述了函数实现的功能。swift的语法也是它能够像表述像c类型这种没有参数名字，也能表述像Objectivie-C一样的有内部和外部名字的参数形式。也能为函数的参数提供默认值和引用参数(in-out)这样的方式去调用。</p>
+<p>在swift中，function是 first class ，说明它是跟其它的值类型没有什么区别的，可以赋值，作为函数参数和作为返回值，这个特性就是使 swift 作为一个 functional programming language 成为可能。</p>
+<h3 id="定义和调用函数"><a href="#定义和调用函数" class="headerlink" title="定义和调用函数"></a>定义和调用函数</h3><p>定义时，可以选择定义一个或者多个参数作为输入，以及为参数定一个名字。调用时，用名字以及可能对应的参数顺序。函数是以一个 <code>func</code> 作为关键词开始。</p>
+<pre><code>func sayHelloWorld(personName : String) -&gt; String &#123;
+    let greeting = &quot;Hello world , &quot; + personName + &quot;!&quot;
+    return greeting
+&#125;
+
+sayHelloWorld(&quot;Niko&quot;)  
+//output  : Hello world , Niko!
+</code></pre>
+<p>通过使用 <code>-&gt;</code> 标明它的返回值。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>每一个参数都有一个名字，用于描述参数的作用，这个名字又分为外部使用和内部使用的。</p>
+<pre><code>func generateFullName(fistName firstName: String , familyName : String) -&gt; String &#123;
+    return firstName + &quot; &quot; + familyName
+&#125;
+
+generateFullName(fistName: &quot;Niko&quot;, familyName: &quot;Tung&quot;)
+// Niko Tung
+</code></pre>
+<p>第一个参数的外部名称 <code>familyName</code> 默认是忽略的,所以一般的的写法是这样的</p>
+<pre><code>func generateFullName(firstName: String , familyName : String) -&gt; String &#123;
+    ....
+&#125;
+
+generateFullName(&quot;Niko&quot;, familyName: &quot;Tung&quot;)
+</code></pre>
+<p>如果想让其它参数的名称在函数调用的时候也忽略，可以这样写：</p>
+<pre><code>func generateFullName(firstName: String , _ familyName : String) -&gt; String &#123;
+    ....
+&#125;
+
+generateFullName(&quot;Niko&quot;, &quot;Tung&quot;)
+</code></pre>
+<p>也可以为参数指定默认值</p>
+<pre><code>func generateFullName(firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String &#123;
+    ....
+&#125;
+
+generateFullName(&quot;Niko&quot;) //Niko unknow
+generateFullName(&quot;Niko&quot; , &quot;Tung&quot;) //Niko Tung
+</code></pre>
+<p>在swift的函数中，参数默认都是常量的，这就意味着你不能在函数体内修改参数的值。所以如果需要在函数体内修改参数的值，你需要把它定义成变量。就是在参数名字前面加上	<code>var</code>去声明就行了。</p>
+<pre><code>func generateFullName(var  firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String &#123;
+    ....
+&#125;
+</code></pre>
+<h3 id="函数类型-Function-Type"><a href="#函数类型-Function-Type" class="headerlink" title="函数类型(Function Type)"></a>函数类型(Function Type)</h3><p>在我们的 oop 编程中，一般说函数的类型都是指函数的返回类型。在 swift 中是不一样的。函数在 swift 中是一等公民(<code>first-class citizens</code>),跟其它基本类型值是一样的。</p>
+<pre><code>func addTwoInts(a : Int , _ b : Int) -&gt; Int &#123;
+    return a + b
+&#125;
+
+func multiplyTowInts(a : Int , _ b : Int) -&gt; Int &#123;
+    return a * b
+&#125;
+</code></pre>
+<p>上面的两个方法的函数类型可以这样描述：(Int , Int) -&gt; Int 函数接收两个整形参数，最后返回一个整形结果。</p>
+<p>这样的函数类型，可以像一般的值一样，通过赋值可以获取定义,并且只要函数的类型一样，它可以赋值给同样的变量</p>
+<pre><code>var mathFunction: (Int , Int) -&gt; Int = addTwoInts
+
+print(&quot;result : \(mathFunction(2,3))&quot;)
+//print &quot;result : 5&quot;
+
+mathFunction = multiplyTowInts
+</code></pre>
+<p>也可以把函数类型作为一个方法的参数</p>
+<pre><code>func printMathResult(mathFunction : (Int , Int) -&gt; Int , _ a : Int , _ b : Int) &#123;
+    print(&quot;Resutl : \(mathFunction(a , b))&quot;)
+&#125;
+
+printMathResult(addTwoInts , 3, 5)
+//print &quot;Result : 8&quot; 
+</code></pre>
+<p>当然也可以把函数类型当让一个函数的返回值</p>
+<pre><code>func getTheAddTwoIntsFucntion() -&gt; (Int , Int) -&gt; Int &#123;
+    return addTwoInts
+&#125;
+</code></pre>
+<p>也可以写成这样</p>
+<pre><code>func getTheAddTwoIntsFucntion() -&gt; (Int , Int) -&gt; Int &#123;
+    func addTwoInts(a : Int , _ b : Int) -&gt; Int &#123;
+        return a + b
+    &#125;
+
+    return addTwoInts
+&#125;
+</code></pre>
+<h3 id="闭包-Closures"><a href="#闭包-Closures" class="headerlink" title="闭包(Closures)"></a>闭包(Closures)</h3><p>闭包其实就像一个函数一样，一段可以执行的代码，有输入输出，能够在代码中传递像函数的参数一样。</p>
+<p>全局函数和嵌套函数(Global and nested function),其实就是闭包的一种。</p>
+<p>得益于 swift 的编译器的强大，闭包的语法可以变得很简洁。</p>
+<ul>
+<li>从上下文可以自动推断参数和返回值(Inferring parameter and return value types from context)</li>
+<li>在简单表达式中隐式返回(Implicit Returns from Single-Expression Closures)</li>
+<li>参数名称缩写(Shorthand argument names)</li>
+<li>尾随闭包(Trailing closure syntax)</li>
+</ul>
+<h3 id="闭包表达式语法"><a href="#闭包表达式语法" class="headerlink" title="闭包表达式语法"></a>闭包表达式语法</h3><pre><code>&#123;(parameters) -&gt; return type in 
+    statements
+&#125;
+</code></pre>
+<p>这里其实很像前面的函数的声明一样，用关键词 <code>in</code> 隔开闭包的类型声明和闭包体。</p>
+<p>看看排序的方法</p>
+<pre><code>//     func sort(isOrderedBefore: (Self.Generator.Element, Self.Generator.Element) -&gt; Bool) -&gt; [Self.Generator.Element]
+
+let names = [&quot;Chris&quot; , &quot;Alex&quot; , &quot;Ewa&quot; , &quot;Barry&quot; , &quot;Daniella&quot;]
+
+func backwards(s1 : String , s2 : String) -&gt; Bool &#123;
+    return s1 &gt; s2
+&#125;
+
+var reversed = names.sort(backwards)
+//reversed now is [&quot;Ewa&quot;, &quot;Daniella&quot;, &quot;Chris&quot;, &quot;Barry&quot;, &quot;Alex&quot;]
+</code></pre>
+<p>这里的<code>backwards</code>方法比较两个字符串的大小，如果<code>s1</code>大于<code>s2</code>则返回 true 。而在sort方法里面的参数是<code>isOrderedBefore</code>，说明<code>backwards</code>中返回 true 了就排在前面。</p>
+<p>用闭包的方法可以这样写</p>
+<pre><code>reversed = names.sort(&#123; (s1 : String , s2 : String) -&gt; Bool in 
+        return s1 &gt; s2
+    &#125;)
+</code></pre>
+<p>这就像 Go 语言里面的的匿名函数了。</p>
+<h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>因为在上面的 sort 函数的闭包中，它是以一个参数的形式传递给 sort 函数的。swift 就可以通过 sort 这个函数就能通过它自己的参数自动推断出传递过来的参数的类型和返回值了,<code>(String , String) -&gt; Bool</code>。</p>
+<p>一旦 swift 能够自动推断出的事情，我们就不需要去重复做了，所以排序的闭包可以简化成这样</p>
+<pre><code>reversed = names.sort(&#123; s1 , s2 in return s1 &gt; s2&#125;)
+</code></pre>
+<blockquote>
+<p>It is always possible to infer the parameter types and return type when passing a closure to a function as an inline closure expression. As a result, you never need to write an inline closure in its fullest form when the closure is used as a function argument. </p>
+</blockquote>
+<h3 id="在简单表达式中隐式返回"><a href="#在简单表达式中隐式返回" class="headerlink" title="在简单表达式中隐式返回"></a>在简单表达式中隐式返回</h3><p>上面的排序我们可以再进一步简化成这样：不需要写 <code>return</code></p>
+<pre><code>reversed = names.sort(&#123;s1 , s2 in s1 &gt; s2&#125;)
+</code></pre>
+<p>这也是因为<code>sort</code>函数中的参数中能够表明，传进来的闭包一定要返回一个布尔值，所以就可以把<code>return</code>忽略，而不引起歧义。</p>
+<h3 id="参数名称缩写"><a href="#参数名称缩写" class="headerlink" title="参数名称缩写"></a>参数名称缩写</h3><p>swift 自动为內联闭包提供参数名简称，可以通过<code>$0</code>,<code>$1</code>和<code>$2</code>去代表闭包的参数。<br>如果你用这些简写在你的闭包表达式中，就可以在闭包定义的时候忽略它的参数列表，<code>in</code>关键词可以就可以忽略了。</p>
+<pre><code>reversed = names.sort(&#123; $0 &gt; $1 &#125;)
+</code></pre>
+<p>由于<code>String</code>本身就有自己的 &gt; 方法，所以我们可以这样更简单的简化：</p>
+<pre><code>    reversed = names.sort( &gt; )
+</code></pre>
+<h3 id="尾随闭包"><a href="#尾随闭包" class="headerlink" title="尾随闭包"></a>尾随闭包</h3><p>如果需要传递一个闭包表达式给一个函数，作为这个函数的最后参数，而这个闭包的表达式很长，就可以写成尾随闭包的形式。所谓尾随闭包就是一个闭包表达式写在函数调用的括号的最后面</p>
+<p>不用尾随闭包的</p>
+<pre><code>func someFunctionThatTakesAClosure(closure : () -&gt; Void)&#123;
+    //function body goes here
+&#125;
+
+someFunctionThatTakesAClosure(&#123;
+    //closure&#39;s body goes here
+    &#125;)
+</code></pre>
+<p>用尾随闭包的</p>
+<pre><code>someFunctionThatTakesAClosure()&#123;
+    //closure&#39;s body goes here
+&#125;
+
+reversed = names.sort()&#123; $0 &gt; $1 &#125;
+</code></pre>
+<p>在调用的时候，也可以把后面的括号给忽略掉</p>
+<pre><code>reversed = names.sort&#123; $0 &gt; $1 &#125;
+</code></pre>
+<h3 id="捕获值-Capturing-Values"><a href="#捕获值-Capturing-Values" class="headerlink" title="捕获值(Capturing Values)"></a>捕获值(Capturing Values)</h3><p>一个闭包可以捕获它定义时的上下文的一些变量和常量。在 swift 中最简单的捕获值形式就是在嵌套函数中能够获取它外部的参数和变量常量。</p>
+<p>在捕获的时候，swift 会决定到底捕获的是引用还是值复制 ，简单说，如果在闭包中会对外部值改变就是一个引用的捕获，如果不会改变的话，就是一个值复制。而且 swift 会自动处理所有的内存管理。</p>
+<pre><code>func makeIncrementer(forIncrement amout : Int) -&gt; Void -&gt; Int &#123;
+    var runningTotal = 0
+    func incrementer() -&gt; Int &#123;
+        runningTotal += amout
+        return runningTotal
+    &#125;
+
+    return incrementer
+&#125;
+</code></pre>
+<p>这里的<code>runningTotal</code>就是引用捕获，<code>amout</code>就是值复制。</p>
+<blockquote>
+<p>Swift determines what should be captured by reference and what should be copied by value.You don’t need to annotate <code>amount</code> or <code>runningTotal</code> to say that they can be used within the nested <code>incrementer</code> function.Swift also handles all memory mamagement involved in disposing of <code>runningTotal</code> when it is no longer needed by the <code>incrementer()</code> function.</p>
+</blockquote>
+<h3 id="闭包是引用类型（Closures-Are-Reference-Types）"><a href="#闭包是引用类型（Closures-Are-Reference-Types）" class="headerlink" title="闭包是引用类型（Closures Are Reference Types）"></a>闭包是引用类型（Closures Are Reference Types）</h3><p>闭包的赋值都是一个引用。</p>
+<pre><code>let incrementBySeven = makeIncrementer(forIncrement : 7)
+incrementBySeven()  
+</code></pre>
+<p>这里的<code>incrementBySeven</code>就是闭包的一个引用</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11">The Swift Programming Language</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/First-class_function">first class function</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#swift" >
+    <span class="tag-code">swift</span>
+  </a>
+
+  <a href="/tags#closure" >
+    <span class="tag-code">closure</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2015/07/20/swift-optional-value/">
+        <span class="nav-arrow">← </span>
+        
+          swift学习笔记 -- optional value ? and !
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2015/08/04/iOS-Animation-Layer-note/">
+        
+          iOS 动画 -- layer
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-nav-text">定义和调用函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-nav-text">参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B-Function-Type"><span class="toc-nav-text">函数类型(Function Type)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%97%AD%E5%8C%85-Closures"><span class="toc-nav-text">闭包(Closures)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%97%AD%E5%8C%85%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95"><span class="toc-nav-text">闭包表达式语法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-nav-text">类型推断</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8%E7%AE%80%E5%8D%95%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E9%9A%90%E5%BC%8F%E8%BF%94%E5%9B%9E"><span class="toc-nav-text">在简单表达式中隐式返回</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E7%BC%A9%E5%86%99"><span class="toc-nav-text">参数名称缩写</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B0%BE%E9%9A%8F%E9%97%AD%E5%8C%85"><span class="toc-nav-text">尾随闭包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8D%95%E8%8E%B7%E5%80%BC-Capturing-Values"><span class="toc-nav-text">捕获值(Capturing Values)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%97%AD%E5%8C%85%E6%98%AF%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%EF%BC%88Closures-Are-Reference-Types%EF%BC%89"><span class="toc-nav-text">闭包是引用类型（Closures Are Reference Types）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-text">Reference</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2015/07/29/swift-funcion-closure/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/04/22/URL-Loading-System-URLProtocol/">URL Loading System -NSURLProtocol</a>
+      </h2>
+      <p class="article-date">April 22, 2015</p>
+      
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+  <a href="/tags#NSURLProtocol" >
+    <span class="tag-code">NSURLProtocol</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          昨天无意的在github上看到一个stub http请求的精简”框架”OHHTTPStubs。大概看了一下，感觉有点意思的，主要是使用了NSURLProtocol去实现stub的。很早之前就看过这个protocol了，现在在这里简单记录一下。
+使用在本地把你需要mock的数据准备好，最好是以 ...
+        
+      </div>
+      <a class="more" href="/2015/04/22/URL-Loading-System-URLProtocol/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/03/04/book-record/"><<程序员的修养--从优秀到卓越>> 语录</a>
+      </h2>
+      <p class="article-date">March 4, 2015</p>
+      
+        
+  <a href="/tags#程序员" >
+    <span class="tag-code">程序员</span>
+  </a>
+
+  <a href="/tags#优秀" >
+    <span class="tag-code">优秀</span>
+  </a>
+
+  <a href="/tags#卓越" >
+    <span class="tag-code">卓越</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          语录这个词是不是有点不太好呢？有点儿崇拜主义的感觉。
+其实看完这本书有一段时间了，当时是有记录的，一直没有整理上来。恰逢昨天申请了个域名，所以就找点东西来写。顺便看看是否对这本书还有了解。
+
+如果你一味的保持沉默，总像局外人一样冷眼旁观，你就什么也改变不了。如果你想要改变你的工作和生活，你必 ...
+        
+      </div>
+      <a class="more" href="/2015/03/04/book-record/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/01/27/android-screen-resolution/">Android分辨率的一些基础知识和理解</a>
+      </h2>
+      <p class="article-date">January 27, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+  <a href="/tags#分辨率" >
+    <span class="tag-code">分辨率</span>
+  </a>
+
+  <a href="/tags#屏幕适配" >
+    <span class="tag-code">屏幕适配</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在Android开发过程中，分辨率这个东西非常重要。会影响在不同机型，分辨率下的效果，外观以及对素材的使用。
+因为是从iOS开发过来的，一开始也曾不太理解为何Android中有各种各样不同的表示方式，px,sp,ps,dp等等。既然是无法避免要用到的，只能要学习一下了。
+基本的一些概念像素& ...
+        
+      </div>
+      <a class="more" href="/2015/01/27/android-screen-resolution/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/01/12/miui-note/">miui</a>
+      </h2>
+      <p class="article-date">January 12, 2015</p>
+      
+        
+  <a href="/tags#miui" >
+    <span class="tag-code">miui</span>
+  </a>
+
+  <a href="/tags#小米" >
+    <span class="tag-code">小米</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          说起来我也算是小米手机的一个早期所谓的发烧用户，那时还是大四吧。小米手机发布，屁颠屁颠的去排队抢购，印象中还记得排了个一千六百多的号，然后再等。那台小米手机可是我第一部完全用自己挣的钱买的，那时太穷了，觉得这个价位还可以啦。
+等买回来后，也经常折腾，好几次变了砖头。还记得那时Android  ...
+        
+      </div>
+      <a class="more" href="/2015/01/12/miui-note/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/01/08/git-remove-remote-master-branch/">git 删除远程master分支</a>
+      </h2>
+      <p class="article-date">January 8, 2015</p>
+      
+        
+  <a href="/tags#git" >
+    <span class="tag-code">git</span>
+  </a>
+
+  <a href="/tags#master" >
+    <span class="tag-code">master</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          分支在git中有多么的重要，我就不说了。用到了分支就一定会有创建和删除的操作了。今天因为想把blog中的主题换一下，折腾了一下。在删除远程仓库中的master分支的时候遇到了点问题，顺便记录一下。
+在git中，如果你的分支已经push出去了，但是你想要改名字的话你需要这样做：
+
+在你需要删除 ...
+        
+      </div>
+      <a class="more" href="/2015/01/08/git-remove-remote-master-branch/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/11/17/Objective-C-Class-Object-And-MetaClass/">Objective-C Class,Object and MetaClass</a>
+      </h2>
+      <p class="article-date">November 17, 2014</p>
+      
+        
+  <a href="/tags#Objective-C" >
+    <span class="tag-code">Objective-C</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          背景知识Objective-C是一个面向对象的语言。任何对象都是从类中实例化过来的，对象的isa指针指向实例化该对象的类，该类包含了这个对象的一些基本信息，比如说一些实例方法，还有一些属性等。
+类就是对象的描述。
+该类包含的方法就是该实例方法的集合，该实例能响应的SEL。当你用实例调用一个方 ...
+        
+      </div>
+      <a class="more" href="/2014/11/17/Objective-C-Class-Object-And-MetaClass/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/10/26/Android-BroadcastReceiver-Study/">Android BroadcastReceiver初试</a>
+      </h2>
+      <p class="article-date">October 26, 2014</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+  <a href="/tags#BroadcastReceiver" >
+    <span class="tag-code">BroadcastReceiver</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近开始要做Android的项目，其实是跟着项目马上就要开发功能了，所以只能边做边学习了。用到啥学啥，纪录啥，没有系统的学习过Android开发。刚开始就用到了广播，所以就先学习一下了。
+广播嘛，顾名思义就是广而播之，在它的播送范围内都能知道的。
+在Android中，BroadcastRec ...
+        
+      </div>
+      <a class="more" href="/2014/10/26/Android-BroadcastReceiver-Study/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/10/10/iOS-8-Launch-Screen/">iOS 8 Launch Screen</a>
+      </h2>
+      <p class="article-date">October 10, 2014</p>
+      
+        
+  <a href="/tags#iOS8" >
+    <span class="tag-code">iOS8</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在iOS开发中，Apple为了能够让App启动时第一时间给用户留下一个好”印象”，用静态的图片做了一个启动画面(Launch Image)。这个静态只要按照一定的命名规则和尺寸大小，就能自动的适配不同的机器。随着Apple不断推出新的机器，如果还是按照这种方式的话，在App的Bundle中这 ...
+        
+      </div>
+      <a class="more" href="/2014/10/10/iOS-8-Launch-Screen/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/09/04/git-config-ssh-keys/">多个git仓库配置多个ssh key</a>
+      </h2>
+      <p class="article-date">September 4, 2014</p>
+      
+        
+  <a href="/tags#ssh key" >
+    <span class="tag-code">ssh key</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          都知道连接git仓库，一般来说有这么几个方式：
+
+https
+ssh
+Subversion (这是github特有的吧)
+
+https的话可能要经常输入密码，ssh就是在初次使用的时候配置一下key,以后就不需要再输入密码了。在一些托管平台中，一些私有的项目中默认的都是建议用ssh，这样是会 ...
+        
+      </div>
+      <a class="more" href="/2014/09/04/git-config-ssh-keys/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2014/09/02/git-command-a-time-gitignore/">Git command a day - gitignore</a>
+      </h2>
+      <p class="article-date">September 2, 2014</p>
+      
+        
+  <a href="/tags#gitignore" >
+    <span class="tag-code">gitignore</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天在使用git新建项目时犯了一个错误，折腾了些许时间，所以在这里记录一下。
+如果我们在github，gitcafe等托管平台的时候，一般新建项目时都会建议我们加入readme和.gitignore这两个文件。我的错误就是在于没有建立.gitignore文件。
+我在后台建立一个个项目后，直接 ...
+        
+      </div>
+      <a class="more" href="/2014/09/02/git-command-a-time-gitignore/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/5/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/7/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

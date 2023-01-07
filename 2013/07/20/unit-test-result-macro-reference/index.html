@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Unit Test Result Macro Reference | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Unit Test Result Macro Reference</h2>
+  <p class="post-date">2013-07-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>So far,I have never do Unit-Test .This is the beginning for to learn about Unit-Test on ios develope .If you find something wrong ,pls corret it ,I will appreciate it.</p>
+<p>As the title,this artitle is about Unit-Test Result Macro ,which we use on unit test.For more details,pls go to apple’s <a target="_blank" rel="noopener" href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/UnitTesting/00-About_Unit_Testing/about.html">document</a></p>
+<h2 id="Unconditional-Failure"><a href="#Unconditional-Failure" class="headerlink" title="Unconditional Failure"></a>Unconditional Failure</h2><h3 id="STFail"><a href="#STFail" class="headerlink" title="STFail"></a>STFail</h3><p>Description of the failure.</p>
+<p><code>STFail(failure_description, ...)</code></p>
+<h6 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h6><p><em>failure_description</em>:specify the error message.</p>
+<p><em>…</em>  :(Optional) A comma-separated list of arguments to substitute into <em>failure_description</em></p>
+<h2 id="Equality-Tests"><a href="#Equality-Tests" class="headerlink" title="Equality Tests"></a>Equality Tests</h2><h3 id="Equality-Tests-1"><a href="#Equality-Tests-1" class="headerlink" title="Equality Tests"></a>Equality Tests</h3><p><code>STAssertEqualObjects(object_1, object_2, failure_description, ...)</code></p>
+<p>Fail when <code>[object1 isEquelTo:object2]</code></p>
+<h3 id="STAssertEquals"><a href="#STAssertEquals" class="headerlink" title="STAssertEquals"></a>STAssertEquals</h3><p><code>STAssertEquals(value_1, value_2, failure_description, ...)</code></p>
+<p>Fail when <code>value1</code> is not equal to <code>value2</code></p>
+<h3 id="STAssertEqualsWithAccuracy"><a href="#STAssertEqualsWithAccuracy" class="headerlink" title="STAssertEqualsWithAccuracy"></a>STAssertEqualsWithAccuracy</h3><p><code>STAssertEqualsWithAccurary(value1,value2,accuracy,failure_description,...)</code></p>
+<p>Fail when the differenc between <code>value1</code> and <code>value2</code> is greater than <code>accuracy</code>,<code>value1</code>,<code>value2</code> and <code>accuracy</code> are integer or floating-point value</p>
+<h2 id="Nil-Tests"><a href="#Nil-Tests" class="headerlink" title="Nil Tests"></a>Nil Tests</h2><h3 id="STAssertNil"><a href="#STAssertNil" class="headerlink" title="STAssertNil"></a>STAssertNil</h3><p><code>STAssertNil(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is not nil</p>
+<h3 id="STAssertNotNil"><a href="#STAssertNotNil" class="headerlink" title="STAssertNotNil"></a>STAssertNotNil</h3><p><code>STAssertNotNil(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is nil.</p>
+<h2 id="Boolean-Tests"><a href="#Boolean-Tests" class="headerlink" title="Boolean Tests"></a>Boolean Tests</h2><h3 id="STAssertTrue"><a href="#STAssertTrue" class="headerlink" title="STAssertTrue"></a>STAssertTrue</h3><p><code>STAssertTrue(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is false</p>
+<h3 id="STAssertFalse"><a href="#STAssertFalse" class="headerlink" title="STAssertFalse"></a>STAssertFalse</h3><p><code>STAssertFalse(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is true</p>
+<h2 id="Exception-Tests"><a href="#Exception-Tests" class="headerlink" title="Exception Tests "></a>Exception Tests </h2><h3 id="STAssertThrows"><a href="#STAssertThrows" class="headerlink" title="STAssertThrows"></a>STAssertThrows</h3><p><code>STAssertThrows(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression does’t raise an exception</p>
+<h3 id="STAssertThrowSpecific"><a href="#STAssertThrowSpecific" class="headerlink" title="STAssertThrowSpecific"></a>STAssertThrowSpecific</h3><p><code>STAssertThrowsSpecific(expression, exception_class, failure_description, ...)</code></p>
+<p>Fail when a given expression does’t raise an exception of a particular class</p>
+<h3 id="STAssertThrowSpecificNamed"><a href="#STAssertThrowSpecificNamed" class="headerlink" title="STAssertThrowSpecificNamed"></a>STAssertThrowSpecificNamed</h3><p><code>STAssertThrowsSpecificNamed(expression, exception_class, exception_name, failure_description, ...)</code></p>
+<p>Fail when a given expression does’t raise an exception of a particular class with a given name.</p>
+<h3 id="STAssertNoThrow"><a href="#STAssertNoThrow" class="headerlink" title="STAssertNoThrow"></a>STAssertNoThrow</h3><p><code>STAssertNoThrow(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression raise an exception</p>
+<h3 id="STAssertNoThrowSpecific"><a href="#STAssertNoThrowSpecific" class="headerlink" title="STAssertNoThrowSpecific"></a>STAssertNoThrowSpecific</h3><p><code>STAssertNoThrowSpecific(expression, exception_class, failure_description, ...)</code></p>
+<p>Fail when a given expression raises an exception of the exception_class</p>
+<h3 id="STAssertNoThrowSpecificNamed"><a href="#STAssertNoThrowSpecificNamed" class="headerlink" title="STAssertNoThrowSpecificNamed"></a>STAssertNoThrowSpecificNamed</h3><p><code>STAssertNoThrowSpecificNamed(expression, exception_class, exception_name, failure_description, ...)</code></p>
+<p>Fail when a given expression raise an exception of the class exception_class with the name exception_name</p>
+<h3 id="STAssertTrueNoThrow"><a href="#STAssertTrueNoThrow" class="headerlink" title="STAssertTrueNoThrow"></a>STAssertTrueNoThrow</h3><p><code>STAssertTrueNoThrow(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is false or raises an exception</p>
+<h3 id="STAssertFalseNoThrow"><a href="#STAssertFalseNoThrow" class="headerlink" title="STAssertFalseNoThrow"></a>STAssertFalseNoThrow</h3><p><code>STAssertFalseNoThrow(expression, failure_description, ...)</code></p>
+<p>Fail when a given expression is true or raise an exception.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#ios" >
+    <span class="tag-code">ios</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+    
+      <a class="nav-right" href="/2013/07/22/ios-Unit-Test/">
+        
+          IOS下單元測試
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Unconditional-Failure"><span class="toc-nav-text">Unconditional Failure</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STFail"><span class="toc-nav-text">STFail</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#Parameters"><span class="toc-nav-text">Parameters</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Equality-Tests"><span class="toc-nav-text">Equality Tests</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Equality-Tests-1"><span class="toc-nav-text">Equality Tests</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertEquals"><span class="toc-nav-text">STAssertEquals</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertEqualsWithAccuracy"><span class="toc-nav-text">STAssertEqualsWithAccuracy</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nil-Tests"><span class="toc-nav-text">Nil Tests</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertNil"><span class="toc-nav-text">STAssertNil</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertNotNil"><span class="toc-nav-text">STAssertNotNil</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Boolean-Tests"><span class="toc-nav-text">Boolean Tests</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertTrue"><span class="toc-nav-text">STAssertTrue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertFalse"><span class="toc-nav-text">STAssertFalse</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exception-Tests"><span class="toc-nav-text">Exception Tests </span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertThrows"><span class="toc-nav-text">STAssertThrows</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertThrowSpecific"><span class="toc-nav-text">STAssertThrowSpecific</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertThrowSpecificNamed"><span class="toc-nav-text">STAssertThrowSpecificNamed</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertNoThrow"><span class="toc-nav-text">STAssertNoThrow</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertNoThrowSpecific"><span class="toc-nav-text">STAssertNoThrowSpecific</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertNoThrowSpecificNamed"><span class="toc-nav-text">STAssertNoThrowSpecificNamed</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertTrueNoThrow"><span class="toc-nav-text">STAssertTrueNoThrow</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#STAssertFalseNoThrow"><span class="toc-nav-text">STAssertFalseNoThrow</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2013/07/20/unit-test-result-macro-reference/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

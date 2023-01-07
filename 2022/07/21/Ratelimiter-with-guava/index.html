@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
+  
+  <title>
+    
+      Guava Ratelimiter | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Guava Ratelimiter</h2>
+  <p class="post-date">2022-07-21</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><ul>
+<li><p>[[Github]]链接 <a target="_blank" rel="noopener" href="https://github.com/google/guava/blob/master/guava/src/com/google/common/util/concurrent/SmoothRateLimiter.java">github</a>  </p>
+</li>
+<li><p>在 [[Sentinel]]中有借鉴了这里的<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/wiki/%E9%99%90%E6%B5%81---%E5%86%B7%E5%90%AF%E5%8A%A8">实现</a>  </p>
+</li>
+<li><p>传统的第一印象做法  </p>
+<ul>
+<li>记录上一次允许请求的时间戳，确保在新请求进来的时候，确保距离上一次允许请求已经过了 1&#x2F;QPS 时间。  <ul>
+<li>假如一个QPS&#x3D;5的限制，在上一次允许的请求时间是t1 的i那个況下，下一次允许的请求必须要在t1+200ms (1&#x2F;5) 时间后才能允许。如果上一次的请求允许时间是在100ms 之前，那么新的请求必须要再等100ms 后才能放行  </li>
+<li>在这个QPS 下，如果有15个新请求进来，那么必须要等3s (200ms * 15)才能放行完这15个请求  <ul>
+<li>假如这个ratelimiter 很久没有请求进来，而突然间来了5个请求呢？也要200ms * 5 &#x3D; 1s 才放行完？  </li>
+<li>这种情况怎么处理呢？</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Guava 里面的实现  </p>
+<ul>
+<li><h2 id="针对上面的问题，-Guava-里面提出一个past-underutilization，过去的低利用率。-在一个限流器里面，在它过去一段时间没有流量进来的情况下，当有流量突然进来了，过去的时间实际上限流器是没有起作用的，那么它是否可以被利用起来呢？从利用上来讲它可能是无成本的，因为时间都已经过去了。如果可以那么突然进来的流量就可以马上予以同行-假设没有超过限定值-它这里提出了下面两个维度-stored-permits：在限流器过去一段时间没有被使用时，它可以累积一些令牌，等流量进来后，可以马上放行-fresh-permits-正常饱和流量下可以获得的令牌，它的使用会让限流器把时间往前走n-1-x2F-QPS-例子"><a href="#针对上面的问题，-Guava-里面提出一个past-underutilization，过去的低利用率。-在一个限流器里面，在它过去一段时间没有流量进来的情况下，当有流量突然进来了，过去的时间实际上限流器是没有起作用的，那么它是否可以被利用起来呢？从利用上来讲它可能是无成本的，因为时间都已经过去了。如果可以那么突然进来的流量就可以马上予以同行-假设没有超过限定值-它这里提出了下面两个维度-stored-permits：在限流器过去一段时间没有被使用时，它可以累积一些令牌，等流量进来后，可以马上放行-fresh-permits-正常饱和流量下可以获得的令牌，它的使用会让限流器把时间往前走n-1-x2F-QPS-例子" class="headerlink" title="针对上面的问题，[[Guava]] 里面提出一个past underutilization，过去的低利用率。- 在一个限流器里面，在它过去一段时间没有流量进来的情况下，当有流量突然进来了，过去的时间实际上限流器是没有起作用的，那么它是否可以被利用起来呢？从利用上来讲它可能是无成本的，因为时间都已经过去了。如果可以那么突然进来的流量就可以马上予以同行(假设没有超过限定值)- 它这里提出了下面两个维度  - stored permits：在限流器过去一段时间没有被使用时，它可以累积一些令牌，等流量进来后，可以马上放行  - fresh permits: 正常饱和流量下可以获得的令牌，它的使用会让限流器把时间往前走n*(1&#x2F;QPS)- 例子  "></a>针对上面的问题，[[Guava]] 里面提出一个<code>past underutilization</code>，过去的低利用率。<br>- 在一个限流器里面，在它过去一段时间没有流量进来的情况下，当有流量突然进来了，过去的时间实际上限流器是没有起作用的，那么它是否可以被利用起来呢？从利用上来讲它可能是无成本的，因为时间都已经过去了。如果可以那么突然进来的流量就可以马上予以同行(假设没有超过限定值)<br>- 它这里提出了下面两个维度<br>  - <code>stored permits</code>：在限流器过去一段时间没有被使用时，它可以累积一些令牌，等流量进来后，可以马上放行<br>  - <code>fresh permits</code>: 正常饱和流量下可以获得的令牌，它的使用会让限流器把时间往前走n*(1&#x2F;QPS)<br>- 例子  </h2><pre><code>&gt; For a RateLimiter that produces 1 token per second, every second that goes by with the RateLimiter being unused, we increase storedPermits by 1. Say we leave the RateLimiter unused for 10 seconds (i.e., we expected a request at time X, but we are at time X + 10 seconds before  a request actually arrives; this is also related to the point made in the last paragraph), thus storedPermits becomes 10.0 (assuming maxStoredPermits &gt;= 10.0). At that point, a request of acquire(3) arrives. We serve this request out of storedPermits, and reduce that to 7.0 (how this is translated to throttling time is discussed later). Immediately after, assume that an acquire(10) request arriving. We serve the request partly from storedPermits, using all the remaining 7.0 permits, and the remaining 3.0, we serve them by fresh permits produced by the rate limiter.  
+</code></pre>
+<ul>
+<li>一般来说，我们计算QPS是这样的 <code>rate=permits/times</code>，在一定时间内获得的令牌除以时间。那么速率就是<code>1/rate=times/permits</code>。那么<code>1/rate(times/permits)</code> 乘以令牌数就是<strong>时间</strong>了。这里的意思就是针对过去累积的令牌数来说的。比如说累积的令牌数是100,那么它消耗到只剩10 需要耗时多少，一旦消耗完成(有足够饱和的持续的流量进来)，限流器就会正常工作，就是以指定的QPS 释放令牌。  </li>
+<li>在流量稳定的情况下，一个<code>1QPS</code> 的限流器，我们可以知道它将会要3s 才能释放3个新的令牌。那么使用<code>stored permits</code>意味这什么呢？  <ul>
+<li>假如我们关注的是过去的低利用率，那么在<code>stored permits</code> 有10 个的情况下，一个<code>acquire(7)</code> 请求来了，则应该就马上通行的。因为这10 个令牌是过去积累下来的，等于是免费的。  </li>
+<li>假如我们关注的是overflow, 那么我们就不能马上放行这7个令牌了。  </li>
+<li><strong>这里就需要有一个地方处理这个转换的过程</strong></li>
+</ul>
+</li>
+<li>预热和冷却  <ul>
+<li>这里把它拆分成两个过程对于后面的那个图形更好理解。  <ul>
+<li>预热  <ul>
+<li>在限流器刚开始时(或者很长一段时间没有流量进来)，开始有流量进来了，<code>store permits</code> 是有一定的积累，那么需要以慢一点的速度释放令牌。比如，在一个2QPS 的限流器稳定情况下，应该每个令牌获取的时间间隔是<code>1/QPS =1/2=500ms</code>，那么在这个阶段的间隔应该要调整，例如变成 <code>500ms * 3 = 1.5s/个</code> 这里的3 可以理解为一个冷却因子。这个速率保持的时间应该就是我们要指定的<code>warnupPeriod</code></li>
+</ul>
+</li>
+<li>冷却  <ul>
+<li>在流量稳定进入一段时间后，开始慢慢变少，直至没有流量。这个过程就是预热的逆过程。一旦流量变少，即意味着每个令牌过去的间隔就会变长，就会进入低利用率的状态，那么<code>stored permits</code> 就会增加。</li>
+</ul>
+</li>
+<li>这两个过程实际上是一致的。意思是说通过积分的方式去保证，<code>stored permits</code> 的变化，比如说由10 -&gt; 7(预热)和7 -&gt; 10(冷却)所需要的时间是一致的。这里同时还隐含着在这个变化过程中，<code>acquire(1)</code> ,<code>acquire(1)</code>,<code>acquire(1)</code>和<code>acquire(3)</code> 产生的效果(时间)是一致的。  </li>
+<li>限流器就会在这两个过程中动态进行。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+<li>概念  <ul>
+<li><code>thresholdPermits</code>: 临界令牌数，当存储的令牌数到达这个值时就回到正常的速率，问题是这个值怎么算出来？<strong>两条线的相交点</strong>  </li>
+<li><code>stableIntervalMicros</code>:稳定速率  </li>
+<li><code>coldIntervalMicros</code>: 冷却速率  </li>
+<li><code>coldFactor</code>：冷却因子，怎么去理解这个概念呢？  </li>
+<li><h2 id="两种限流器-SmoothWarmingUp-带有预热时间的限流器"><a href="#两种限流器-SmoothWarmingUp-带有预热时间的限流器" class="headerlink" title="两种限流器- SmoothWarmingUp  - 带有预热时间的限流器  "></a>两种限流器<br>- SmoothWarmingUp<br>  - 带有预热时间的限流器  </h2><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">* This implements the following function where coldInterval = coldFactor * stableInterval.</span><br><span class="line">*</span><br><span class="line">*          ^ throttling</span><br><span class="line">*          |</span><br><span class="line">*    cold  +                  /</span><br><span class="line">* interval |                 /.</span><br><span class="line">*          |                / .</span><br><span class="line">*          |               /  .   &lt;-- &quot;warmup period&quot; is the area of the trapezoid between</span><br><span class="line">*          |              /   .       thresholdPermits and maxPermits</span><br><span class="line">*          |             /    .</span><br><span class="line">*          |            /     .</span><br><span class="line">*          |           /      .</span><br><span class="line">*   stable +----------/  WARM .</span><br><span class="line">* interval |          .   UP  .</span><br><span class="line">*          |          . PERIOD.</span><br><span class="line">*          |          .       .</span><br><span class="line">*        0 +----------+-------+--------------&gt; storedPermits</span><br><span class="line">*          0 thresholdPermits maxPermits</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li>这个图要分左右两个方向看。其中横坐标是<code>stored permits</code> 积累的令牌，越往右利用率越低。纵坐标是[[1]]&#x2F;QPS，就是速率的意思代表每生产一个令牌需要花费多长时间  <ul>
+<li>从右往左  <ul>
+<li>开始时就是上面说的预热过程，在到稳定过程，随着时间走，直到<code>stored permits</code> 消耗完</li>
+</ul>
+</li>
+<li>从左往右  <ul>
+<li>就是开始冷却的过程慢慢地<code>stored permits</code> 开始积累，直到达到最大值(此时没有流量进来)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>从速率的角度去理解这个图，由0到<code>maxPermits</code>的速度应该是<code>maxPermits/warnupPeriod</code>  </li>
+<li><code>thresholdPermits</code> 的计算  <ul>
+<li>预热的时长是一个比较短的时间</li>
+</ul>
+</li>
+<li></li>
+<li>SmoothBursty</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h2 id="调用流程-首先通过acquire-n-获取n-个令牌，会返回需要等待的时间，如果需要等待-microToWait-大于0-则进行线程sleep，否则就直接获取到令牌"><a href="#调用流程-首先通过acquire-n-获取n-个令牌，会返回需要等待的时间，如果需要等待-microToWait-大于0-则进行线程sleep，否则就直接获取到令牌" class="headerlink" title="调用流程- 首先通过acquire(n)获取n 个令牌，会返回需要等待的时间，如果需要等待(microToWait 大于0)则进行线程sleep，否则就直接获取到令牌  "></a>调用流程<br>- 首先通过<code>acquire(n)</code>获取n 个令牌，会返回需要等待的时间，如果需要等待(<code>microToWait</code> 大于0)则进行线程<code>sleep</code>，否则就直接获取到令牌  </h2><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public double acquire(int permits) &#123;</span><br><span class="line">//计算获取令牌需要等待的时间</span><br><span class="line">  long microsToWait = reserve(permits);</span><br><span class="line">  //如果microsToWait &gt; 0，则进行等待</span><br><span class="line">  stopwatch.sleepMicrosUninterruptibly(microsToWait);</span><br><span class="line">  //返回等待了的时间，转换成秒。</span><br><span class="line">  return 1.0 * microsToWait / SECONDS.toMicros(1L);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li><h2 id="reserve-int-permits"><a href="#reserve-int-permits" class="headerlink" title="reserve(int permits)  "></a><code>reserve(int permits)</code>  </h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">final long reserve(int permits) &#123;</span><br><span class="line">//检查permit,不允许小于0</span><br><span class="line">  checkPermits(permits);</span><br><span class="line">  synchronized (mutex()) &#123;</span><br><span class="line">  //获取锁后预约令牌。因为这里会把`nextFreeTicketMicros` 往前拨</span><br><span class="line">    return reserveAndGetWaitLength(permits, stopwatch.readMicros());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="reserveAndGetWaitLength-int-permits-long-nowMicros"><a href="#reserveAndGetWaitLength-int-permits-long-nowMicros" class="headerlink" title="reserveAndGetWaitLength(int permits, long nowMicros)  "></a><code>reserveAndGetWaitLength(int permits, long nowMicros)</code>  </h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">final long reserveAndGetWaitLength(int permits, long nowMicros) &#123;</span><br><span class="line">    //获取到permits 可以授予的时间戳</span><br><span class="line">    long momentAvailable = reserveEarliestAvailable(permits, nowMicros);</span><br><span class="line">    //这里返回需要等待的时间，两个时间戳相减，如果可以授予的时间戳在当前时间之后 （momentAvailable - nowMicros 大于 0），则需要等待</span><br><span class="line">    return max(momentAvailable - nowMicros, 0);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="resync-long-nowMicros"><a href="#resync-long-nowMicros" class="headerlink" title="resync(long nowMicros)  "></a><code>resync(long nowMicros)</code>  </h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void resync(long nowMicros) &#123;</span><br><span class="line">  // 里面的实现不是通过定期更新nextFreeTicketMicros，而是</span><br><span class="line">  //每次在获取时重新计算令牌的消耗情况</span><br><span class="line">  //当前时间在nextFreeTicketMicros 之后，说明限流器已经有一段时间没有被使用</span><br><span class="line">  //故需要更新时间指针</span><br><span class="line">  if (nowMicros &gt; nextFreeTicketMicros) &#123;</span><br><span class="line">  //冷却是按照一定的速率去进行的,每个不同限流器不一样</span><br><span class="line">  //warmup：warmupPeriodMicros / maxPermits</span><br><span class="line">  //bursty：stableInterval</span><br><span class="line">  //通过时间和速率的关系，计算出过去低利用率下可以利用的令牌</span><br><span class="line">    double newPermits = (nowMicros - nextFreeTicketMicros) / coolDownIntervalMicros();</span><br><span class="line">    storedPermits = min(maxPermits, storedPermits + newPermits);</span><br><span class="line">    nextFreeTicketMicros = nowMicros;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="reserveEarliestAvailable-int-requiredPermits-long-nowMicros"><a href="#reserveEarliestAvailable-int-requiredPermits-long-nowMicros" class="headerlink" title="reserveEarliestAvailable(int requiredPermits, long nowMicros)  "></a><code>reserveEarliestAvailable(int requiredPermits, long nowMicros)</code>  </h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">final long reserveEarliestAvailable(int requiredPermits, long nowMicros) &#123;</span><br><span class="line">  resync(nowMicros);//更新限流器的状态</span><br><span class="line">  //当前限流器可以获得令牌的时间戳，前面acquire 中会用它和当前时间做差值来决定是否需要等待</span><br><span class="line">  long returnValue = nextFreeTicketMicros;</span><br><span class="line">  //可以使用的storedPermits,最多能用当前积累的数量，不能超过。</span><br><span class="line">  double storedPermitsToSpend = min(requiredPermits, this.storedPermits);</span><br><span class="line">  //如果上面累积的令牌不够，计算需要多少个新令牌</span><br><span class="line">  double freshPermits = requiredPermits - storedPermitsToSpend;</span><br><span class="line">  //计算需要等待的时间，由两部分组成，一部分是使用积累的令牌，一部分是新的令牌</span><br><span class="line">  long waitMicros =</span><br><span class="line">      storedPermitsToWaitTime(this.storedPermits, storedPermitsToSpend)</span><br><span class="line">          + (long) (freshPermits * stableIntervalMicros);</span><br><span class="line">//更新下一次令牌可以获得的时间戳</span><br><span class="line">  this.nextFreeTicketMicros = LongMath.saturatedAdd(nextFreeTicketMicros, waitMicros);</span><br><span class="line">  //减掉使用了的累积的令牌（结果可能会少于0）</span><br><span class="line">  this.storedPermits -= storedPermitsToSpend;</span><br><span class="line">  return returnValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="storedPermitsToWaitTime-double-storedPermits-double-permitsToTake-不同限流器的实现是不一样的，burty-是直接返回0了。"><a href="#storedPermitsToWaitTime-double-storedPermits-double-permitsToTake-不同限流器的实现是不一样的，burty-是直接返回0了。" class="headerlink" title="storedPermitsToWaitTime(double storedPermits, double permitsToTake)不同限流器的实现是不一样的，burty 是直接返回0了。  "></a><code>storedPermitsToWaitTime(double storedPermits, double permitsToTake)</code><br>不同限流器的实现是不一样的，burty 是直接返回0了。  </h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">long storedPermitsToWaitTime(double storedPermits, double permitsToTake) &#123;</span><br><span class="line">  //这里的permitsToTake：stored permits to spend,前面已经做了处理保证不会大于storedPermits</span><br><span class="line">  //超过thresholdPermits 的可用令牌数</span><br><span class="line">  double availablePermitsAboveThreshold = storedPermits - thresholdPermits;</span><br><span class="line">  long micros = 0;</span><br><span class="line">  // 如果积累的令牌数有超过thresholdPermits 的话，计算要使用这些令牌需要的时间</span><br><span class="line">  //也就是梯形的面积，permitsToTime这个方法就是通过 y = a*x +b 这样的函数来计算的。</span><br><span class="line">  if (availablePermitsAboveThreshold &gt; 0.0) &#123;</span><br><span class="line">    double permitsAboveThresholdToTake = min(availablePermitsAboveThreshold, permitsToTake);</span><br><span class="line">    // permitsToTime(availablePermitsAboveThreshold)这个计算的是梯形的下底（从右往左看）</span><br><span class="line">    // permitsToTime(availablePermitsAboveThreshold - permitsAboveThresholdToTake)计算的梯形上底</span><br><span class="line">    double length = permitsToTime(availablePermitsAboveThreshold)</span><br><span class="line">        + permitsToTime(availablePermitsAboveThreshold - permitsAboveThresholdToTake);</span><br><span class="line">    //梯形的面积 (a + b) * h / 2</span><br><span class="line">    micros = (long) (permitsAboveThresholdToTake * length / 2.0);</span><br><span class="line">    permitsToTake -= permitsAboveThresholdToTake;</span><br><span class="line">  &#125;</span><br><span class="line">  // 超过thresholdPermits 的令牌，以稳定的速率计算然后转换成时间</span><br><span class="line">  micros += (stableIntervalMicros * permitsToTake);</span><br><span class="line">  return micros;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li></li>
+<li><h2 id="一次性获取全部的storedPermits-和-通过饱和的流量acquire-1-…-多次获取直至storedPermits用完，这两者之间的区别是什么？-前者第一次获取时就会全部通过，更新了nextFreeTicketMicros到下一次等待时间-后者就是慢慢地每一个令牌消耗，那么这两者用完了storedPermits后的下一次可以获取到令牌的时间是否一致呢？理论上是一致的。这里计算他们的时间间隔就可以。"><a href="#一次性获取全部的storedPermits-和-通过饱和的流量acquire-1-…-多次获取直至storedPermits用完，这两者之间的区别是什么？-前者第一次获取时就会全部通过，更新了nextFreeTicketMicros到下一次等待时间-后者就是慢慢地每一个令牌消耗，那么这两者用完了storedPermits后的下一次可以获取到令牌的时间是否一致呢？理论上是一致的。这里计算他们的时间间隔就可以。" class="headerlink" title="一次性获取全部的storedPermits 和 通过饱和的流量acquire(1)… 多次获取直至storedPermits用完，这两者之间的区别是什么？- 前者第一次获取时就会全部通过，更新了nextFreeTicketMicros到下一次等待时间- 后者就是慢慢地每一个令牌消耗，那么这两者用完了storedPermits后的下一次可以获取到令牌的时间是否一致呢？理论上是一致的。这里计算他们的时间间隔就可以。  "></a>一次性获取全部的<code>storedPermits</code> 和 通过饱和的流量<code>acquire(1)</code>… 多次获取直至<code>storedPermits</code>用完，这两者之间的区别是什么？<br>- 前者第一次获取时就会全部通过，更新了<code>nextFreeTicketMicros</code>到下一次等待时间<br>- 后者就是慢慢地每一个令牌消耗，那么这两者用完了<code>storedPermits</code>后的下一次可以获取到令牌的时间是否一致呢？理论上是一致的。这里计算他们的时间间隔就可以。  </h2></li>
+</ul>
+</li>
+<li>为什么  <ul>
+<li>为什么使用积分去计算  </li>
+<li>面积是代表时间的  </li>
+<li>从<code>maxPermits</code> 到 <code>threshholdPermits</code> 的时间是<code>warmupPeriod</code>。从<code>thresholdPermits</code> 到 0 的时间是<code>warmupPeriod / 2</code>。这里的解释是说因为之前的<code>coldFactor</code> 硬编码为3,这样做是为了保持和原有的行为一直。可是为什么<code>coldFactor</code> 是3的情况下，时间为<code>warmupPeriod / 2</code>，如果把<code>coldFactor</code> 设为7呢？这个时间又是多少呢？</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>References  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cidoliu.github.io/2021/02/24/RateLimiter%E8%A7%A3%E8%AF%BB/">RateLimiter 解读</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://blog.katastros.com/a?ID=00700-9dbb94e7-08d5-4761-88e1-98f96fc8f266">Analysis of Current Limiting RateLimiter</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/g/guava-discuss/c/w2f8HvnE47Q/m/o6ellgqRAwAJ">how the value of thresholdPermits is cacluated in smoothWarnmingUp</a>  </li>
+<li>[[[Guava]]-[[RateLimiter]]-warmup-clarification](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/35298991/guava-ratelimiter-warmup-clarification">https://stackoverflow.com/questions/35298991/guava-ratelimiter-warmup-clarification</a>)</li>
+</ul>
+</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#限流" >
+    <span class="tag-code">限流</span>
+  </a>
+
+  <a href="/tags#Guava" >
+    <span class="tag-code">Guava</span>
+  </a>
+
+  <a href="/tags#Ratelimiter" >
+    <span class="tag-code">Ratelimiter</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/04/24/Retries-with-Idempotent/">
+        <span class="nav-arrow">← </span>
+        
+          用幂等支持重试
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/09/08/Thought-About-Comunicating-Over-Text/">
+        
+          工作上的文字沟通
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%92%88%E5%AF%B9%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C-Guava-%E9%87%8C%E9%9D%A2%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AApast-underutilization%EF%BC%8C%E8%BF%87%E5%8E%BB%E7%9A%84%E4%BD%8E%E5%88%A9%E7%94%A8%E7%8E%87%E3%80%82-%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%99%90%E6%B5%81%E5%99%A8%E9%87%8C%E9%9D%A2%EF%BC%8C%E5%9C%A8%E5%AE%83%E8%BF%87%E5%8E%BB%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E6%B2%A1%E6%9C%89%E6%B5%81%E9%87%8F%E8%BF%9B%E6%9D%A5%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%BD%93%E6%9C%89%E6%B5%81%E9%87%8F%E7%AA%81%E7%84%B6%E8%BF%9B%E6%9D%A5%E4%BA%86%EF%BC%8C%E8%BF%87%E5%8E%BB%E7%9A%84%E6%97%B6%E9%97%B4%E5%AE%9E%E9%99%85%E4%B8%8A%E9%99%90%E6%B5%81%E5%99%A8%E6%98%AF%E6%B2%A1%E6%9C%89%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%EF%BC%8C%E9%82%A3%E4%B9%88%E5%AE%83%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%88%A9%E7%94%A8%E8%B5%B7%E6%9D%A5%E5%91%A2%EF%BC%9F%E4%BB%8E%E5%88%A9%E7%94%A8%E4%B8%8A%E6%9D%A5%E8%AE%B2%E5%AE%83%E5%8F%AF%E8%83%BD%E6%98%AF%E6%97%A0%E6%88%90%E6%9C%AC%E7%9A%84%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%97%B6%E9%97%B4%E9%83%BD%E5%B7%B2%E7%BB%8F%E8%BF%87%E5%8E%BB%E4%BA%86%E3%80%82%E5%A6%82%E6%9E%9C%E5%8F%AF%E4%BB%A5%E9%82%A3%E4%B9%88%E7%AA%81%E7%84%B6%E8%BF%9B%E6%9D%A5%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%B1%E5%8F%AF%E4%BB%A5%E9%A9%AC%E4%B8%8A%E4%BA%88%E4%BB%A5%E5%90%8C%E8%A1%8C-%E5%81%87%E8%AE%BE%E6%B2%A1%E6%9C%89%E8%B6%85%E8%BF%87%E9%99%90%E5%AE%9A%E5%80%BC-%E5%AE%83%E8%BF%99%E9%87%8C%E6%8F%90%E5%87%BA%E4%BA%86%E4%B8%8B%E9%9D%A2%E4%B8%A4%E4%B8%AA%E7%BB%B4%E5%BA%A6-stored-permits%EF%BC%9A%E5%9C%A8%E9%99%90%E6%B5%81%E5%99%A8%E8%BF%87%E5%8E%BB%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E6%B2%A1%E6%9C%89%E8%A2%AB%E4%BD%BF%E7%94%A8%E6%97%B6%EF%BC%8C%E5%AE%83%E5%8F%AF%E4%BB%A5%E7%B4%AF%E7%A7%AF%E4%B8%80%E4%BA%9B%E4%BB%A4%E7%89%8C%EF%BC%8C%E7%AD%89%E6%B5%81%E9%87%8F%E8%BF%9B%E6%9D%A5%E5%90%8E%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%A9%AC%E4%B8%8A%E6%94%BE%E8%A1%8C-fresh-permits-%E6%AD%A3%E5%B8%B8%E9%A5%B1%E5%92%8C%E6%B5%81%E9%87%8F%E4%B8%8B%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%BE%97%E7%9A%84%E4%BB%A4%E7%89%8C%EF%BC%8C%E5%AE%83%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BC%9A%E8%AE%A9%E9%99%90%E6%B5%81%E5%99%A8%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BE%80%E5%89%8D%E8%B5%B0n-1-x2F-QPS-%E4%BE%8B%E5%AD%90"><span class="toc-nav-text">针对上面的问题，[[Guava]] 里面提出一个past underutilization，过去的低利用率。- 在一个限流器里面，在它过去一段时间没有流量进来的情况下，当有流量突然进来了，过去的时间实际上限流器是没有起作用的，那么它是否可以被利用起来呢？从利用上来讲它可能是无成本的，因为时间都已经过去了。如果可以那么突然进来的流量就可以马上予以同行(假设没有超过限定值)- 它这里提出了下面两个维度  - stored permits：在限流器过去一段时间没有被使用时，它可以累积一些令牌，等流量进来后，可以马上放行  - fresh permits: 正常饱和流量下可以获得的令牌，它的使用会让限流器把时间往前走n*(1&#x2F;QPS)- 例子  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%99%90%E6%B5%81%E5%99%A8-SmoothWarmingUp-%E5%B8%A6%E6%9C%89%E9%A2%84%E7%83%AD%E6%97%B6%E9%97%B4%E7%9A%84%E9%99%90%E6%B5%81%E5%99%A8"><span class="toc-nav-text">两种限流器- SmoothWarmingUp  - 带有预热时间的限流器  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-%E9%A6%96%E5%85%88%E9%80%9A%E8%BF%87acquire-n-%E8%8E%B7%E5%8F%96n-%E4%B8%AA%E4%BB%A4%E7%89%8C%EF%BC%8C%E4%BC%9A%E8%BF%94%E5%9B%9E%E9%9C%80%E8%A6%81%E7%AD%89%E5%BE%85%E7%9A%84%E6%97%B6%E9%97%B4%EF%BC%8C%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E7%AD%89%E5%BE%85-microToWait-%E5%A4%A7%E4%BA%8E0-%E5%88%99%E8%BF%9B%E8%A1%8C%E7%BA%BF%E7%A8%8Bsleep%EF%BC%8C%E5%90%A6%E5%88%99%E5%B0%B1%E7%9B%B4%E6%8E%A5%E8%8E%B7%E5%8F%96%E5%88%B0%E4%BB%A4%E7%89%8C"><span class="toc-nav-text">调用流程- 首先通过acquire(n)获取n 个令牌，会返回需要等待的时间，如果需要等待(microToWait 大于0)则进行线程sleep，否则就直接获取到令牌  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#reserve-int-permits"><span class="toc-nav-text">reserve(int permits)  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#reserveAndGetWaitLength-int-permits-long-nowMicros"><span class="toc-nav-text">reserveAndGetWaitLength(int permits, long nowMicros)  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#resync-long-nowMicros"><span class="toc-nav-text">resync(long nowMicros)  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#reserveEarliestAvailable-int-requiredPermits-long-nowMicros"><span class="toc-nav-text">reserveEarliestAvailable(int requiredPermits, long nowMicros)  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#storedPermitsToWaitTime-double-storedPermits-double-permitsToTake-%E4%B8%8D%E5%90%8C%E9%99%90%E6%B5%81%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%98%AF%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84%EF%BC%8Cburty-%E6%98%AF%E7%9B%B4%E6%8E%A5%E8%BF%94%E5%9B%9E0%E4%BA%86%E3%80%82"><span class="toc-nav-text">storedPermitsToWaitTime(double storedPermits, double permitsToTake)不同限流器的实现是不一样的，burty 是直接返回0了。  </span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80%E6%AC%A1%E6%80%A7%E8%8E%B7%E5%8F%96%E5%85%A8%E9%83%A8%E7%9A%84storedPermits-%E5%92%8C-%E9%80%9A%E8%BF%87%E9%A5%B1%E5%92%8C%E7%9A%84%E6%B5%81%E9%87%8Facquire-1-%E2%80%A6-%E5%A4%9A%E6%AC%A1%E8%8E%B7%E5%8F%96%E7%9B%B4%E8%87%B3storedPermits%E7%94%A8%E5%AE%8C%EF%BC%8C%E8%BF%99%E4%B8%A4%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F-%E5%89%8D%E8%80%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96%E6%97%B6%E5%B0%B1%E4%BC%9A%E5%85%A8%E9%83%A8%E9%80%9A%E8%BF%87%EF%BC%8C%E6%9B%B4%E6%96%B0%E4%BA%86nextFreeTicketMicros%E5%88%B0%E4%B8%8B%E4%B8%80%E6%AC%A1%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4-%E5%90%8E%E8%80%85%E5%B0%B1%E6%98%AF%E6%85%A2%E6%85%A2%E5%9C%B0%E6%AF%8F%E4%B8%80%E4%B8%AA%E4%BB%A4%E7%89%8C%E6%B6%88%E8%80%97%EF%BC%8C%E9%82%A3%E4%B9%88%E8%BF%99%E4%B8%A4%E8%80%85%E7%94%A8%E5%AE%8C%E4%BA%86storedPermits%E5%90%8E%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AC%A1%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96%E5%88%B0%E4%BB%A4%E7%89%8C%E7%9A%84%E6%97%B6%E9%97%B4%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4%E5%91%A2%EF%BC%9F%E7%90%86%E8%AE%BA%E4%B8%8A%E6%98%AF%E4%B8%80%E8%87%B4%E7%9A%84%E3%80%82%E8%BF%99%E9%87%8C%E8%AE%A1%E7%AE%97%E4%BB%96%E4%BB%AC%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E5%B0%B1%E5%8F%AF%E4%BB%A5%E3%80%82"><span class="toc-nav-text">一次性获取全部的storedPermits 和 通过饱和的流量acquire(1)… 多次获取直至storedPermits用完，这两者之间的区别是什么？- 前者第一次获取时就会全部通过，更新了nextFreeTicketMicros到下一次等待时间- 后者就是慢慢地每一个令牌消耗，那么这两者用完了storedPermits后的下一次可以获取到令牌的时间是否一致呢？理论上是一致的。这里计算他们的时间间隔就可以。  </span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2022/07/21/Ratelimiter-with-guava/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
