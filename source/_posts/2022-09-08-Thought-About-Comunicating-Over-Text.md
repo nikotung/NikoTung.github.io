@@ -18,15 +18,13 @@ tags: [沟通,文字]
 
 这里并非指的是字面上的权力，是大家对于用文字交流时的态度不同而产生的不对等。Tim Urban 在一篇 [11-awkward-things-about-email](https://waitbutwhy.com/2013/12/11-awkward-things-about-email.html)中也提到过: `**Exchanges that have an unequal power dynamic.**` 
 	  
-	  > If someone you’re emailing with:  
-
-	  > * is making typos and you’re not
-		* is skipping punctuation and you’re not
-		* is skipping capitals and you’re not
-		* is taking a long time to reply and you’re not
-		* is responding to your long, well-written emails with much shorter responses
-
-	  > Then you’re their bitch.  
+> If someone you’re emailing with:  
+    * is making typos and you’re not
+	* is skipping punctuation and you’re not
+	* is skipping capitals and you’re not
+	* is taking a long time to reply and you’re not
+	* is responding to your long, well-written emails with much shorter responses
+	Then you’re their bitch.  
 
 ![](http://2.bp.blogspot.com/-D8dfZJD-p6k/Up74Zqw429I/AAAAAAAAGgg/pyeaf_rWqlc/s640/unequal.png)
 
