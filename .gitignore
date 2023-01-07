@@ -15,3 +15,9 @@ _site/
 .sass-cache
 .jekyll-cache
 Gemfile.lock
+
+#hexo
+node_modules/
+db.json
+public/
+.deploy_git/
