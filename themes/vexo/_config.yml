@@ -29,7 +29,7 @@ qrcode: false
 # you can set utterances, gitment, uyan or disqus
 comment: utterances
 
-favicon: images/favicon.ico
+favicon: css/images/favicon.ico
 
 # utterances config
 utterances_repo: NikoTung/NikoTung.github.io  # e.g. GitHubAccount/RepoForUtterances
