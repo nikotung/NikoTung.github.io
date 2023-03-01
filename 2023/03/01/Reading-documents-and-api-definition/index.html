@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="css/images/favicon.ico"/>
+  
+  <title>
+    
+      API 文档记录和阅读技术规范 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>API 文档记录和阅读技术规范</h2>
+  <p class="post-date">2023-03-01</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>最近公司在对接菲律宾的一个二维码支付，QR PH，它是一个由菲律宾国家层面主导的一个无现金支付系统，类似国内的微信支付宝扫码付款。这个支付系统是基于<a target="_blank" rel="noopener" href="https://www.emvco.com/specifications/">EMVCO</a> 的<a target="_blank" rel="noopener" href="https://www.emvco.com/specifications/emv-qr-code-specification-for-payment-systems-emv-qrcps-merchant-presented-mode/">MPM（Merchant Present Mode)</a>模式做的。任何接入方需要遵循这些规范，当然这个EMVCO 规范是比较通用的，在菲律宾下它扩展了一些信息，EMVCO 本身是支持使用的支付系统进行扩展并且是在规范上预留了可扩展的范围已经说明。</p>
+<p>在菲律宾的规范下，任何接入方跟国家下的一个机构（PPMI）对接就可以。只要接入方都遵循规范，大家各自生成的商家二维码都可以被别的接入方识别并且能完成支付，同样的各个接入方也有自己的应用，通常是App，支持扫码识别其它接入方生成的商家码。因为历史原因，与菲律宾PPMI 对接的实现是交给一个外包公司S做的，这家公司已经接了公司印尼的银行核心系统。笔者这边就负责二维码的生辰和识别部分，就卡在中间的位置，首先要了解二维码的规范并把二维码解析后的数据按照S公司提供的API 与他们进行一次交互后，这个系统才会把请求发给PPMI，最后完成一个支付流程。在这个过程中发现有很多不适，虽然不是第一次跟这个S公司的人打交道，但是过程还是很不开心的。</p>
+<h3 id="API-定义"><a href="#API-定义" class="headerlink" title="API 定义"></a>API 定义</h3><p>因为要跟PPMI 对接，S 公司会根据PPMI 的接口文档梳理一份提供给笔者这边调用的API。正是这份API 文档，让笔者最开始就感受到不适。</p>
+<p>S公司第一次提供API 文档的时候是在企业微信群中发了一个文件，一个Excel 文件。当我看到的时候第一句话就问“文档可以上云吗？”，一天后没有反应，实在无法忍受后自己主动上传到Google sheets，开了共享后就把链接在群里发出来。都这个年代了还在即时聊天工具中，通过发文件的方式来达到协作，实在是无法理解，也不敢去理解。这份文档本身是没有定档的，还需要不停地修改，并且会有一些问题的补充和调整的。还有就是用Excel 提供API 文档？我都不敢想象，里面的层级什么的，乱七八糟，要看这份文档需要克服很大心理压力。你可以知道我司是有wiki 的，而且这个问题都不是第一次提出来跟他们说过。</p>
+<p>接口字段的命名，各种单词缩写。在写代码时，完全无法根据理解到的业务去传值，每一个字段的赋值都要看一下定义，才能确定自己没有弄错，实在无奈的情况下给各个字段起了别名，这样才能在写码时手能跟上脑子。</p>
+<p>才发现，他们把PPMI 接口的字段名称原封不动不动地挪过来，同事称之为“不粘锅”，PPMI 系统交互参数时基于<a target="_blank" rel="noopener" href="https://www.iso20022.org/iso-20022-message-definitions">ISO 20022</a>。完全不做过滤，他们理解一遍又要我们再理解一遍，完全不考虑防腐层，导致不停地沟通。</p>
+<p>特别生成的点在于，他们在笔者开始接入这个系统时就已经说在补充单元测试了，第几轮的自测了。可是在汇报进度和风险点时，却又说如果笔者这边的系统没有好的话，他们是无法和PPMI 这边做测试的。听到后我不太确定这段时间他们在测试什么。一个系统按照规范接入了一个标准系统（上游）后，却说不能与之联调，要等它的下游系统好了后才能联调，这种鬼话都能说出来。</p>
+<p>收钱后真的是可以为所欲为。</p>
+<h3 id="技术规范文档阅读"><a href="#技术规范文档阅读" class="headerlink" title="技术规范文档阅读"></a>技术规范文档阅读</h3><p>一直以为，如果要接入一套标准、规范完善的系统时，应该把它的文档认真阅读一遍，原来是我太天真了，没想到还可以关键词阅读。</p>
+<p>这里我想举一个例子来说明一下我的感受。</p>
+<p>二维码的规范中定义了一个字段F，是如下的要求</p>
+<ul>
+<li>ID：28-03</li>
+<li>Format：ANS，这个术语的描述是：“Combination of Alphabet,Numberic and Special Characters”</li>
+<li>Length：1..25,表示1到25位可变长度。</li>
+</ul>
+<p>这个F 字段要提交到S 公司定义的API 中，对应的字段C  的约束如下。</p>
+<ul>
+<li><code>[0-9]&#123;8,28&#125;</code>，是一个正则表达式，8到28位的数字</li>
+</ul>
+<p>基于上面的例子，笔者就向其中一位负责API 定义的工程师反馈说，这个字段C的要求可能有问题，看看是不是文档看错了还是哪里没有衔接上。没想到他反客为主，问我“你有见到过二维码中字段F 里的值带有字母的吗？”，因为在研究二维码时曾看了一些别的接入方生成的二维码，这个字段的内容都是纯数字，笔者很直接地回答说“没有”，他竟然说“没有看到的话，那么这个字段就认为是纯数字吧。”，我着急了说“你不能因为没有看到有这样的二维码，何况我们之看了两家的码，来得出结论说字段F 的值不可能包含字母”。</p>
+<p>“你是否认同字段F 的值在文档规范下是可以包含字母的？”，“不同意”，笔者掩面。</p>
+<p>“文档上格式上写的是ANS，不是说就会有字母出现”。笔者摊手。</p>
+<p>“我可以找一个别的字段，在文档上规定的格式是ANS，在二维码上确实出现过字母”，“我看看”，笔者翻白眼。</p>
+<p>这种情况出现了无数次，真的要崩溃了。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2023/01/31/Lunar-New-Year-records/">
+        <span class="nav-arrow">← </span>
+        
+          新年见闻
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#API-%E5%AE%9A%E4%B9%89"><span class="toc-nav-text">API 定义</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3%E9%98%85%E8%AF%BB"><span class="toc-nav-text">技术规范文档阅读</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2023/03/01/Reading-documents-and-api-definition/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
