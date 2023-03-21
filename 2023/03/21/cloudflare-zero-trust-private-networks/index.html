@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="css/images/favicon.ico"/>
+  
+  <title>
+    
+      cloudflare zero trust:private networks | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>cloudflare zero trust:private networks</h2>
+  <p class="post-date">2023-03-21</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>自疫情来，有居家办公开始，我对内网穿透的需求越来越大且越来越依赖。公司网络需要安装DLP（Data Loss Prevention）软件才能访问，我称之为监控，个人电脑需要访问的话就必须要安装DLP 后才能使用VPN 接入，个人电脑我是不想并且不会安装DLP的，并且我也不想天天背着公司电脑上下班，于是就在想有没有什么办法可以绕过这个DLP 这个监控软件还能安全连接到公司内网。中间折腾花了不少时间，刚好办公室里有一台闲置的PC安装了Ubuntu并且常年开机，尝试过的方案有<a target="_blank" rel="noopener" href="https://www.softether.org/">softether</a>、<a target="_blank" rel="noopener" href="https://ngrok.com/">ngrok</a>、<a target="_blank" rel="noopener" href="https://tailscale.com/">tailscale</a>以及<a target="_blank" rel="noopener" href="https://www.cloudflare.com/zero-trust-hub/">cloudflare zero trust</a>，发现tailscale 已经能很好满足我的需求，配置好<code>exit-node</code> 和 <code>subnets</code>就能把网络打通，最近又发现cloudflare 的zero trust 已经发布并且把之前的tunnel 功能也集成在里面，它也能做内网穿透，直接把内网暴露到cloudflare 的网络中，这样就可以在我个人的电脑上安装warp 接入到cloudflare 中就可以访问公司网络了，目前这个功能在少于50个用户的组织中是免费的，而且zero trust 还能做代理访问防火墙（GFW）外的内容而不需要你像tailscale一样需要有一台外网VPS 才能做到，流量也没有限制。它的架构大概如下（图片来源cloudflare 博客）：<br><img src="/./assets/cloudflare-private-networks.png"></p>
+<p>下面记录一下如何用cloudflare zero trust 做内网穿透。</p>
+<h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><ul>
+<li>有一个cloudflare 账户并且关联了一个域名，这个域名可以在cloudflare 购买或者把域名nameserver 指向cloudflare 家的<code>rihana.ns.cloudflare.com</code> 和 <code>sam.ns.cloudflare.com</code></li>
+<li>开通cloudflare zero trust,现在可以直接在dashboard 上操作了，点开后按提示操作就可以了，主要是创建一个组织并且选择一个付费计划，选择免费的即可。</li>
+</ul>
+<h2 id="Dashboard-上的一些配置"><a href="#Dashboard-上的一些配置" class="headerlink" title="Dashboard 上的一些配置"></a>Dashboard 上的一些配置</h2><p>Zero Trust 是一个面向企业的服务，因此它有很多规则类的配置，包括一些准入规则，屏蔽规则等等。这里主要配置一下谁能加入我们的组织以及怎么验证。</p>
+<h3 id="Login-methods"><a href="#Login-methods" class="headerlink" title="Login methods"></a>Login methods</h3><p>这个配置的作用是在于如果别人要加入你的组织，你需要通过什么方式去验证加入的这个用户的身份，cloudflare 内部集成了很多种，包括Github、Facebook、Google、Okta 和 One-time PIN等等，One-time PIN 好像是默认的，可以选择自己需要的验证方式，入口：<strong>Settings-&gt;Authentication-&gt;Login methods</strong>,进入后按照提示，跟着添加步骤走就可以了。</p>
+<h3 id="Warp-Client"><a href="#Warp-Client" class="headerlink" title="Warp Client"></a>Warp Client</h3><p>用户是通过Warp client 来加入组织的，只要在电脑或者手机上安装Cloudflare Warp 这个应用后，在账户中进入选择加入Zero Trust networks 后根据提示输入组织名，然后再选择验证方式，上面的Login methods 配置了什么这里就会出现，跟着提示操作就可以。这里主要是配置符合什么样的条件才能加入你的组织，入口：<strong>Settings-&gt;Warp Client-&gt;Device enrollment</strong>，点击<code>Manage</code>进入配置规则，在<code>Rules</code>下新增一个规则，这个规则可以有多种表达方式，比如指定邮箱、指定邮箱域名、Login methods 以及国家等等，下面是一个示例：<br><img src="/./assets/cloudflare-rule-example.png"></p>
+<p>表示<code>xxx@gmail.com</code> 或者<code>duckduckgo.com</code> 后缀的邮箱都可以加入组织，里面还有很多规则可以根据自己的需要选择。</p>
+<p>有了上面的两个配置后就可以在电脑或者手机上安装Cloudflare Warp 应用然后加入组织了，加入后就可以做代理应用了。</p>
+<h2 id="Cloudflare-Tunnel"><a href="#Cloudflare-Tunnel" class="headerlink" title="Cloudflare Tunnel"></a>Cloudflare Tunnel</h2><p>Tunnel 就是在你的内网机器上安装<code>cloudflared</code> 运行一个后台服务与cloudflare 网络创建一个outbound-only 的连接，从而把你的网络暴露到cloudflare 的网络中。</p>
+<blockquote>
+<p>Cloudflared establishes outbound connections (tunnels) between your resources and the Cloudflare edge. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many cloudflared processes (connectors) as needed. These processes will establish connections to the Cloudflare edge and send traffic to the nearest Cloudflare data center.<br><img src="/./assets/how-cloudflare-tunnel-works.jpeg"></p>
+</blockquote>
+<h3 id="安装-cloudflared"><a href="#安装-cloudflared" class="headerlink" title="安装 cloudflared"></a>安装 cloudflared</h3><p><code>cloudflared</code>在<a target="_blank" rel="noopener" href="https://github.com/cloudflare/cloudflared/releases">GitHub</a> 上有很多编译好的二进制文件，选择适合自己的安装即可，具体的安装步骤参考<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/">install-and-setup&#x2F;installation</a></p>
+<h3 id="创建Tunnel"><a href="#创建Tunnel" class="headerlink" title="创建Tunnel"></a>创建Tunnel</h3><p>创建Tunnel 有两个途径，一个是在dashboard 页面上操作，一个是安装了cloudflared 机器上用命令行安装。这里建议是通过命令行安装，因为我试过了几次用cloudflare 的dashboard 安装总是不成功。</p>
+<p>首先第一步是先登录，<code>cloudflared tunnel login</code>，点击控制台的链接进行登录授权。成功后会在当前用户的<code>$HOME/.cloudflared/</code>目录下创建一个证书<code>cert.pem</code></p>
+<p>接着就是创建Tunnel <code>cloudflared tunnel create vpc-office</code>,把这里的vpc-office 换成你自己的名字，创建成功后会打印出Tunnel 的uuid，并且在<code>$HOME/.cloudflared</code> 目录下创建一个以uuid为名字的json 文件，比如<code>07cc7011-2d18-49eb-9d4a-2db9b4d50067.json</code></p>
+<p>在<code>$HOME/.cloudflared</code> 下创建一个配置文件<code>config.yml</code>,内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tunnel: 07cc7011-2d18-49eb-9d4a-2db9b4d50067 # 这里就是tunnel 的uuid</span><br><span class="line">credentials-file: /home/root/.cloudflared/07cc7011-2d18-49eb-9d4a-2db9b4d50067.json # json文件</span><br><span class="line">warp-routing:</span><br><span class="line">   enabled: true #这里是暴露私有网络，如果是仅仅暴露一个服务的话可以不用开启</span><br></pre></td></tr></table></figure>
+
+<p>运行Tunnel <code>cloudflared tunnel run vpc-office</code>看看是否Tunnel 能运行成功。这样只是在前台运行成功，这里要暴露网络，因此需要运行成后台，具体可以参考<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/">run-as-a-service</a></p>
+<p>我这里是Ubuntu，操作如下：把<code>config.yml</code> 拷贝到<code>/etc/cloudflared/config.yml</code>，然后<code>sudo cloudflared service install</code> 这样就可以安装成功了，通过<code>systemctl status cloudflared</code>可以查看运行的状态。</p>
+<p>另外，也可以改一下cloudflared参数<code>sudo sysctl -w net.core.rmem_max=2500000</code> </p>
+<h3 id="暴露网络"><a href="#暴露网络" class="headerlink" title="暴露网络"></a>暴露网络</h3><p>在cloudflared 安装好后，需要配置一些路由规则来告诉cloudflare 那些网段是走这个Tunnel。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cloudflared tunnel route ip add 192.168.2.0/24 vpc-office</span><br><span class="line">cloudflared tunnel route ip add 192.168.14.0/24 vpc-office</span><br><span class="line">cloudflared tunnel route ip add 10.0.20.0/24 vpc-office</span><br></pre></td></tr></table></figure>
+<p>上面的命令就是把192.168.2.0&#x2F;24，192.168.14.0&#x2F;24 和 10.0.20.0&#x2F;24配置成走这个Tunnel，也就是组织内的用户在访问到的地址在这个三个网段时就会被路由到这个公司内网中，具体的网段要根据自己的实际情况配置。</p>
+<h3 id="Split-tunnle-配置"><a href="#Split-tunnle-配置" class="headerlink" title="Split tunnle 配置"></a>Split tunnle 配置</h3><p>Cloudflare 默认有一些内网IP是不会经过它的网关的，而是直接在用户设备上连接的，因此要确认是否跟你公司的内网网段重复，如果是的话需要在cloudflare 中把它删掉或者添加这样你配置的路由规则才会生效。<br>配置入口：<strong>Settings-&gt;Network-&gt;Split tunnels and local domain fallback-&gt;Device settings</strong>，在<strong>Device settings</strong>下选择你的profile 点击进入配置，找到<strong>Split Tunnels</strong>。根据配置的模式，如果是<strong>Include</strong>，那么就要把上面配置的网段加进去，如果是<strong>Exlude</strong> 那么就看看cloudflare 默认不走路由规则的网段是否和你要配置的网段冲突，如果是就把它删掉即可。</p>
+<h3 id="Local-Domain-Fallback"><a href="#Local-Domain-Fallback" class="headerlink" title="Local Domain Fallback"></a>Local Domain Fallback</h3><p>很多时候，公司内部有很多内部域名，需要通过内部的DNS 服务器去解析才行，这时就需要配置<strong>Local Domain Fallback</strong>，在上面Split tunnel 配置的页面中找到<strong>Local Domain Fallback</strong>，点击进入管理，在域名项输入内网的域名，在DNS Servers项输入内部的DNS 服务器添加即可。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.cloudflare.com/building-many-private-virtual-networks-through-cloudflare-zero-trust/">building-many-private-virtual-networks-through-cloudflare-zero-trust</a></li>
+<li><a target="_blank" rel="noopener" href="https://savjee.be/blog/securely-access-home-network-with-Cloudflare-Tunnel-and-WARP/">securely-access-home-network-with-Cloudflare-Tunnel-and-WARP</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cloudflare-one/">Cloudflare Zero Trust</a></li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#cloudflare" >
+    <span class="tag-code">cloudflare</span>
+  </a>
+
+  <a href="/tags#内网穿透" >
+    <span class="tag-code">内网穿透</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2023/03/01/Reading-documents-and-api-definition/">
+        <span class="nav-arrow">← </span>
+        
+          API 文档记录和阅读技术规范
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%A6%81%E6%B1%82"><span class="toc-nav-text">要求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Dashboard-%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">Dashboard 上的一些配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Login-methods"><span class="toc-nav-text">Login methods</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Warp-Client"><span class="toc-nav-text">Warp Client</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cloudflare-Tunnel"><span class="toc-nav-text">Cloudflare Tunnel</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%89%E8%A3%85-cloudflared"><span class="toc-nav-text">安装 cloudflared</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%88%9B%E5%BB%BATunnel"><span class="toc-nav-text">创建Tunnel</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9A%B4%E9%9C%B2%E7%BD%91%E7%BB%9C"><span class="toc-nav-text">暴露网络</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Split-tunnle-%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">Split tunnle 配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Local-Domain-Fallback"><span class="toc-nav-text">Local Domain Fallback</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-text">参考</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2023/03/21/cloudflare-zero-trust-private-networks/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
