@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="css/images/favicon.ico"/>
+  
+  <title>
+    
+      Code Simplicity | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Code Simplicity</h2>
+  <p class="post-date">2023-05-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>看了一本书<a target="_blank" rel="noopener" href="https://www.codesimplicity.com/book.pdf">Code Simplicity</a>，准确点来说应该是一本小册子，全书也就80来页而已。里面有些观点在这里摘录一下。</p>
+<blockquote>
+<p>There are, thankfully, various ways to balance these two needs of writing features and handling complexity. One of the best ways is to do your redesigning purely with the goal of making some specific feature easier to implement, and then implementing that feature. That way, you switch regularly between redesign work and feature work. This also helps your new design fit your needs well, because you’re creating it with a real use in mind. Your system will slowly get less complex over time, and you will still keep pace with your users’ needs. You can even do this for bugs—if you see that some bug would be easier to fix with a different design, redesign the code before fixing it.</p>
+</blockquote>
+<p>这也是小步迭代的方向，每次写代码都要设计，需要思考过，而并不是仅仅把功能实现就可以。</p>
+<blockquote>
+<p>Many difficult design problems can be solved by simply drawing or writing them out on paper. </p>
+</blockquote>
+<p>我自己也逐渐在养成一种习惯，在开始写代吗时先用文字的方式在自己的logseq 上写下来要做什么，具体步骤有哪些一步一步列出来，也会把具体的需求或者问题描述一边。一旦我这么做了后<br>开始写代码时就会思路清晰很多。</p>
+<blockquote>
+<p>A technology’s survival potential is the likelihood that it will continue to be maintained. If you get stuck with a library or some dependency that becomes obsolete and un- maintained, you’re really in for some trouble </p>
+</blockquote>
+<p>曾经听到一个观点：一个东西&#x2F;技术存活了多久，它很大可能也就会再存活多久，老技术更能说明它可靠。</p>
+<blockquote>
+<p>Thankfully, there are three factors you can look at to determine if a technology is “bad” before you even start using it: <strong>survival potential, interoperability, and attention to quality</strong>.</p>
+</blockquote>
+<p>这也许是选择技术框架时的一个思路。这门技术是否有比较强的持续存下去的可能，这里说到的interoperability，我理解来说是容易替换也就是说符合标准的而不是定制化的，在面向接口编程时往往可以不关注实现，<br>关注质量这个的话，可能要关注它的社区，如果能看到源代码那就要看它的源代码。</p>
+<blockquote>
+<p>Complexity builds on complexity—it’s not just a linear thing. That is, you can’t make assumptions like: “We have 10 features, so adding 1 more will only add 10 percent more time.” In fact, that one new feature will have to be coordinated with all 10 of your existing features. So, if it takes 10 hours of coding time to implement the feature itself, it may well take another 10 hours of coding time to make the 10 existing features all interact properly with the new feature. The more features there are, the higher the cost of adding a feature gets. You can minimize this problem by having an excellent software design, but there will still always be some slight extra cost for every new feature. </p>
+</blockquote>
+<p>这个观点在人曰神话中出现过了，这里作者也提到了这本书。尤其是在复杂都比较高的系统中，往往不能简单地这样计算。</p>
+<blockquote>
+<p>On the other side of things, when you’ve designed well, there’s often not a whole lot of credit that comes your way. Catastrophic failures in design are big and noticeable, whereas small increments of work toward a good design are invisible to people who aren’t intimately connected with the code. This can make being a designer a difficult job. Handling a big failure gets you a lot of thanks, but preventing one from ever hap- pening…well, nobody’s likely to notice. </p>
+</blockquote>
+<p>程序员工作悖论，架构做的好，代码写得好，没有出任何故障，可用率达到6个9，最后却被优化了。而天天救火的人反倒获得了组织认可，因为他天天出现在领导面前。</p>
+<blockquote>
+<p>The real purpose of comments is to explain why you did something, when the reason isn’t obvious. If you don’t explain that, other programmers may be confused, and when they go to change your code they might remove important parts of it if those parts don’t seem to have a reason to exist</p>
+</blockquote>
+<p>代码注释的功能不是讲述这段代码做什么，而是讲述为什么这么做。做什么的说明应该是通过代码本身去表达。</p>
+<blockquote>
+<p>There are situations in programming where it doesn’t matter how you do things, as long as you always do them that way. Theoretically, you could write your code in some crazy complex way, but as long as you were consistent with it, people would learn how to read it. (Of course, it’s better to be consistent and simple, but if you can’t be totally simple, at least be consistent.)<br>Code that isn’t consistent is harder for a programmer to understand and read.</p>
+</blockquote>
+<p>一致性，先从变量命名开始，尤其是API 中，用了驼峰就全部都是驼峰，别一会下划线一会驼峰。</p>
+<blockquote>
+<p>However, just because a user reports something doesn’t mean it’s a problem. Some- times the user will simply not have realized that your program had some feature already, and so asked you to implement something else unnecessarily<br>Never “fix” anything unless it’s a problem, and you have evidence showing that the problem really exists. It’s important to have evidence of problems before you address them. Otherwise, you might be developing features that don’t solve anybody’s problem, or you might be “fixing” things that aren’t broken. </p>
+</blockquote>
+<p>不要着急去“Fix bugs”，先确认清楚情况。尤其看到一些年轻开发者，一旦别人提了个问题，马上就自己吭哧就写代码了。</p>
+<blockquote>
+<p>This is actually a combination of two methods: one called “incremental development” and another called “incremental design.” Incremental development is a method of building up a whole system by doing work in small pieces. In our list, each step that started with “Implement” was part of the incremental development process. Incre- mental design is similarly a method of creating and improving the system’s design in small increments. Each step that started with “Fix up the system’s design” or “Plan” was part of the incremental design process.<br>In general, when your design makes things more complex instead of simplifying things, you’re overengineering.<br>Code should be designed based on what you know now, not on what you think will happen in the future. </p>
+<ol>
+<li>Make too many assumptions about the future. 2. Write code without enough design</li>
+</ol>
+</blockquote>
+<p>永远不要假想以后会怎么样。</p>
+<blockquote>
+<p>It’s a good rule, but it’s misnamed. You actually might need the code in the future, but since you can’t predict the future you don’t know how the code needs to work yet. If you write it now, before you need it, you’re going to have to redesign it for your real needs once you actually start using it<br>There are three broad mistakes that software designers make when attempting to cope with the Law of Change, listed here in order of how common they are: </p>
+<ol>
+<li>Writing code that isn’t needed </li>
+<li>Not making the code easy to change </li>
+<li>Being too generic</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Often, designing a system that will have decreasing maintenance effort requires a significantly larger effort of implementation—quite a bit more design work and planning are required. However, remember that the effort of implementation is nearly always an insignificant factor in making design decisions, and should mostly be ignored.<br>And in fact, nearly all decisions in software design reduce entirely to measuring the future value of a change versus its effort of maintenance. There are situations in which the present value and the implementation effort are large enough to be significant in a decision, but they are extremely rare. In general, software systems are maintained for so long that the value now and the effort of implementation are guaranteed to become insignificant in almost all cases when compared to the long-term future value and effort of maintenance.<br>Features that have no users have no immediate value. These could include features that users can’t find, features that are too difficult to use, or features that simply don’t help anybody. They may have value in the future, but they have no value now. </p>
+</blockquote>
+<p>重长远的角度看，如果一个软件会被长期使用，那么维护成本往往比当初开始开发时的成本要高，那么可维护行就很重要了。</p>
+<blockquote>
+<p>Probability of value and potential value Value is actually composed of two factors: the probability of value (how likely it is that this change will help a user), and the potential value (how much this change will help a user during those times when it does help that person). </p>
+</blockquote>
+<p>这个说法跟我自己的理解&#x2F;感受很像，产品出了事故大家往往评价产生了多大影响（Probability），但是鲜少去关心每个受影响的用户会受到多大的影响。在互联网公司呆久了往往看到一些事故分析都是关心公司有没有受到资产损失，<br>有多少用户受到了影响，这些都是大数，可能每个人的影响不一样的。在用户投诉时，客服往往又不会有什么权力去安慰（赔偿）用户。</p>
+<blockquote>
+<p>The difference between a bad programmer and a good programmer is understanding.<br>The average software system becomes large enough that no human being could hope to hold all of its code in their mind at once. This isn’t good or bad, it’s just a fact </p>
+</blockquote>
+<p>作者在书中提到软件的目的就是帮助人，你是否同意呢？</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#读书" >
+    <span class="tag-code">读书</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2023/03/21/cloudflare-zero-trust-private-networks/">
+        <span class="nav-arrow">← </span>
+        
+          cloudflare zero trust:private networks
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2023/05/24/Code-Simplicity/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
