@@ -17,9 +17,38 @@ tags: [读书]
 ```
     opkg update
     opkg install kmod-inet-diag kmod-netlink-diag kmod-tun iptables-nft
+    opkg install sing-box
 ```
 
+安装完后,`/etc/init.d/sing-box` 和 `/etc/config/sing-box` 会被创建,主要是用来开机启动和配置管理,后面会用到.
+
+为了验证安装是否成功以及配置文件是否有问题,用`check` 和 `run` 命令分别测试一下.
+
+```
+    sing-box check -c {your_config_path}
+    sing-box run -c {your_config_path} -D {your_work_dir} # 这个会在你运行的地方下载geoip ,geosite 以及cash dashboard 的UI 
+```
+
+如果上面的检测没有问题说明安装就正常了. 下面是要配置开机启动和防火墙.
+
+### 配置防火墙
+
+通过`opkg install sing-box` 自动创建的`/etc/init.d/sing-box` 脚本,运行是没有问题的,但是我自己通过`/etc/init.d/sing-box start` 启动后`sing-box` 进程也就退出了,不知道为何.于是我就参考[这里](https://github.com/rezconf/Sing-box/wiki/How-to-Run) 换了一个脚本.由于路由的防火墙是用的`nft-table`,因此防火墙这边做了一下调整.
+
+```
+// 在start 中增加
+nft add table inet filter
+nft add chain inet filter FORWARD { type filter hook forward priority 0\; }
+nft insert rule inet filter FORWARD oifname "tun*" counter accept # 这里的tun要根据sing-box 配置文件中的网卡名字决定.
+
+//在stop 中删除
+nft delete table inet filter
+```
+
+`sing-box` 运行后会在路由器的`Network` -> `Interface` 中创建一个虚拟网卡,名字是和你的配置文件中的网卡名字一致的.
 
 ### References
 
 * [How to Run](https://github.com/rezconf/Sing-box/wiki/How-to-Run)
+* [netlink: 'sing-box': attribute type 22 has an invalid length](https://github.com/SagerNet/sing-box/issues/100)
+* [nftables](https://en.wikipedia.org/wiki/Nftables)
