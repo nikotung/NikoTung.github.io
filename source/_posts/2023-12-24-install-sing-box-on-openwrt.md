@@ -84,6 +84,8 @@ config sing-box 'main'
 * Taiwan
 * Others
 
+通过 Github Action 的方式定期更新订阅并把转换好的配置文件上传到Cloudflare 的免费R2 上.
+
 ### References
 
 * [How to Run](https://github.com/rezconf/Sing-box/wiki/How-to-Run)
