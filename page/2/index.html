@@ -167,6 +167,42 @@
   
     <article class="article-card">
       <h2 class="article-head">
+        <a href="/2022/07/21/Ratelimiter-with-guava/">Guava Ratelimiter</a>
+      </h2>
+      <p class="article-date">July 21, 2022</p>
+      
+        
+  <a href="/tags#限流" >
+    <span class="tag-code">限流</span>
+  </a>
+
+  <a href="/tags#Guava" >
+    <span class="tag-code">Guava</span>
+  </a>
+
+  <a href="/tags#Ratelimiter" >
+    <span class="tag-code">Ratelimiter</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+[[Github]]链接 github  
+
+在 [[Sentinel]]中有借鉴了这里的实现  
+
+传统的第一印象做法  
+
+记录上一次允许请求的时间戳，确保在新请求进来的时候，确保距离上一次允许请求已经过了 1&#x2F;QPS 时间。  
+假如一个QPS&#x3D;5的限制，在上一次 ...
+        
+      </div>
+      <a class="more" href="/2022/07/21/Ratelimiter-with-guava/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
         <a href="/2022/04/24/Retries-with-Idempotent/">用幂等支持重试</a>
       </h2>
       <p class="article-date">April 24, 2022</p>
@@ -417,35 +453,6 @@ Note that the minimal cluster that works as expected re ...
         
       </div>
       <a class="more" href="/2019/07/25/Simple-Redis-Cluster-With-Docker/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/06/13/Distribute-Caching-And-Consistent-Hashing/">分布式缓存及一致性哈希算法（ketama）</a>
-      </h2>
-      <p class="article-date">June 13, 2019</p>
-      
-        
-  <a href="/tags#缓存" >
-    <span class="tag-code">缓存</span>
-  </a>
-
-  <a href="/tags#一致性哈希" >
-    <span class="tag-code">一致性哈希</span>
-  </a>
-
-  <a href="/tags#架构" >
-    <span class="tag-code">架构</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          在实际的系统开发中，当流量增大时，通常会使用缓存技术去减少数据库的访问来减少数据库的压力。而随着流量越来越大，缓存的量也就越来越大，这时也会引用到分布式缓存。
-分布式缓存所谓的分布式缓存就是用一堆机器构成一个大的缓存池，每一台机器缓存一部分数据，这样也能达到水平伸缩的效果。比如说一台机器能够 ...
-        
-      </div>
-      <a class="more" href="/2019/06/13/Distribute-Caching-And-Consistent-Hashing/">Read more</a>
     </article>
   
 

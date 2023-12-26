@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="css/images/favicon.ico"/>
+  
+  <title>
+    
+      Install sing-box on Openwrt | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Install sing-box on Openwrt</h2>
+  <p class="post-date">2023-12-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>前段时间因为clash 删库的事情，就在网上查了一下有什么替代品之类的，发现了一个<a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/">sing-box</a> 的工具。它支持现在机场上提供的大部分的协议，发现它也是很早前自己曾经使用的sagernet(一个Android 的代理工具)的那群开发者开发的，于是就简单的了解了一下，也在手机使用了一段时间，发现整体的体验还不错。所以就折腾了一下把全平台都迁移一下过来，这样就用一个通用的配置就全平台通用。Android 、iOS 和 Mac OS 上都有客户端可以直接安装就使用了，家里的路由器之前是装的是<a target="_blank" rel="noopener" href="https://github.com/immortalwrt">immortalwrt</a>，需要做一些配置才能安装好使用。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>在openwrt 的<a target="_blank" rel="noopener" href="https://github.com/openwrt/packages/tree/master/net/sing-box">packages</a> 中已经有了sing-box 的安装源，目前的版本是1.74。因此整个安装会比较简单用<code>opkg</code> 就能完成。</p>
+<p>更新一下packages 然后把依赖也一并安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg install kmod-inet-diag kmod-netlink-diag kmod-tun iptables-nft</span><br><span class="line">opkg install sing-box</span><br></pre></td></tr></table></figure>
+
+<p>安装完后,<code>/etc/init.d/sing-box</code> 和 <code>/etc/config/sing-box</code> 会被创建,主要是用来开机启动和配置管理,后面会用到.</p>
+<p>为了验证安装是否成功以及配置文件是否有问题,用<code>check</code> 和 <code>run</code> 命令分别测试一下.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sing-box check -c &#123;your_config_path&#125;</span><br><span class="line">sing-box run -c &#123;your_config_path&#125; -D &#123;your_work_dir&#125; # 这个会在你运行的地方下载geoip ,geosite 以及cash dashboard 的UI </span><br></pre></td></tr></table></figure>
+
+<p>如果上面的检测没有问题说明安装就正常了. 下面是要配置开机启动和防火墙.</p>
+<h3 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h3><p>sing-box 服务启动后不能自己代理流量的,即便你开了了<code>auto_route</code>,需要简单配置一个防火墙.</p>
+<p>在&#x2F;etc&#x2F;config&#x2F;firewall中添加规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">config zone</span><br><span class="line">        option name &#x27;proxy&#x27;</span><br><span class="line">        option forward &#x27;REJECT&#x27;</span><br><span class="line">        option output &#x27;ACCEPT&#x27;</span><br><span class="line">        option input &#x27;ACCEPT&#x27;</span><br><span class="line">        option mtu_fix &#x27;1&#x27;</span><br><span class="line">        option device &#x27;tun0&#x27;</span><br><span class="line">        list network &#x27;proxy&#x27;</span><br><span class="line"></span><br><span class="line">config forwarding</span><br><span class="line">        option name &#x27;lan-proxy&#x27;</span><br><span class="line">        option dest &#x27;proxy&#x27;</span><br><span class="line">        option src &#x27;lan&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>添加网络接口&#x2F;etc&#x2F;config&#x2F;network</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config interface &#x27;proxy&#x27;</span><br><span class="line">       option proto &#x27;none&#x27;</span><br><span class="line">       option device &#x27;tun0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>配置开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config sing-box &#x27;main&#x27;</span><br><span class="line">        option enabled &#x27;1&#x27;</span><br><span class="line">        option user &#x27;root&#x27; # 如果你是用tun 模式的话,一定要改成root</span><br><span class="line">        option conffile &#x27;/etc/sing-box/config.json&#x27;</span><br><span class="line">        option workdir &#x27;/usr/share/sing-box&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置订阅"><a href="#配置订阅" class="headerlink" title="配置订阅"></a>配置订阅</h3><p>我是自己fork 了一个<a target="_blank" rel="noopener" href="https://github.com/NikoTung/clash2singbox">clash2singbox</a>,在原来的基础上加了地区分组.主要有:</p>
+<ul>
+<li>HongKong</li>
+<li>USA</li>
+<li>Japan</li>
+<li>Singapore</li>
+<li>Taiwan</li>
+<li>Others</li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rezconf/Sing-box/wiki/How-to-Run">How to Run</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SagerNet/sing-box/issues/100">netlink: ‘sing-box’: attribute type 22 has an invalid length</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nftables">nftables</a></li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#工具" >
+    <span class="tag-code">工具</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2023/05/24/Code-Simplicity/">
+        <span class="nav-arrow">← </span>
+        
+          Code Simplicity
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-nav-text">安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-nav-text">配置防火墙</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AE%A2%E9%98%85"><span class="toc-nav-text">配置订阅</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#References"><span class="toc-nav-text">References</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2023/12/24/install-sing-box-on-openwrt/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
