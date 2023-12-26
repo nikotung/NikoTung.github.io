@@ -33,19 +33,54 @@ tags: [读书]
 
 ### 配置防火墙
 
-通过`opkg install sing-box` 自动创建的`/etc/init.d/sing-box` 脚本,运行是没有问题的,但是我自己通过`/etc/init.d/sing-box start` 启动后`sing-box` 进程也就退出了,不知道为何.于是我就参考[这里](https://github.com/rezconf/Sing-box/wiki/How-to-Run) 换了一个脚本.由于路由的防火墙是用的`nft-table`,因此防火墙这边做了一下调整.
+sing-box 服务启动后不能自己代理流量的,即便你开了了`auto_route`,需要简单配置一个防火墙.
+
+在/etc/config/firewall中添加规则：
 
 ```
-// 在start 中增加
-nft add table inet filter
-nft add chain inet filter FORWARD { type filter hook forward priority 0\; }
-nft insert rule inet filter FORWARD oifname "tun*" counter accept # 这里的tun要根据sing-box 配置文件中的网卡名字决定.
+config zone
+        option name 'proxy'
+        option forward 'REJECT'
+        option output 'ACCEPT'
+        option input 'ACCEPT'
+        option mtu_fix '1'
+        option device 'tun0'
+        list network 'proxy'
 
-//在stop 中删除
-nft delete table inet filter
+config forwarding
+        option name 'lan-proxy'
+        option dest 'proxy'
+        option src 'lan'
 ```
 
-`sing-box` 运行后会在路由器的`Network` -> `Interface` 中创建一个虚拟网卡,名字是和你的配置文件中的网卡名字一致的.
+添加网络接口/etc/config/network
+
+```
+ config interface 'proxy'
+        option proto 'none'
+        option device 'tun0'
+```
+
+配置开机启动
+
+```
+config sing-box 'main'
+        option enabled '1'
+        option user 'root' # 如果你是用tun 模式的话,一定要改成root
+        option conffile '/etc/sing-box/config.json'
+        option workdir '/usr/share/sing-box'
+```
+
+### 配置订阅
+
+我是自己fork 了一个[clash2singbox](https://github.com/NikoTung/clash2singbox),在原来的基础上加了地区分组.主要有:
+
+* HongKong
+* USA
+* Japan
+* Singapore
+* Taiwan
+* Others
 
 ### References
 
