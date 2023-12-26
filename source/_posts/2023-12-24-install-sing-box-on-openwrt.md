@@ -1,9 +1,11 @@
 ---
 title: Install sing-box on Openwrt
+tags:
+  - 工具
+categories: 2023-12
 date: 2023-12-24 22:33:29
-categories: "2023-12"
-tags: [读书]
 ---
+
 
 前段时间因为clash 删库的事情，就在网上查了一下有什么替代品之类的，发现了一个[sing-box](https://sing-box.sagernet.org/) 的工具。它支持现在机场上提供的大部分的协议，发现它也是很早前自己曾经使用的sagernet(一个Android 的代理工具)的那群开发者开发的，于是就简单的了解了一下，也在手机使用了一段时间，发现整体的体验还不错。所以就折腾了一下把全平台都迁移一下过来，这样就用一个通用的配置就全平台通用。Android 、iOS 和 Mac OS 上都有客户端可以直接安装就使用了，家里的路由器之前是装的是[immortalwrt](https://github.com/immortalwrt)，需要做一些配置才能安装好使用。
 
