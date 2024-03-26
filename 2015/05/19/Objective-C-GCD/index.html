@@ -238,7 +238,7 @@ dispatch_group_notify(dispatch_group_t group,
 <h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><p>Dispatch semaphores类似于一种生产-消费者这种模式(也可以用锁去理解)。有三个API <code>dispatch_semaphore_create</code>,<code>dispatch_semaphore_signal</code>和<code>dispatch_semaphore_wait</code>。通过signal会增加一个可以消费的信号量，wait就会减少一个。</p>
 <p>在创建的时候传进去的初始化值一般有0和大于0两种用法。0的话主要就是用于同步锁这样的一个需求，而大于0的话是用于管理有限资源，比如资源数有六个，然后传个6进去，就可以限定最多6个线程可以访问这六个资源。</p>
 <p>ps:可以通过terminal 用如下命令查看用法 : man dispatch_semaphore_create </p>
-<h3 id="Resume-amp-Suspension"><a href="#Resume-amp-Suspension" class="headerlink" title="Resume &amp; Suspension"></a>Resume &amp; Suspension</h3><p>Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。<code>dispatch_resume</code> <code>dispathc_suspend</code></p>
+<h3 id="Resume-Suspension"><a href="#Resume-Suspension" class="headerlink" title="Resume &amp; Suspension"></a>Resume &amp; Suspension</h3><p>Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。<code>dispatch_resume</code> <code>dispathc_suspend</code></p>
 </section>
     <!-- Tags START -->
     
@@ -304,7 +304,7 @@ dispatch_group_notify(dispatch_group_t group,
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGCD"><span class="toc-nav-text">什么是GCD</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#GCD%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD-%E2%80%94-Dispatch-Object-%E5%92%8C-Dispatch-Queue"><span class="toc-nav-text">GCD中的基本术语 — Dispatch Object 和 Dispatch Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84Queue"><span class="toc-nav-text">三种类型的Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Queue%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-nav-text">Queue的基本用法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#dispatch-group"><span class="toc-nav-text">dispatch_group</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Dispatch-Source"><span class="toc-nav-text">Dispatch Source</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Semaphores"><span class="toc-nav-text">Semaphores</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Resume-amp-Suspension"><span class="toc-nav-text">Resume &amp; Suspension</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGCD"><span class="toc-nav-text">什么是GCD</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#GCD%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD-%E2%80%94-Dispatch-Object-%E5%92%8C-Dispatch-Queue"><span class="toc-nav-text">GCD中的基本术语 — Dispatch Object 和 Dispatch Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84Queue"><span class="toc-nav-text">三种类型的Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Queue%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-nav-text">Queue的基本用法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#dispatch-group"><span class="toc-nav-text">dispatch_group</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Dispatch-Source"><span class="toc-nav-text">Dispatch Source</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Semaphores"><span class="toc-nav-text">Semaphores</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Resume-Suspension"><span class="toc-nav-text">Resume &amp; Suspension</span></a></li></ol>
     
   </div>
 </aside>
@@ -373,7 +373,7 @@ dispatch_group_notify(dispatch_group_t group,
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2023 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2024 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     
