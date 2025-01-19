@@ -195,12 +195,12 @@
 <p>看到这个应该就知道置为nil是不可行的，然后我就重写了<code>inputView</code></p>
 <pre><code>- (UIView *)inputView
 &#123;
-    static UIView *iv = nil;
-    if (iv == nil)
-    &#123;
-        iv = [[UIView alloc] init];
-    &#125;
-    return iv;
+	static UIView *iv = nil;
+	if (iv == nil)
+	&#123;
+		iv = [[UIView alloc] init];
+	&#125;
+	return iv;
 &#125;
 </code></pre>
 <p>就这样达到了我想要的效果了。</p>

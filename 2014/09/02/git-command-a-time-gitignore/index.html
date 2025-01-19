@@ -204,37 +204,37 @@ Your branch is up-to-date with &#39;origin/master&#39;.
 Changes to be committed:
   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
 
-    new file:   Bicycle/Bicycle.xcodeproj/project.pbxproj
-    new file:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-    new file:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/xcuserdata/Niko.xcuserdatad/UserInterfaceState.xcuserstate
-    new file:   Bicycle/Bicycle.xcodeproj/xcuserdata/Niko.xcuserdatad/xcschemes/Bicycle.xcscheme
-    new file:   Bicycle/Bicycle.xcodeproj/xcuserdata/Niko.xcuserdatad/xcschemes/xcschememanagement.plist
-    new file:   Bicycle/Bicycle/BRAppDelegate.h
-    new file:   Bicycle/Bicycle/BRAppDelegate.m
-    new file:   Bicycle/Bicycle/Bicycle-Info.plist
-    new file:   Bicycle/Bicycle/Bicycle-Prefix.pch
-    new file:   Bicycle/Bicycle/Images.xcassets/AppIcon.appiconset/Contents.json
-    new file:   Bicycle/Bicycle/Images.xcassets/LaunchImage.launchimage/Contents.json
-    new file:   Bicycle/Bicycle/en.lproj/InfoPlist.strings
-    new file:   Bicycle/Bicycle/main.m
-    new file:   Bicycle/BicycleTests/BicycleTests-Info.plist
-    new file:   Bicycle/BicycleTests/BicycleTests.m
-    new file:   Bicycle/BicycleTests/en.lproj/InfoPlist.strings
+	new file:   Bicycle/Bicycle.xcodeproj/project.pbxproj
+	new file:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+	new file:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/xcuserdata/Niko.xcuserdatad/UserInterfaceState.xcuserstate
+	new file:   Bicycle/Bicycle.xcodeproj/xcuserdata/Niko.xcuserdatad/xcschemes/Bicycle.xcscheme
+	new file:   Bicycle/Bicycle.xcodeproj/xcuserdata/Niko.xcuserdatad/xcschemes/xcschememanagement.plist
+	new file:   Bicycle/Bicycle/BRAppDelegate.h
+	new file:   Bicycle/Bicycle/BRAppDelegate.m
+	new file:   Bicycle/Bicycle/Bicycle-Info.plist
+	new file:   Bicycle/Bicycle/Bicycle-Prefix.pch
+	new file:   Bicycle/Bicycle/Images.xcassets/AppIcon.appiconset/Contents.json
+	new file:   Bicycle/Bicycle/Images.xcassets/LaunchImage.launchimage/Contents.json
+	new file:   Bicycle/Bicycle/en.lproj/InfoPlist.strings
+	new file:   Bicycle/Bicycle/main.m
+	new file:   Bicycle/BicycleTests/BicycleTests-Info.plist
+	new file:   Bicycle/BicycleTests/BicycleTests.m
+	new file:   Bicycle/BicycleTests/en.lproj/InfoPlist.strings
 
 Changes not staged for commit:
   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
 
-    modified:   Bicycle/Bicycle.xcodeproj/project.pbxproj
-    modified:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/xcuserdata/Niko.xcuserdatad/UserInterfaceState.xcuserstate
+	modified:   Bicycle/Bicycle.xcodeproj/project.pbxproj
+	modified:   Bicycle/Bicycle.xcodeproj/project.xcworkspace/xcuserdata/Niko.xcuserdatad/UserInterfaceState.xcuserstate
 
 Untracked files:
   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
 
-    .gitignore
-    Bicycle/Bicycle.xcworkspace/
-    Bicycle/Podfile
-    Bicycle/Podfile.lock
+	.gitignore
+	Bicycle/Bicycle.xcworkspace/
+	Bicycle/Podfile
+	Bicycle/Podfile.lock
 </code></pre>
 <p>奇怪吧，我已经把xcuserdata加到.gitignore中了，可以Bicycle&#x2F;Bicycle.xcodeproj&#x2F;project.xcworkspace&#x2F;xcuserdata&#x2F;Niko.xcuserdatad&#x2F;UserInterfaceState.xcuserstate折让的文件依然还在，让我感到有点意外。一时也没有想到是为什么，只能用最简单的方法把一个一个这样的文件移除掉。</p>
 <pre><code>Niko@NikoTungs-MacBook-Pro Bicycle (master) $ git reset HEAD Bicycle/Bicycle.xcodeproj/xcuserdata/Niko.xcuserdatad/xcschemes/Bicycle.xcscheme

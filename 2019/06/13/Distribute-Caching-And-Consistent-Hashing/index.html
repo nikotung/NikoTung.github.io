@@ -183,7 +183,7 @@
 <li>缓存数据会在多台机器上重复存放</li>
 </ul>
 <p>这时只要做到同一个数据来源，能够保证访问的是同一台机器，这样就可以解决上面的问题。最简单的方式就是对访问的数据进行hash，然后对机器进行编号（0到N-1），最后对可用的机器数量进行取模。上面的例子中，如果对用户的id做hash。这时后，只要你的缓存机器不变动，增加或减少，就能够分布式缓存了。</p>
-<pre><code>    i = Hash(key) % N (N为可用机器数量)
+<pre><code>	i = Hash(key) % N (N为可用机器数量)
 </code></pre>
 <p>一旦你缓存机器变动了，就会引起大规模的缓存命中失败，hash(key) % (N-1),hash(key) % (N+1),减一台或者加一台，就会有大量的缓存丢失了。</p>
 <p>这种做法导致了系统的容错性（出错后的可用情况）和扩展性（增加机器后服务能力是否可以提高）变得很差。一致性hansh就是为了解决这个问题的。</p>
@@ -303,7 +303,7 @@ MemcachedNode rv = getNodeForKey(hashAlg.hash(k));
 assert rv != null : &quot;Found no node for key &quot; + k;
 return rv;
 &#125;
-  
+	
 
 MemcachedNode getNodeForKey(long hash) &#123;
 final MemcachedNode rv;

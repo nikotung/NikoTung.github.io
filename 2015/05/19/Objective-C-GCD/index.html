@@ -185,31 +185,27 @@
 </ul>
 <h3 id="Queue的基本用法"><a href="#Queue的基本用法" class="headerlink" title="Queue的基本用法"></a>Queue的基本用法</h3><p>其实大部分GCD中提供出来的API都提供了这样同步(synchronous)和异步(asynchronous)这样两种使用方式。</p>
 <p>同步的用法：</p>
-<pre><code>    dipatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^&#123;
-        [object dosomethingHere];
-        &#125;) ;
+<pre><code>	dipatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^&#123;
+		[object dosomethingHere];
+		&#125;) ;
 </code></pre>
 <p>异步的用法: </p>
-<pre><code>    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0) , ^&#123;
-        [object dosomethingHere];
-        &#125;);
+<pre><code>	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0) , ^&#123;
+		[object dosomethingHere];
+		&#125;);
 </code></pre>
 <p>非常简单的。</p>
 <h3 id="dispatch-group"><a href="#dispatch-group" class="headerlink" title="dispatch_group"></a>dispatch_group</h3><blockquote>
 <p>A dispatch group is a mechanism for monitoring a set of blocks. Your application can monitor the blocks in the group synchronously or asynchronously depending on your needs. By extension, a group can be useful for synchronizing for code that depends on the completion of other tasks.</p>
 </blockquote>
-<p>简单说它就是一个可以监控所有提交到group中的block的执行情况的机制。</p>
-<pre><code>    dispatch_group_async(dispatch_group_t group,
-        dispatch_queue_t queue,
-        dispatch_block_t block);
-</code></pre>
+<p>简单说它就是一个可以监控所有提交到group中的block的执行情况的机制。<br>	<br>		dispatch_group_async(dispatch_group_t group,<br>			dispatch_queue_t queue,<br>			dispatch_block_t block);</p>
 <p>把block提交到queue，并把该block和group关联起来，这样在block执行完成后就可以通知到group，同步或者异步的方式</p>
 <pre><code>dispatch_group_wait(dispatch_group_t group, dispatch_time_t timeout); 
 //同步的话就是直接等待，返回0代表在timeout前所有block已经完成了
 
 dispatch_group_notify(dispatch_group_t group,
-    dispatch_queue_t queue,
-    dispatch_block_t block); //异步就通过设置一个block在完成后执行
+	dispatch_queue_t queue,
+	dispatch_block_t block); //异步就通过设置一个block在完成后执行
 </code></pre>
 <p>在dispatch_group中，还有一个<code>dispatch_group_enter</code> , <code>dispatch_group_leave</code>这个两个API。看文档的时候，以为这两个API也会带一个block的参数。</p>
 <blockquote>
@@ -238,7 +234,8 @@ dispatch_group_notify(dispatch_group_t group,
 <h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><p>Dispatch semaphores类似于一种生产-消费者这种模式(也可以用锁去理解)。有三个API <code>dispatch_semaphore_create</code>,<code>dispatch_semaphore_signal</code>和<code>dispatch_semaphore_wait</code>。通过signal会增加一个可以消费的信号量，wait就会减少一个。</p>
 <p>在创建的时候传进去的初始化值一般有0和大于0两种用法。0的话主要就是用于同步锁这样的一个需求，而大于0的话是用于管理有限资源，比如资源数有六个，然后传个6进去，就可以限定最多6个线程可以访问这六个资源。</p>
 <p>ps:可以通过terminal 用如下命令查看用法 : man dispatch_semaphore_create </p>
-<h3 id="Resume-Suspension"><a href="#Resume-Suspension" class="headerlink" title="Resume &amp; Suspension"></a>Resume &amp; Suspension</h3><p>Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。<code>dispatch_resume</code> <code>dispathc_suspend</code></p>
+<h3 id="Resume-Suspension"><a href="#Resume-Suspension" class="headerlink" title="Resume &amp; Suspension"></a>Resume &amp; Suspension</h3><p>Dispatch queue是可以被暂停和重启的。但是那些正在执行的block是没法暂停的。<code>dispatch_resume</code> <code>dispathc_suspend</code>
+	</p>
 </section>
     <!-- Tags START -->
     

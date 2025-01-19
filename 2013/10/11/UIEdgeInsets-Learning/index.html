@@ -183,7 +183,7 @@
 <p>注意一点的是，这是我们的整个窗口是在button里面，就button这么大。</p>
 <p>通过下面的代码</p>
 <pre><code>   [_nextButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 14, -_nextButton.titleLabel.bounds.size.width+10)];
-    [_nextButton setTitleEdgeInsets:UIEdgeInsetsMake(30, -[_nextButton currentImage].size.width+3, 0, 0)];
+	[_nextButton setTitleEdgeInsets:UIEdgeInsetsMake(30, -[_nextButton currentImage].size.width+3, 0, 0)];
 </code></pre>
 <p>简单说明一下：</p>
 <p>由于图片和标题原本是水平的，它们是压缩在同一个宽度中的，因此，对于图片的话我们需要把它向右边拉长到标题label的宽度，而对于标题则需要把它向左拉到图片的宽度。</p>

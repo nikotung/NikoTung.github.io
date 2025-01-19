@@ -178,25 +178,25 @@
 <pre><code>@WebFilter
 @Component
 public class FilterResponse implements Filter&#123;
-    @Override
-    public void destroy() &#123;			
-    &#125;
-    
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException &#123;
-        HttpServletResponse rep = (HttpServletResponse)response;
-        HttpServletRequest req = (HttpServletRequest)request;
-        rep.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, PUT, OPTIONS&quot;);
-        rep.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+	@Override
+	public void destroy() &#123;			
+	&#125;
+	
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException &#123;
+		HttpServletResponse rep = (HttpServletResponse)response;
+		HttpServletRequest req = (HttpServletRequest)request;
+		rep.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, PUT, OPTIONS&quot;);
+		rep.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
         rep.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;Content-Type&quot;);
         rep.setHeader(&quot;Access-Control-Allow-Credentials&quot;,&quot;true&quot;);
-        
-        chain.doFilter(request, response);
-    &#125;
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException &#123;			
-    &#125;
+		
+		chain.doFilter(request, response);
+	&#125;
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException &#123;			
+	&#125;
 &#125;
 </code></pre>
 <p>粗看一下感觉没有问题。这个写法网上一搜一大堆。</p>
@@ -310,28 +310,28 @@ Access-Control-Max-Age: 30
 <p>这段代码成为了问题。</p>
 <p>最后看看 spring 中自带的跨域支持一个代码片段</p>
 <pre><code>public String checkOrigin(String requestOrigin) &#123;
-    if (!StringUtils.hasText(requestOrigin)) &#123;
-        return null;
-    &#125;
-    if (ObjectUtils.isEmpty(this.allowedOrigins)) &#123;
-        return null;
-    &#125;
+	if (!StringUtils.hasText(requestOrigin)) &#123;
+		return null;
+	&#125;
+	if (ObjectUtils.isEmpty(this.allowedOrigins)) &#123;
+		return null;
+	&#125;
 
-    if (this.allowedOrigins.contains(ALL)) &#123;
-        if (this.allowCredentials != Boolean.TRUE) &#123;
-            return ALL;
-        &#125;
-        else &#123;
-            return requestOrigin;
-        &#125;
-    &#125;
-    for (String allowedOrigin : this.allowedOrigins) &#123;
-        if (requestOrigin.equalsIgnoreCase(allowedOrigin)) &#123;
-            return requestOrigin;
-        &#125;
-    &#125;
+	if (this.allowedOrigins.contains(ALL)) &#123;
+		if (this.allowCredentials != Boolean.TRUE) &#123;
+			return ALL;
+		&#125;
+		else &#123;
+			return requestOrigin;
+		&#125;
+	&#125;
+	for (String allowedOrigin : this.allowedOrigins) &#123;
+		if (requestOrigin.equalsIgnoreCase(allowedOrigin)) &#123;
+			return requestOrigin;
+		&#125;
+	&#125;
 
-    return null;
+	return null;
 &#125;
 </code></pre>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a target="_blank" rel="noopener" href="https://fetch.spec.whatwg.org/#http-cors-protocol">fetch</a></p>

@@ -181,16 +181,16 @@
 <p>看看下面的代码</p>
 <pre><code>- (void)sendAsynchronousRequest:(void (^)()) handler
 &#123;
-       void (^aBlock)(id) = ^(id g)&#123;
-    &#125;;    
-    void ^cBlock = ^&#123;
-        &#125;;   
-       aBlock(@(1));   
-    id (^bBlock)(id) = ^id(id g)&#123;
-        return nil;
-       &#125;;
-       id a = bBlock(@(122));
-   &#125;
+		void (^aBlock)(id) = ^(id g)&#123;
+	&#125;;    
+	void ^cBlock = ^&#123;
+		 &#125;;   
+		aBlock(@(1));   
+	id (^bBlock)(id) = ^id(id g)&#123;
+	      return nil;
+		&#125;;
+		id a = bBlock(@(122));
+	&#125;
 </code></pre>
 <p>同样是一个无返回类型，不带参数的block，在作为方法的参数定义时也要把那个参数的括号加上，但是在local中的时候就可以忽略了。好像就差不多了。</p>
 <p>关于block的好处什么的，就不说了。</p>

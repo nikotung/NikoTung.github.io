@@ -195,9 +195,7 @@
 <pre><code>[Error: Please install Android target 17 (the Android 4.2 SDK). Make sure you have the latest Android tools installed as well. Run `android` from your command-line to install/update any missing SDKs or tools.]
 </code></pre>
 <p>应该是我的adt中的Android sdk没有4.2版本，于是在终端中输入an<code>android</code>就打开了 Android sdk manager,发现确实只是安装了4.3版本的sdk。但是更令人痛心的是看不到其他版本sdk的安装链接，我了个去，难道要另外下载然后导入，这也太坑爹了吧。遂Google之，发现是由于被墙的原因，获取到其它版本的sdk，WTF.乐观点，只要修改一下hosts文件就可以了，没有完全墙掉。</p>
-<p>打开hosts文件，增加下面那一行，保存后，重新打开Android sdk manager就会看到4.2和其它版本的sdk。</p>
-<pre><code> 74.125.237.1       dl-ssl.google.com  
-</code></pre>
+<p>打开hosts文件，增加下面那一行，保存后，重新打开Android sdk manager就会看到4.2和其它版本的sdk。<br>	<br>	 74.125.237.1       dl-ssl.google.com  </p>
 <p>下载完sdk后，就可以开始整合到Android了。进入到项目中再次使用如下命令</p>
 <pre><code>cordova platform add android
 </code></pre>
@@ -231,9 +229,7 @@ Deleting project...
 <p>打开cordova的一个script：</p>
 <pre><code>vim /Users/dev/.cordova/lib/android/cordova/3.0.0/bin/create
 </code></pre>
-<p>找到如下语句：</p>
-<pre><code>&quot;$ANDROID_BIN&quot; create project --target $TARGET --path &quot;$PROJECT_PATH&quot; --package $PACKAGE --activity $ACTIVITY &amp;&gt; /dev/null
-</code></pre>
+<p>找到如下语句：<br>	<br>	“$ANDROID_BIN” create project –target $TARGET –path “$PROJECT_PATH” –package $PACKAGE –activity $ACTIVITY &amp;&gt; &#x2F;dev&#x2F;null</p>
 <p>把它去掉后面的 <code>&amp;&gt; /dev/null</code>改成如下：</p>
 <pre><code>&quot;$ANDROID_BIN&quot; create project --target $TARGET --path &quot;$PROJECT_PATH&quot; --package $PACKAGE --activity $ACTIVITY
 </code></pre>

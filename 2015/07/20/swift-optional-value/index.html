@@ -174,23 +174,19 @@
   <!-- Article START -->
   <article class="post-article">
     <section class="markdown-content"><p>在swift中，你可以通过<code>var</code>关键词去声明一个变量，通过<code>let</code>去声明一个常量。与OC一个不一样的地方是，在OC中声明一个变量的时候，如果没有赋默认值则就是一个默认的<code>nil</code>，直接去使用也不会报错。而在swift中你没有初始化一个变量，而去直接使用是会报错的，而且还是在编译期就报错了，因为swift中不会在声明一个对象的时候有一个<code>nil</code>的默认值。</p>
-<p>在swift中还引入了一个叫<strong>optionals</strong>的这样的变量。你可以这么理解：</p>
+<p>在swift中还引入了一个叫<strong>optionals</strong>的这样的变量。你可以这么理解：
+	</p>
 <ul>
 <li>它有一个值，并且等于x</li>
 <li>或者它根本就没有一个值</li>
 </ul>
 <p>表明它可能是一个缺省值。这种概念在OC中不存在的，而且也跟OC中跟它比较接近的nil也不一样。在OC中nil是一个指向空对象的指针,所以只能用于对象，而在swift中应该是一个语意上的概念，能用于任何对象。</p>
-<p>可以通过下面的方法，在变量的类型后面添加一个？去标明改变量是一个<code>optional</code>的值(变量与?间不能有空格)。</p>
-<pre><code>var value : String? //nil
-value?.hashValue // nil
-var optional : String? = &quot;hash&quot;  //hash
-optional?.hashValue    //4799450059810186505
-</code></pre>
+<p>可以通过下面的方法，在变量的类型后面添加一个？去标明改变量是一个<code>optional</code>的值(变量与?间不能有空格)。<br>	<br>	var value : String? &#x2F;&#x2F;nil<br>	value?.hashValue &#x2F;&#x2F; nil<br>	var optional : String? &#x3D; “hash”  &#x2F;&#x2F;hash<br>	optional?.hashValue    &#x2F;&#x2F;4799450059810186505</p>
 <p>如果你在声明的时候没有给<code>optional</code>赋初值，那么它就默认为nil(跟变量不一样的)</p>
 <p>有一个地方需要注意的是?其实就是一个语法糖。<code>optional</code>其实是一个<code>enum</code>。</p>
 <pre><code>enum Optional&lt;T&gt; : _Reflectable, NilLiteralConvertible &#123;
-    case None
-    case Some(T)
+	case None
+	case Some(T)
 
     /// Construct a `nil` instance.
     init()
@@ -216,11 +212,7 @@ optional?.hashValue    //4799450059810186505
 <li>如果你在声明一个<code>optional</code>时，没有赋初值，那么它就调用了一个<code>init()</code>构造函数返回一个<code>nil</code></li>
 <li>如果你在声明一个<code>optional</code>时，赋了初值，那么它就调用了<code>init(_ some : T)</code>返回一个<code>T</code>类型的的实例</li>
 </ul>
-<p>在访问<code>optional</code>变量时，可以通过if 语句去判断它是不是nil，(&#x3D;&#x3D; nil 或者 !&#x3D; nil)</p>
-<pre><code>if value != nil &#123;
-    print(&quot;the value variable contain some value&quot;)
-&#125;
-</code></pre>
+<p>在访问<code>optional</code>变量时，可以通过if 语句去判断它是不是nil，(&#x3D;&#x3D; nil 或者 !&#x3D; nil)<br>	<br>	if value !&#x3D; nil {<br>		print(“the value variable contain some value”)<br>	}</p>
 <p>当你百分百确认<code>optinal</code>变量是有值的时候，你可以通过在变量后面添加感叹号!去访问 </p>
 <pre><code>if optional != nil &#123;
     print(&quot;value of optional \(optional!)&quot;)
@@ -229,7 +221,7 @@ optional?.hashValue    //4799450059810186505
 <p>这种就成为强制拆包，强行返回<code>optional</code>声明时的<code>T</code>类型数据。如果你用强制拆包!时，<code>optional</code>却还没有值，那么app就会crash了，触发了一个运行时的错误。</p>
 <p>Apple建议使用一种叫<code>optinal binding</code>的方法去访问<code>optional</code>变量。主要就是通过if&#x2F;while语句，去检查<code>optinal</code>并它取出来把它放到一个变量或者常量中，如果转换成功就会执行一下步，而且在这里面就不再需要用!去访问变量了。</p>
 <pre><code>if let actualValue = value &#123;
-    print(&quot;the actual value is \(actualValue)&quot;)
+	print(&quot;the actual value is \(actualValue)&quot;)
 &#125;
 </code></pre>
 <p>隐式拆包(implicitly unwrapped optional)。有时候，一个<code>optional</code>的值一旦被设好了，就会一直存在，这时候可以在声明的时候用!而不是？去修饰，在后续的使用过程中就可以直接访问了。这种比较常见的是用于一个类的属性中。</p>

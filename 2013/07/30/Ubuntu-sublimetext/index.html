@@ -197,7 +197,7 @@
 </code></pre>
 <p>通过安装一个插件：inputhelper后就可以在每一次需要输入中文时同时按下Ctrl+Shift+z就可以调用输入框，输入完后直接按Eenter键就可以了。</p>
 <p>当然，安装插件最好是通过Package Control ,如果还没安装Package Control,可以通过ctrl+～，把以下代码放进去回车。安装完就重启。</p>
-<pre><code>    import urllib2,os; pf=&#39;Package Control.sublime-package&#39;; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),&#39;wb&#39;).write(urllib2.urlopen(&#39;http://sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read()); print(&#39;Please restart Sublime Text to finish installation&#39;)
+<pre><code>	import urllib2,os; pf=&#39;Package Control.sublime-package&#39;; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),&#39;wb&#39;).write(urllib2.urlopen(&#39;http://sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read()); print(&#39;Please restart Sublime Text to finish installation&#39;)
 </code></pre>
 </section>
     <!-- Tags START -->
