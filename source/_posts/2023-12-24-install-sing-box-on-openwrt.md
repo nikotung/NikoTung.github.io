@@ -73,7 +73,6 @@ config forwarding
 
 ~~配置开机启动~~
 
-<strike>
 ```
 config sing-box 'main'
         option enabled '1'
@@ -81,7 +80,6 @@ config sing-box 'main'
         option conffile '/etc/sing-box/config.json'
         option workdir '/usr/share/sing-box'
 ```
-</strike>
 
 ### 配置订阅
 
