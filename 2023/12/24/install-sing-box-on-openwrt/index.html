@@ -183,15 +183,23 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sing-box check -c &#123;your_config_path&#125;</span><br><span class="line">sing-box run -c &#123;your_config_path&#125; -D &#123;your_work_dir&#125; # 这个会在你运行的地方下载geoip ,geosite 以及cash dashboard 的UI </span><br></pre></td></tr></table></figure>
 
 <p>如果上面的检测没有问题说明安装就正常了. 下面是要配置开机启动和防火墙.</p>
-<h3 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h3><p>sing-box 服务启动后不能自己代理流量的,即便你开了了<code>auto_route</code>,需要简单配置一个防火墙.</p>
-<p>在&#x2F;etc&#x2F;config&#x2F;firewall中添加规则：</p>
+<p>在1.10.0 以上下面的这个步骤可以不用了。<br>~~<br><del>### 配置防火墙</del></p>
+<p><del>sing-box 服务启动后不能自己代理流量的,即便你开了了<code>auto_route</code>,需要简单配置一个防火墙.</del></p>
+<p><del>在&#x2F;etc&#x2F;config&#x2F;firewall中添加规则：</del></p>
+<strike>
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">config zone</span><br><span class="line">        option name &#x27;proxy&#x27;</span><br><span class="line">        option forward &#x27;REJECT&#x27;</span><br><span class="line">        option output &#x27;ACCEPT&#x27;</span><br><span class="line">        option input &#x27;ACCEPT&#x27;</span><br><span class="line">        option mtu_fix &#x27;1&#x27;</span><br><span class="line">        option device &#x27;tun0&#x27;</span><br><span class="line">        list network &#x27;proxy&#x27;</span><br><span class="line"></span><br><span class="line">config forwarding</span><br><span class="line">        option name &#x27;lan-proxy&#x27;</span><br><span class="line">        option dest &#x27;proxy&#x27;</span><br><span class="line">        option src &#x27;lan&#x27;</span><br></pre></td></tr></table></figure>
+</strike>
 
-<p>添加网络接口&#x2F;etc&#x2F;config&#x2F;network</p>
+<p><del>添加网络接口&#x2F;etc&#x2F;config&#x2F;network</del></p>
+<strike>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config interface &#x27;proxy&#x27;</span><br><span class="line">       option proto &#x27;none&#x27;</span><br><span class="line">       option device &#x27;tun0&#x27;</span><br></pre></td></tr></table></figure>
+</strike>
 
-<p>配置开机启动</p>
+<p><del>配置开机启动</del></p>
+<strike>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config sing-box &#x27;main&#x27;</span><br><span class="line">        option enabled &#x27;1&#x27;</span><br><span class="line">        option user &#x27;root&#x27; # 如果你是用tun 模式的话,一定要改成root</span><br><span class="line">        option conffile &#x27;/etc/sing-box/config.json&#x27;</span><br><span class="line">        option workdir &#x27;/usr/share/sing-box&#x27;</span><br></pre></td></tr></table></figure>
+</strike>
 
 <h3 id="配置订阅"><a href="#配置订阅" class="headerlink" title="配置订阅"></a>配置订阅</h3><p>我是自己fork 了一个<a target="_blank" rel="noopener" href="https://github.com/NikoTung/clash2singbox">clash2singbox</a>,在原来的基础上加了地区分组.主要有:</p>
 <ul>
@@ -203,6 +211,10 @@
 <li>Others</li>
 </ul>
 <p>通过 Github Action 的方式定期更新订阅并把转换好的配置文件上传到Cloudflare 的免费R2 上.</p>
+<p>最后，sing-box 的更新还是挺多的，而且每次的更新都会有些变动，也就涉及到你的配置文件的变更。因此如果你在用sing-box 的话要习惯一下，同时，配置文件都是json的，都是文本编辑，如果你想要用图形化的编辑，sing-box 对你来说不是一个好选择。</p>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><ul>
+<li>去掉firewall 的配置（1.10.0 以上）</li>
+</ul>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/rezconf/Sing-box/wiki/How-to-Run">How to Run</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/SagerNet/sing-box/issues/100">netlink: ‘sing-box’: attribute type 22 has an invalid length</a></li>
@@ -269,7 +281,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-nav-text">安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-nav-text">配置防火墙</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AE%A2%E9%98%85"><span class="toc-nav-text">配置订阅</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#References"><span class="toc-nav-text">References</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-nav-text">安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AE%A2%E9%98%85"><span class="toc-nav-text">配置订阅</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#update"><span class="toc-nav-text">update</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#References"><span class="toc-nav-text">References</span></a></li></ol>
     
   </div>
 </aside>
