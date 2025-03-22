@@ -33,11 +33,16 @@ date: 2023-12-24 22:33:29
 
 如果上面的检测没有问题说明安装就正常了. 下面是要配置开机启动和防火墙.
 
-### 配置防火墙
 
-sing-box 服务启动后不能自己代理流量的,即便你开了了`auto_route`,需要简单配置一个防火墙.
+在1.10.0 以上下面的这个步骤可以不用了。
+~~
+~~### 配置防火墙~~
 
-在/etc/config/firewall中添加规则：
+~~sing-box 服务启动后不能自己代理流量的,即便你开了了`auto_route`,需要简单配置一个防火墙.~~
+
+~~在/etc/config/firewall中添加规则：~~
+
+<strike>
 
 ```
 config zone
@@ -54,17 +59,21 @@ config forwarding
         option dest 'proxy'
         option src 'lan'
 ```
+</strike>
 
-添加网络接口/etc/config/network
+~~添加网络接口/etc/config/network~~
 
+<strike>
 ```
  config interface 'proxy'
         option proto 'none'
         option device 'tun0'
 ```
+</strike>
 
-配置开机启动
+~~配置开机启动~~
 
+<strike>
 ```
 config sing-box 'main'
         option enabled '1'
@@ -72,6 +81,7 @@ config sing-box 'main'
         option conffile '/etc/sing-box/config.json'
         option workdir '/usr/share/sing-box'
 ```
+</strike>
 
 ### 配置订阅
 
@@ -85,6 +95,14 @@ config sing-box 'main'
 * Others
 
 通过 Github Action 的方式定期更新订阅并把转换好的配置文件上传到Cloudflare 的免费R2 上.
+
+
+最后，sing-box 的更新还是挺多的，而且每次的更新都会有些变动，也就涉及到你的配置文件的变更。因此如果你在用sing-box 的话要习惯一下，同时，配置文件都是json的，都是文本编辑，如果你想要用图形化的编辑，sing-box 对你来说不是一个好选择。
+
+### update
+
+* 去掉firewall 的配置（1.10.0 以上）
+
 
 ### References
 
