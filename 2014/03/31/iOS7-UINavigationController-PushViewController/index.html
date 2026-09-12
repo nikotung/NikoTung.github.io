@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -195,14 +195,14 @@
 @implementation JVNavigationController
 
 - (void)viewDidLoad
-&#123;
+{
 
   if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
-  &#123;
+  {
     self.interactivePopGestureRecognizer.delegate = weakSelf;
     self.delegate = weakSelf;
-  &#125;
-&#125;
+  }
+}
 </code></pre>
 <p>就这样屏幕返回的手势又可以工作了。</p>
 <p>因为<code>UINavigationController</code>的每一次pop和push都是有动画的，如果快速的操作就会由于前一个动画没有完成，后一个动画就开始了就会出错。</p>
@@ -211,23 +211,23 @@
 <p>所以要在每个pop和push完成后才能进行手势的操作，这样就能避免这样的问题了。</p>
 <p>我们只要实现<code>UINavigationControllerDelegate</code>在每个<code>ViewController</code>完全出现了才把手势enable</p>
 <pre><code>- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-&#123;
+{
   if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
     self.interactivePopGestureRecognizer.enabled = NO;
 
   [super pushViewController:viewController animated:animated];
-&#125;
+}
 
 #pragma mark UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animate
-&#123;
+{
 
   if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
     self.interactivePopGestureRecognizer.enabled = YES;
-&#125;
+}
 </code></pre>
 <p>这样问题就好了。</p>
 <p>###参考<br><a target="_blank" rel="noopener" href="http://stuartkhall.com/posts/ios-7-development-tips-tricks-hacks">iOS 7 Development Tips, Tricks &amp; Hacks</a></p>
@@ -365,7 +365,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

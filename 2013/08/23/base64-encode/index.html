@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -194,7 +194,7 @@
 <p>所以如果你输入的字节位n则输出的字节最多为：（n+2）* 4&#x2F;3. 当n%3的余数为1时，输出的结果会有两个’&#x3D;&#x3D;’在结尾；当余数位2时，输出的结果有一个’&#x3D;’在结尾。</p>
 <pre><code>            //base64 encode
             - (NSString*) createEncodedString:(NSData*)data
-            &#123;
+            {
                 static char table[] = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
 
                 const int size = ((data.length + 2)/3)*4;  //max output size
@@ -202,24 +202,24 @@
 
                 const uint8_t* input = (const uint8_t*)[data bytes];
                 for (int i = 0; i &lt; data.length; i += 3)
-                &#123;
+                {
                     int value = 0;
                     for (int j = i; j &lt; (i + 3); j++)
-                    &#123;
+                    {
                          value &lt;&lt;= 8;  //每一个输入都进行位移8
                         if (j &lt; data.length)
                             value |= (0xFF &amp; input[j]);
-                    &#125;
+                    }
 
                     const int index = (i / 3) * 4;
                     output[index + 0] = table[(value &gt;&gt; 18) &amp; 0x3F];  //右移十八位，通过&amp;去右边六位
                     output[index + 1] = table[(value &gt;&gt; 12) &amp; 0x3F];
                     output[index + 2] = (i + 1) &lt; data.length ? table[(value &gt;&gt; 6) &amp; 0x3F] : &#39;=&#39;;
                     output[index + 3] = (i + 2) &lt; data.length ? table[(value &gt;&gt; 0) &amp; 0x3F] : &#39;=&#39;;
-            &#125;
+            }
 
             return [[NSString alloc] initWithBytes:output length:size encoding:NSASCIIStringEncoding];
-            &#125; 
+            } 
 </code></pre>
 <h3 id="updated-2013-08-29"><a href="#updated-2013-08-29" class="headerlink" title="updated 2013-08-29"></a>updated 2013-08-29</h3><h4 id="base64解码"><a href="#base64解码" class="headerlink" title="base64解码"></a>base64解码</h4><p>解码的过程就是一个逆向的过程,首先是要对你的输入做一个判断，确认每一个字符都是在码表的范围内，如果不是可以选择跳过。每一次均可以通过移位和&amp;运算把编码时高位增加的那两位去掉，最后拼成8位。</p>
 </section>
@@ -356,7 +356,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

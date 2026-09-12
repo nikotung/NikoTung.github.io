@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -187,50 +187,50 @@
 sudo apt-get install letsencrypt 
 </code></pre>
 <p>因为要验证你是否拥有这个域名，需要在服务器上配置一个路径，能够给certbot 在生成证书的过程中进行验证。需要配置一下 nginx,因为我的机器是用 nginx 做转发。</p>
-<pre><code>server &#123;
+<pre><code>server {
   listen              80;
   server_name         yourdomain.com;
-  location &#39;/.well-known/acme-challenge&#39; &#123;
+  location &#39;/.well-known/acme-challenge&#39; {
   	default_type &quot;text/plain&quot;;
     	root        /var/www/example;
-  &#125;
+  }
 
 #生成证书
 letsencrypt certonly --webroot -w /var/www/example -d yourdomain.com 
 </code></pre>
 <p>这样生成了你自己域名的证书,看到成功后的提示就知道证书存放的位置。</p>
-<h5 id="配置https"><a href="#配置https" class="headerlink" title="配置https"></a>配置https</h5><pre><code>server &#123;
+<h5 id="配置https"><a href="#配置https" class="headerlink" title="配置https"></a>配置https</h5><pre><code>server {
     listen 443 ssl;
     ssl_certificate         /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
     ssl_certificate_key     /etc/letsencrypt/live/yourdomain.com/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/yourdomain.com/chain.pem;
     server_name yourdomain.com;
-    location / &#123;
+    location / {
         proxy_set_header   X-Forwarded-For $remote_addr;
         proxy_set_header   Host $http_host;
         proxy_pass         http://127.0.0.1:3000;
-    &#125;
+    }
 
-&#125;
+}
 </code></pre>
 <p>然后 reload 一下 nginx </p>
 <pre><code>sudo nginx -s reload
 </code></pre>
 <p>这样就能访问 : <a target="_blank" rel="noopener" href="https://yourdomain.com/">https://yourdomain.com</a></p>
 <p>也要可以配置一下自动把 http 请求转化成 https</p>
-<pre><code>server &#123;
+<pre><code>server {
   listen              80;
   listen              [::]:80;
   server_name         yourdomain.com;
-  location &#39;/.well-known/acme-challenge&#39; &#123;
+  location &#39;/.well-known/acme-challenge&#39; {
   	default_type &quot;text/plain&quot;;
     	root        /var/www/example;
-  &#125;
+  }
 
-  location / &#123;
+  location / {
     return              301 https://$host$request_uri;
-  &#125;
-&#125;
+  }
+}
 </code></pre>
 <h5 id="自动更新证书"><a href="#自动更新证书" class="headerlink" title="自动更新证书"></a>自动更新证书</h5><p>因为 Letsencrypt 提供的证书有效期为90天，所以我们要自动更新证书，加一个定时任务。</p>
 <pre><code>crontab -e 
@@ -372,7 +372,7 @@ letsencrypt certonly --webroot -w /var/www/example -d yourdomain.com
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

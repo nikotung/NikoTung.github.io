@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -177,19 +177,19 @@
 <p>swift的函数命名方式跟Objective-C可以说是一脉相承，非常好的表述了函数实现的功能。swift的语法也是它能够像表述像c类型这种没有参数名字，也能表述像Objectivie-C一样的有内部和外部名字的参数形式。也能为函数的参数提供默认值和引用参数(in-out)这样的方式去调用。</p>
 <p>在swift中，function是 first class ，说明它是跟其它的值类型没有什么区别的，可以赋值，作为函数参数和作为返回值，这个特性就是使 swift 作为一个 functional programming language 成为可能。</p>
 <h3 id="定义和调用函数"><a href="#定义和调用函数" class="headerlink" title="定义和调用函数"></a>定义和调用函数</h3><p>定义时，可以选择定义一个或者多个参数作为输入，以及为参数定一个名字。调用时，用名字以及可能对应的参数顺序。函数是以一个 <code>func</code> 作为关键词开始。</p>
-<pre><code>func sayHelloWorld(personName : String) -&gt; String &#123;
+<pre><code>func sayHelloWorld(personName : String) -&gt; String {
 	let greeting = &quot;Hello world , &quot; + personName + &quot;!&quot;
 	return greeting
-&#125;
+}
 
 sayHelloWorld(&quot;Niko&quot;)  
 //output  : Hello world , Niko!
 </code></pre>
 <p>通过使用 <code>-&gt;</code> 标明它的返回值。</p>
 <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>每一个参数都有一个名字，用于描述参数的作用，这个名字又分为外部使用和内部使用的。</p>
-<pre><code>func generateFullName(fistName firstName: String , familyName : String) -&gt; String &#123;
+<pre><code>func generateFullName(fistName firstName: String , familyName : String) -&gt; String {
 	return firstName + &quot; &quot; + familyName
-&#125;
+}
 
 generateFullName(fistName: &quot;Niko&quot;, familyName: &quot;Tung&quot;)
 // Niko Tung
@@ -198,33 +198,33 @@ generateFullName(fistName: &quot;Niko&quot;, familyName: &quot;Tung&quot;)
 <pre><code>generateFullName(&quot;Niko&quot;, familyName: &quot;Tung&quot;)
 </code></pre>
 <p>如果想让其它参数的名称在函数调用的时候也忽略，可以这样写：</p>
-<pre><code>func generateFullName(firstName: String , _ familyName : String) -&gt; String &#123;
+<pre><code>func generateFullName(firstName: String , _ familyName : String) -&gt; String {
 	....
-&#125;
+}
 
 generateFullName(&quot;Niko&quot;, &quot;Tung&quot;)
 </code></pre>
 <p>也可以为参数指定默认值</p>
-<pre><code>func generateFullName(firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String &#123;
+<pre><code>func generateFullName(firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String {
 	....
-&#125;
+}
 
 generateFullName(&quot;Niko&quot;) //Niko unknow
 generateFullName(&quot;Niko&quot; , &quot;Tung&quot;) //Niko Tung
 </code></pre>
 <p>在swift的函数中，参数默认都是常量的，这就意味着你不能在函数体内修改参数的值。所以如果需要在函数体内修改参数的值，你需要把它定义成变量。就是在参数名字前面加上	<code>var</code>去声明就行了。</p>
-<pre><code>func generateFullName(var  firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String &#123;
+<pre><code>func generateFullName(var  firstName: String , _ familyName : String = &quot;unknow&quot;) -&gt; String {
 	....
-&#125;
+}
 </code></pre>
 <h3 id="函数类型-Function-Type"><a href="#函数类型-Function-Type" class="headerlink" title="函数类型(Function Type)"></a>函数类型(Function Type)</h3><p>在我们的 oop 编程中，一般说函数的类型都是指函数的返回类型。在 swift 中是不一样的。函数在 swift 中是一等公民(<code>first-class citizens</code>),跟其它基本类型值是一样的。</p>
-<pre><code>func addTwoInts(a : Int , _ b : Int) -&gt; Int &#123;
+<pre><code>func addTwoInts(a : Int , _ b : Int) -&gt; Int {
 	return a + b
-&#125;
+}
 
-func multiplyTowInts(a : Int , _ b : Int) -&gt; Int &#123;
+func multiplyTowInts(a : Int , _ b : Int) -&gt; Int {
 	return a * b
-&#125;
+}
 </code></pre>
 <p>上面的两个方法的函数类型可以这样描述：(Int , Int) -&gt; Int 函数接收两个整形参数，最后返回一个整形结果。</p>
 <p>这样的函数类型，可以像一般的值一样，通过赋值可以获取定义,并且只要函数的类型一样，它可以赋值给同样的变量</p>
@@ -236,21 +236,21 @@ print(&quot;result : \(mathFunction(2,3))&quot;)
 mathFunction = multiplyTowInts
 </code></pre>
 <p>也可以把函数类型作为一个方法的参数</p>
-<pre><code>func printMathResult(mathFunction : (Int , Int) -&gt; Int , _ a : Int , _ b : Int) &#123;
+<pre><code>func printMathResult(mathFunction : (Int , Int) -&gt; Int , _ a : Int , _ b : Int) {
 	print(&quot;Resutl : \(mathFunction(a , b))&quot;)
-&#125;
+}
 
 printMathResult(addTwoInts , 3, 5)
 //print &quot;Result : 8&quot; 
 </code></pre>
 <p>当然也可以把函数类型当让一个函数的返回值</p>
-<pre><code>func getTheAddTwoIntsFucntion() -&gt; (Int , Int) -&gt; Int &#123;
+<pre><code>func getTheAddTwoIntsFucntion() -&gt; (Int , Int) -&gt; Int {
 	return addTwoInts
-&#125;
+}
 </code></pre>
 <p>也可以写成这样<br>	<br>	func getTheAddTwoIntsFucntion() -&gt; (Int , Int) -&gt; Int {<br>		func addTwoInts(a : Int , _ b : Int) -&gt; Int {<br>			return a + b<br>		}</p>
 <pre><code>	return addTwoInts
-&#125;
+}
 </code></pre>
 <h3 id="闭包-Closures"><a href="#闭包-Closures" class="headerlink" title="闭包(Closures)"></a>闭包(Closures)</h3><p>闭包其实就像一个函数一样，一段可以执行的代码，有输入输出，能够在代码中传递像函数的参数一样。</p>
 <p>全局函数和嵌套函数(Global and nested function),其实就是闭包的一种。</p>
@@ -261,9 +261,9 @@ printMathResult(addTwoInts , 3, 5)
 <li>参数名称缩写(Shorthand argument names)</li>
 <li>尾随闭包(Trailing closure syntax)</li>
 </ul>
-<h3 id="闭包表达式语法"><a href="#闭包表达式语法" class="headerlink" title="闭包表达式语法"></a>闭包表达式语法</h3><pre><code>&#123;(parameters) -&gt; return type in 
+<h3 id="闭包表达式语法"><a href="#闭包表达式语法" class="headerlink" title="闭包表达式语法"></a>闭包表达式语法</h3><pre><code>{(parameters) -&gt; return type in 
 	statements
-&#125;
+}
 </code></pre>
 <p>这里其实很像前面的函数的声明一样，用关键词 <code>in</code> 隔开闭包的类型声明和闭包体。</p>
 <p>看看排序的方法</p>
@@ -271,62 +271,62 @@ printMathResult(addTwoInts , 3, 5)
 
 let names = [&quot;Chris&quot; , &quot;Alex&quot; , &quot;Ewa&quot; , &quot;Barry&quot; , &quot;Daniella&quot;]
 
-func backwards(s1 : String , s2 : String) -&gt; Bool &#123;
+func backwards(s1 : String , s2 : String) -&gt; Bool {
 	return s1 &gt; s2
-&#125;
+}
 
 var reversed = names.sort(backwards)
 //reversed now is [&quot;Ewa&quot;, &quot;Daniella&quot;, &quot;Chris&quot;, &quot;Barry&quot;, &quot;Alex&quot;]
 </code></pre>
 <p>这里的<code>backwards</code>方法比较两个字符串的大小，如果<code>s1</code>大于<code>s2</code>则返回 true 。而在sort方法里面的参数是<code>isOrderedBefore</code>，说明<code>backwards</code>中返回 true 了就排在前面。</p>
 <p>用闭包的方法可以这样写</p>
-<pre><code>reversed = names.sort(&#123; (s1 : String , s2 : String) -&gt; Bool in 
+<pre><code>reversed = names.sort({ (s1 : String , s2 : String) -&gt; Bool in 
 		return s1 &gt; s2
-	&#125;)
+	})
 </code></pre>
 <p>这就像 Go 语言里面的的匿名函数了。</p>
 <h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>因为在上面的 sort 函数的闭包中，它是以一个参数的形式传递给 sort 函数的。swift 就可以通过 sort 这个函数就能通过它自己的参数自动推断出传递过来的参数的类型和返回值了,<code>(String , String) -&gt; Bool</code>。</p>
 <p>一旦 swift 能够自动推断出的事情，我们就不需要去重复做了，所以排序的闭包可以简化成这样</p>
-<pre><code>reversed = names.sort(&#123; s1 , s2 in return s1 &gt; s2&#125;)
+<pre><code>reversed = names.sort({ s1 , s2 in return s1 &gt; s2})
 </code></pre>
 <blockquote>
 <p>It is always possible to infer the parameter types and return type when passing a closure to a function as an inline closure expression. As a result, you never need to write an inline closure in its fullest form when the closure is used as a function argument. </p>
 </blockquote>
 <h3 id="在简单表达式中隐式返回"><a href="#在简单表达式中隐式返回" class="headerlink" title="在简单表达式中隐式返回"></a>在简单表达式中隐式返回</h3><p>上面的排序我们可以再进一步简化成这样：不需要写 <code>return</code></p>
-<pre><code>reversed = names.sort(&#123;s1 , s2 in s1 &gt; s2&#125;)
+<pre><code>reversed = names.sort({s1 , s2 in s1 &gt; s2})
 </code></pre>
 <p>这也是因为<code>sort</code>函数中的参数中能够表明，传进来的闭包一定要返回一个布尔值，所以就可以把<code>return</code>忽略，而不引起歧义。</p>
 <h3 id="参数名称缩写"><a href="#参数名称缩写" class="headerlink" title="参数名称缩写"></a>参数名称缩写</h3><p>swift 自动为內联闭包提供参数名简称，可以通过<code>$0</code>,<code>$1</code>和<code>$2</code>去代表闭包的参数。<br>如果你用这些简写在你的闭包表达式中，就可以在闭包定义的时候忽略它的参数列表，<code>in</code>关键词可以就可以忽略了。</p>
-<pre><code>reversed = names.sort(&#123; $0 &gt; $1 &#125;)
+<pre><code>reversed = names.sort({ $0 &gt; $1 })
 </code></pre>
 <p>由于<code>String</code>本身就有自己的 &gt; 方法，所以我们可以这样更简单的简化：</p>
 <pre><code>	reversed = names.sort( &gt; )
 </code></pre>
 <h3 id="尾随闭包"><a href="#尾随闭包" class="headerlink" title="尾随闭包"></a>尾随闭包</h3><p>如果需要传递一个闭包表达式给一个函数，作为这个函数的最后参数，而这个闭包的表达式很长，就可以写成尾随闭包的形式。所谓尾随闭包就是一个闭包表达式写在函数调用的括号的最后面</p>
 <p>不用尾随闭包的<br>	<br>	func someFunctionThatTakesAClosure(closure : () -&gt; Void){<br>		&#x2F;&#x2F;function body goes here<br>	}</p>
-<pre><code>someFunctionThatTakesAClosure(&#123;
+<pre><code>someFunctionThatTakesAClosure({
 	//closure&#39;s body goes here
-	&#125;)
+	})
 </code></pre>
 <p>用尾随闭包的</p>
-<pre><code>someFunctionThatTakesAClosure()&#123;
+<pre><code>someFunctionThatTakesAClosure(){
 	//closure&#39;s body goes here
-&#125;
+}
 
-reversed = names.sort()&#123; $0 &gt; $1 &#125;
+reversed = names.sort(){ $0 &gt; $1 }
 </code></pre>
 <p>在调用的时候，也可以把后面的括号给忽略掉<br>	<br>	reversed &#x3D; names.sort{ $0 &gt; $1 }</p>
 <h3 id="捕获值-Capturing-Values"><a href="#捕获值-Capturing-Values" class="headerlink" title="捕获值(Capturing Values)"></a>捕获值(Capturing Values)</h3><p>一个闭包可以捕获它定义时的上下文的一些变量和常量。在 swift 中最简单的捕获值形式就是在嵌套函数中能够获取它外部的参数和变量常量。</p>
 <p>在捕获的时候，swift 会决定到底捕获的是引用还是值复制 ，简单说，如果在闭包中会对外部值改变就是一个引用的捕获，如果不会改变的话，就是一个值复制。而且 swift 会自动处理所有的内存管理。</p>
-<pre><code>func makeIncrementer(forIncrement amout : Int) -&gt; Void -&gt; Int &#123;
+<pre><code>func makeIncrementer(forIncrement amout : Int) -&gt; Void -&gt; Int {
 	var runningTotal = 0
-	func incrementer() -&gt; Int &#123;
+	func incrementer() -&gt; Int {
 		runningTotal += amout
 		return runningTotal
-	&#125;
+	}
 
 	return incrementer
-&#125;
+}
 </code></pre>
 <p>这里的<code>runningTotal</code>就是引用捕获，<code>amout</code>就是值复制。</p>
 <blockquote>
@@ -473,7 +473,7 @@ incrementBySeven()
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

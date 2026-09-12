@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -184,17 +184,17 @@
 <pre><code>git stash list
 </code></pre>
 <p>这样就可以把所有的暂存记录列出来。</p>
-<pre><code>stash@&#123;0&#125;: GitHub: stashing before switching to feature/stash_test
-stash@&#123;1&#125;: WIP on feature/backup: 77d577e 
+<pre><code>stash@{0}: GitHub: stashing before switching to feature/stash_test
+stash@{1}: WIP on feature/backup: 77d577e 
 </code></pre>
 <p>我这里就有了两条暂存记录了。如果想要恢复暂存的话，就选择自己想要的，然后：</p>
-<pre><code>git stash apply stash@&#123;1&#125; #这里恢复了第二条记录，如果不指定的话会默认恢复最近的一条暂存
-git stash drop stash@&#123;1&#125;  #这里把暂存删掉
+<pre><code>git stash apply stash@{1} #这里恢复了第二条记录，如果不指定的话会默认恢复最近的一条暂存
+git stash drop stash@{1}  #这里把暂存删掉
 </code></pre>
 <p>如果你想在恢复暂存的同时就把暂存删掉的话，可以<br>	<br>	git stash pop </p>
 <p>如果我们在恢复前看到有很多暂存，但是发现自己都忘了每一条暂存都修改了什么内容。所以我们希望可以看到每一条暂存的修改详情</p>
 <pre><code>git stash show -u
-git stash show stash@&#123;0&#125; -u 
+git stash show stash@{0} -u 
 </code></pre>
 <p>这样就可以看到暂存的diff 了</p>
 <p>上面的就是我最近用到的关于stash的功能了。</p>
@@ -362,7 +362,7 @@ ed8f0f4760530b0b04b701e523ba35cd8b6490c0
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

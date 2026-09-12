@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -180,17 +180,17 @@
 <p><img src="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Blocks/Art/blocks.jpg"></p>
 <p>看看下面的代码</p>
 <pre><code>- (void)sendAsynchronousRequest:(void (^)()) handler
-&#123;
-		void (^aBlock)(id) = ^(id g)&#123;
-	&#125;;    
-	void ^cBlock = ^&#123;
-		 &#125;;   
+{
+		void (^aBlock)(id) = ^(id g){
+	};    
+	void ^cBlock = ^{
+		 };   
 		aBlock(@(1));   
-	id (^bBlock)(id) = ^id(id g)&#123;
+	id (^bBlock)(id) = ^id(id g){
 	      return nil;
-		&#125;;
+		};
 		id a = bBlock(@(122));
-	&#125;
+	}
 </code></pre>
 <p>同样是一个无返回类型，不带参数的block，在作为方法的参数定义时也要把那个参数的括号加上，但是在local中的时候就可以忽略了。好像就差不多了。</p>
 <p>关于block的好处什么的，就不说了。</p>
@@ -328,7 +328,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

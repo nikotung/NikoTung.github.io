@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -194,14 +194,14 @@
 </blockquote>
 <p>看到这个应该就知道置为nil是不可行的，然后我就重写了<code>inputView</code></p>
 <pre><code>- (UIView *)inputView
-&#123;
+{
 	static UIView *iv = nil;
 	if (iv == nil)
-	&#123;
+	{
 		iv = [[UIView alloc] init];
-	&#125;
+	}
 	return iv;
-&#125;
+}
 </code></pre>
 <p>就这样达到了我想要的效果了。</p>
 <p>我想应该还有更好的方法的。</p>
@@ -339,7 +339,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

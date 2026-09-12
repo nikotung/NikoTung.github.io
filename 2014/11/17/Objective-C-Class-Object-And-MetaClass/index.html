@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -179,7 +179,7 @@
 <p>在Objective-C中，有一类方法叫类方法。按照我们对method的定义，有方法的必定会有一个对象，而有对象必定对应有一个类。如此推来，Objective-C的类是不是一个对象呢？那它对应的类又是什么呢？</p>
 <p>对的，在Objective-C中，每一个Objective-C类都是一个对象。它也有它的isa指针和它能响应的方法。这就是我们所说的类方法。</p>
 <p>看看class的定义:</p>
-<pre><code>struct objc_class &#123;
+<pre><code>struct objc_class {
     Class isa  OBJC_ISA_AVAILABILITY;
 
 #if !__OBJC2__
@@ -194,7 +194,7 @@
     struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
 #endif
 
-&#125; OBJC2_UNAVAILABLE;
+} OBJC2_UNAVAILABLE;
 </code></pre>
 <p>class就是一个结构体。</p>
 <h4 id="Meta-Class"><a href="#Meta-Class" class="headerlink" title="Meta-Class"></a>Meta-Class</h4><p>既然Objective-C中的每一个类都是一个对象，它必定能够通过一个类实例化过来。这就引出了Objective-C的一个meta-class的概念。我们先看看这个:</p>
@@ -278,7 +278,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="toc-nav-text">背景知识</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Meta-Class"><span class="toc-nav-text">Meta-Class</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Meta-Class%E2%80%99s-class"><span class="toc-nav-text">Meta-Class’s class</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-text">参考</span></a>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="toc-nav-text">背景知识</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Meta-Class"><span class="toc-nav-text">Meta-Class</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Meta-Class%E2%80%99s-class"><span class="toc-nav-text">Meta-Class’s class</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-text">参考</span></a></li></ol>
     
   </div>
 </aside>
@@ -347,7 +347,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

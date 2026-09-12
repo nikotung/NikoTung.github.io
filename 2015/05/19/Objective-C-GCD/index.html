@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -185,14 +185,14 @@
 </ul>
 <h3 id="Queue的基本用法"><a href="#Queue的基本用法" class="headerlink" title="Queue的基本用法"></a>Queue的基本用法</h3><p>其实大部分GCD中提供出来的API都提供了这样同步(synchronous)和异步(asynchronous)这样两种使用方式。</p>
 <p>同步的用法：</p>
-<pre><code>	dipatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^&#123;
+<pre><code>	dipatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^{
 		[object dosomethingHere];
-		&#125;) ;
+		}) ;
 </code></pre>
 <p>异步的用法: </p>
-<pre><code>	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0) , ^&#123;
+<pre><code>	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0) , ^{
 		[object dosomethingHere];
-		&#125;);
+		});
 </code></pre>
 <p>非常简单的。</p>
 <h3 id="dispatch-group"><a href="#dispatch-group" class="headerlink" title="dispatch_group"></a>dispatch_group</h3><blockquote>
@@ -370,7 +370,7 @@ dispatch_group_notify(dispatch_group_t group,
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

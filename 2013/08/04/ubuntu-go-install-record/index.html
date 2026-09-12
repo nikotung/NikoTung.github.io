@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -191,7 +191,7 @@
 <pre><code>            export GOROOT=/usr/local/go
             export GOARCH=amd64
             export GOOS=linux
-            export PATH=$&#123;PATH&#125;:/usr/local/go/bin
+            export PATH=${PATH}:/usr/local/go/bin
             export GOPATH=~/Gits/gostudy
 </code></pre>
 <p>其中GOROOT是你安装的路径，GOARCH是根据你下载的包不同而不同的我这里是64位,GOOS根据你系统不一样而不一样其实还是根据包不同了，<br>PATH,这个是最重要的了，我们需要把安装路径加到PATH中去并在后面加上&#x2F;bin即把“$GOROOT&#x2F;bin”加到PATH中去。<br>GOPATH这个是你项目的路径，这个在后面可以改，可以每一个项目一个GOPATH，但是你要通过：叠加，不然始终还是只有一个的。<br>我个人的话就是只设置了一个GOPATH，因为目前我的GOPATH目录下面全都是go语言的项目，只需要在GOPATH下面新建一个src文件夹存放项目源代码就可以了。</p>
@@ -264,7 +264,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#apt-get%E5%AE%89%E8%A3%85"><span class="toc-nav-text">apt-get安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-nav-text">源码安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step1"><span class="toc-nav-text">step1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step2"><span class="toc-nav-text">step2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step-3"><span class="toc-nav-text">step 3</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#apt-get%E5%AE%89%E8%A3%85"><span class="toc-nav-text">apt-get安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-nav-text">源码安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step1"><span class="toc-nav-text">step1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step2"><span class="toc-nav-text">step2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#step-3"><span class="toc-nav-text">step 3</span></a></li></ol></li></ol>
     
   </div>
 </aside>
@@ -333,7 +333,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

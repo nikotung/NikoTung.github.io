@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -230,63 +230,63 @@
 <li>缓存机器取模法：<code>ArrayModNodeLocator</code></li>
 <li>一致性哈希算法：<code>KetamaNodeLocator</code></li>
 </ul>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre><code>protected void setKetamaNodes(List&lt;MemcachedNode&gt; nodes) &#123;
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre><code>protected void setKetamaNodes(List&lt;MemcachedNode&gt; nodes) {
 TreeMap&lt;Long, MemcachedNode&gt; newNodeMap =
         new TreeMap&lt;Long, MemcachedNode&gt;();
 int numReps = config.getNodeRepetitions();
 int nodeCount = nodes.size();
 int totalWeight = 0;
-if (isWeightedKetama) &#123;
-    for (MemcachedNode node : nodes) &#123;
+if (isWeightedKetama) {
+    for (MemcachedNode node : nodes) {
         totalWeight += weights.get(node.getSocketAddress());
-    &#125;
-&#125;
-for (MemcachedNode node : nodes) &#123;
-  if (isWeightedKetama) &#123;
+    }
+}
+for (MemcachedNode node : nodes) {
+  if (isWeightedKetama) {
       int thisWeight = weights.get(node.getSocketAddress());
       float percent = (float)thisWeight / (float)totalWeight;
       int pointerPerServer = (int)((Math.floor((float)(percent * (float)config.getNodeRepetitions() / 4 * (float)nodeCount + 0.0000000001))) * 4);
-      for (int i = 0; i &lt; pointerPerServer / 4; i++) &#123;
-          for(long position : ketamaNodePositionsAtIteration(node, i)) &#123;
+      for (int i = 0; i &lt; pointerPerServer / 4; i++) {
+          for(long position : ketamaNodePositionsAtIteration(node, i)) {
               newNodeMap.put(position, node);
               getLogger().debug(&quot;Adding node %s with weight %s in position %d&quot;, node, thisWeight, position);
-          &#125;
-      &#125;
-  &#125; else &#123;
+          }
+      }
+  } else {
       // Ketama does some special work with md5 where it reuses chunks.
       // Check to be backwards compatible, the hash algorithm does not
       // matter for Ketama, just the placement should always be done using
       // MD5
-      if (hashAlg == DefaultHashAlgorithm.KETAMA_HASH) &#123;
-          for (int i = 0; i &lt; numReps / 4; i++) &#123;
-              for(long position : ketamaNodePositionsAtIteration(node, i)) &#123;
+      if (hashAlg == DefaultHashAlgorithm.KETAMA_HASH) {
+          for (int i = 0; i &lt; numReps / 4; i++) {
+              for(long position : ketamaNodePositionsAtIteration(node, i)) {
                 newNodeMap.put(position, node);
                 getLogger().debug(&quot;Adding node %s in position %d&quot;, node, position);
-              &#125;
-          &#125;
-      &#125; else &#123;
-          for (int i = 0; i &lt; numReps; i++) &#123;
+              }
+          }
+      } else {
+          for (int i = 0; i &lt; numReps; i++) {
               newNodeMap.put(hashAlg.hash(config.getKeyForNode(node, i)), node);
-          &#125;
-      &#125;
-  &#125;
-&#125;
+          }
+      }
+  }
+}
     assert newNodeMap.size() == numReps * nodes.size();
     ketamaNodes = newNodeMap;
-&#125;
+}
 
-private List&lt;Long&gt; ketamaNodePositionsAtIteration(MemcachedNode node, int iteration) &#123;
+private List&lt;Long&gt; ketamaNodePositionsAtIteration(MemcachedNode node, int iteration) {
   List&lt;Long&gt; positions = new ArrayList&lt;Long&gt;();
   byte[] digest = DefaultHashAlgorithm.computeMd5(config.getKeyForNode(node, iteration));
-  for (int h = 0; h &lt; 4; h++) &#123;
+  for (int h = 0; h &lt; 4; h++) {
       Long k = ((long) (digest[3 + h * 4] &amp; 0xFF) &lt;&lt; 24)
           | ((long) (digest[2 + h * 4] &amp; 0xFF) &lt;&lt; 16)
           | ((long) (digest[1 + h * 4] &amp; 0xFF) &lt;&lt; 8)
           | (digest[h * 4] &amp; 0xFF);
       positions.add(k);
-  &#125;
+  }
   return positions;
-&#125;
+}
 </code></pre>
 <p>来看看具体的实现方法<code>setKetamaNodes(List&lt;MemcachedNode&gt; nodes)</code>首先这里的<code>MemcachedNode</code>就是真实的缓存机器，它里面封装了很多东西，包括操作，连接等等。<code>TreeMap</code>用来模拟圆环，它是一个红黑树的一个实现，里面的节点都是有序的。</p>
 <pre><code>int numReps = config.getNodeRepetitions();
@@ -298,28 +298,28 @@ private List&lt;Long&gt; ketamaNodePositionsAtIteration(MemcachedNode node, int 
 <p>会生成一个key 类似<code>127.0.0.1:11311-0</code>。然后通过MD5生成这个key的摘要，因为MD5后的摘要是16位，这里是通过每4位一组，使用位移运算生成一个32位的整数，作为一个虚拟节点，这样就每一个key 会有四个，然后在根据上面的逻辑，比如非权重的，就会有 numReps&#x2F;4 * 4 就有160 个虚拟节点了。</p>
 <p>所以以上整个初始化过程是比较简单的实现，ketama 算法就是通过MD5做分组来生成虚拟节点。</p>
 <p>现在看看获取时候的代码实现：</p>
-<pre><code>public MemcachedNode getPrimary(final String k) &#123;
+<pre><code>public MemcachedNode getPrimary(final String k) {
 MemcachedNode rv = getNodeForKey(hashAlg.hash(k));
 assert rv != null : &quot;Found no node for key &quot; + k;
 return rv;
-&#125;
+}
 	
 
-MemcachedNode getNodeForKey(long hash) &#123;
+MemcachedNode getNodeForKey(long hash) {
 final MemcachedNode rv;
-if (!ketamaNodes.containsKey(hash)) &#123;
+if (!ketamaNodes.containsKey(hash)) {
   // Java 1.6 adds a ceilingKey method, but I&#39;m still stuck in 1.5
   // in a lot of places, so I&#39;m doing this myself.
   SortedMap&lt;Long, MemcachedNode&gt; tailMap = getKetamaNodes().tailMap(hash);
-  if (tailMap.isEmpty()) &#123;
+  if (tailMap.isEmpty()) {
     hash = getKetamaNodes().firstKey();
-  &#125; else &#123;
+  } else {
     hash = tailMap.firstKey();
-  &#125;
-&#125;
+  }
+}
 rv = getKetamaNodes().get(hash);
 return rv;
-&#125;
+}
 </code></pre>
 <p>首先 <code>getPrimary(final String k)</code> 中根据算法对key 进行hash，然后使用该hash值去圆环中查找。因为是通过<code>SortedMap</code>去模拟圆环，所有通过<code>tailMap</code>就可以获取到比该hash 值要大的数（如果在JDK1.6 中则可以直接通过 <code>ceilingKey</code>就可以获取了），如果存在则取第一个，如果不存在，则取整个圆环第一个。</p>
 <p>以上就是ketama 算法的具体实现。</p>
@@ -464,7 +464,7 @@ return rv;
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

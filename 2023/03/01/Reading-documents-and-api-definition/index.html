@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -191,7 +191,7 @@
 </ul>
 <p>这个F 字段要提交到S 公司定义的API 中，对应的字段C  的约束如下。</p>
 <ul>
-<li><code>[0-9]&#123;8,28&#125;</code>，是一个正则表达式，8到28位的数字</li>
+<li><code>[0-9]{8,28}</code>，是一个正则表达式，8到28位的数字</li>
 </ul>
 <p>基于上面的例子，笔者就向其中一位负责API 定义的工程师反馈说，这个字段C的要求可能有问题，看看是不是文档看错了还是哪里没有衔接上。没想到他反客为主，问我“你有见到过二维码中字段F 里的值带有字母的吗？”，因为在研究二维码时曾看了一些别的接入方生成的二维码，这个字段的内容都是纯数字，笔者很直接地回答说“没有”，他竟然说“没有看到的话，那么这个字段就认为是纯数字吧。”，我着急了说“你不能因为没有看到有这样的二维码，何况我们之看了两家的码，来得出结论说字段F 的值不可能包含字母”。</p>
 <p>“你是否认同字段F 的值在文档规范下是可以包含字母的？”，“不同意”，笔者掩面。</p>
@@ -319,7 +319,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

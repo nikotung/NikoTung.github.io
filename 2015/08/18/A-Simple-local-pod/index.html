@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -189,11 +189,11 @@
 <li>Multi-Platform support : 多平台支持 iOS , OS X，watch OS</li>
 </ul>
 <h4 id="为-Podspec-文件添加库的描述"><a href="#为-Podspec-文件添加库的描述" class="headerlink" title="为 Podspec 文件添加库的描述"></a>为 Podspec 文件添加库的描述</h4><p>这个其实就可以简单的根据模版去修改。而因为我只是在本地建立的 git 项目，所以在 source 这个里面稍微有点不一样，这个一般来说是指向远端的代码管理服务器，比如</p>
-<pre><code>spec.source = &#123; :git =&gt; &#39;https://github.com/AFNetworking/AFNetworking.git&#39;,
-            :tag =&gt; spec.version.to_s &#125;
+<pre><code>spec.source = { :git =&gt; &#39;https://github.com/AFNetworking/AFNetworking.git&#39;,
+            :tag =&gt; spec.version.to_s }
 </code></pre>
 <p>而我这里只能这样填</p>
-<pre><code>  spec.source = &#123; :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s &#125;
+<pre><code>  spec.source = { :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s }
 </code></pre>
 <p>还有一个是，最好给项目打个 tag ，这个在 source 里面用到了。不然会有警告的。<br>如果有依赖的系统的 library，填写的时候要把 lib 的前缀去掉。</p>
 <h4 id="验证-Podspec-文件是否正确"><a href="#验证-Podspec-文件是否正确" class="headerlink" title="验证 Podspec 文件是否正确"></a>验证 Podspec 文件是否正确</h4><p>pod 本身就提供了验证的功能，简单运行命令 </p>
@@ -215,10 +215,10 @@
   s.homepage         = &quot;https://github.com/NikoTung&quot;
 
 
-  s.license      = &#123; :type =&gt; &#39;MIT&#39; , :file =&gt; &quot;LICENSE.md&quot; &#125;
+  s.license      = { :type =&gt; &#39;MIT&#39; , :file =&gt; &quot;LICENSE.md&quot; }
 
-  s.author             = &#123; &quot;Niko&quot; =&gt; &quot;Nizh2008@gmail.com&quot; &#125;
-  s.source           = &#123; :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s &#125;
+  s.author             = { &quot;Niko&quot; =&gt; &quot;Nizh2008@gmail.com&quot; }
+  s.source           = { :git =&gt; &quot;/Users/Niko/Projects/Mobile/AliPay/.git&quot; , :tag =&gt; s.version.to_s }
 
 
   s.platform     = :ios, &#39;7.0&#39;
@@ -228,7 +228,7 @@
 
 
   
-  # s.source       = &#123; :git =&gt; &quot;http://EXAMPLE/AliPay.git&quot;, :tag =&gt; &quot;0.0.1&quot; &#125;
+  # s.source       = { :git =&gt; &quot;http://EXAMPLE/AliPay.git&quot;, :tag =&gt; &quot;0.0.1&quot; }
 
   s.vendored_frameworks = &#39;Framework/AlipaySDK.Framework&#39;
   s.resource = &quot;Resource/AlipaySDK.bundle&quot;
@@ -373,7 +373,7 @@ end
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

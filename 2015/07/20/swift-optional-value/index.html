@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -184,7 +184,7 @@
 <p>可以通过下面的方法，在变量的类型后面添加一个？去标明改变量是一个<code>optional</code>的值(变量与?间不能有空格)。<br>	<br>	var value : String? &#x2F;&#x2F;nil<br>	value?.hashValue &#x2F;&#x2F; nil<br>	var optional : String? &#x3D; “hash”  &#x2F;&#x2F;hash<br>	optional?.hashValue    &#x2F;&#x2F;4799450059810186505</p>
 <p>如果你在声明的时候没有给<code>optional</code>赋初值，那么它就默认为nil(跟变量不一样的)</p>
 <p>有一个地方需要注意的是?其实就是一个语法糖。<code>optional</code>其实是一个<code>enum</code>。</p>
-<pre><code>enum Optional&lt;T&gt; : _Reflectable, NilLiteralConvertible &#123;
+<pre><code>enum Optional&lt;T&gt; : _Reflectable, NilLiteralConvertible {
 	case None
 	case Some(T)
 
@@ -205,7 +205,7 @@
 
     /// Create an instance initialized with `nil`.
     init(nilLiteral: ())
-&#125;
+}
 </code></pre>
 <p>它有两个类型，一个是<code>None</code>一个是<code>Some(T)</code>,这样应该就比较好理解<code>optional</code>的含义了。它有两个构造函数<code>init()</code>和<code>init(_ some : T)</code>。?的语法糖的作用就是这样</p>
 <ul>
@@ -214,15 +214,15 @@
 </ul>
 <p>在访问<code>optional</code>变量时，可以通过if 语句去判断它是不是nil，(&#x3D;&#x3D; nil 或者 !&#x3D; nil)<br>	<br>	if value !&#x3D; nil {<br>		print(“the value variable contain some value”)<br>	}</p>
 <p>当你百分百确认<code>optinal</code>变量是有值的时候，你可以通过在变量后面添加感叹号!去访问 </p>
-<pre><code>if optional != nil &#123;
+<pre><code>if optional != nil {
     print(&quot;value of optional \(optional!)&quot;)
-&#125;
+}
 </code></pre>
 <p>这种就成为强制拆包，强行返回<code>optional</code>声明时的<code>T</code>类型数据。如果你用强制拆包!时，<code>optional</code>却还没有值，那么app就会crash了，触发了一个运行时的错误。</p>
 <p>Apple建议使用一种叫<code>optinal binding</code>的方法去访问<code>optional</code>变量。主要就是通过if&#x2F;while语句，去检查<code>optinal</code>并它取出来把它放到一个变量或者常量中，如果转换成功就会执行一下步，而且在这里面就不再需要用!去访问变量了。</p>
-<pre><code>if let actualValue = value &#123;
+<pre><code>if let actualValue = value {
 	print(&quot;the actual value is \(actualValue)&quot;)
-&#125;
+}
 </code></pre>
 <p>隐式拆包(implicitly unwrapped optional)。有时候，一个<code>optional</code>的值一旦被设好了，就会一直存在，这时候可以在声明的时候用!而不是？去修饰，在后续的使用过程中就可以直接访问了。这种比较常见的是用于一个类的属性中。</p>
 <pre><code>let assumedString : String! = &quot;an implicitly unwrapped optional&quot; 
@@ -363,7 +363,7 @@ print(&quot;the assumed string is \(assumedString)&quot;)
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     

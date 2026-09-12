@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Niko&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" type="image/ico" href="https://blog.eiko.me/css/images/favicon.ico"/>
+  
+  <title>
+    
+      OpenWrt 访客网络配置，以及与 sing-box auto_redirect 的冲突排查 | Niko&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Niko's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>OpenWrt 访客网络配置，以及与 sing-box auto_redirect 的冲突排查</h2>
+  <p class="post-date">2026-09-12</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>家里的路由器（TP-Link TL-XDR6088，刷的 ImmortalWrt）一直是单网段扁平网络，所有设备都在 <code>192.168.8.0/24</code> 里。最近想给来家里的客人单独开一个访客 Wi-Fi，要求很简单：能上网，但摸不到内网设备和路由器管理后台。配置本身不复杂，但因为路由器上跑着 sing-box（<code>auto_redirect</code> 模式全局接管流量），踩了一个值得记录的坑：访客网络配好后，国内网站正常，国外全部不通。</p>
+<h3 id="目标拓扑"><a href="#目标拓扑" class="headerlink" title="目标拓扑"></a>目标拓扑</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主网  lan    192.168.8.0/24  原有 SSID        可互访内网、可管理路由器</span><br><span class="line">访客  guest  192.168.9.0/24  新 SSID(2.4G)    只能上网，禁内网、禁管理</span><br></pre></td></tr></table></figure>
+
+<p>只动新增配置，不修改任何现有的 lan&#x2F;wan&#x2F;无线配置，把风险降到最低。动手前先 <code>sysupgrade -b</code> 备份一份。</p>
+<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><p><strong>① 新建 guest 网桥和接口</strong>（<code>/etc/config/network</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config device &#x27;br_guest&#x27;</span><br><span class="line">	option type &#x27;bridge&#x27;</span><br><span class="line">	option name &#x27;br-guest&#x27;</span><br><span class="line"></span><br><span class="line">config interface &#x27;guest&#x27;</span><br><span class="line">	option proto &#x27;static&#x27;</span><br><span class="line">	option device &#x27;br-guest&#x27;</span><br><span class="line">	option ipaddr &#x27;192.168.9.1&#x27;</span><br><span class="line">	option netmask &#x27;255.255.255.0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>② 访客 DHCP</strong>（<code>/etc/config/dhcp</code>）：独立地址池，租期缩短到 1 小时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config dhcp &#x27;guest&#x27;</span><br><span class="line">	option interface &#x27;guest&#x27;</span><br><span class="line">	option start &#x27;100&#x27;</span><br><span class="line">	option limit &#x27;100&#x27;</span><br><span class="line">	option leasetime &#x27;1h&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>③ 防火墙隔离</strong>（<code>/etc/config/firewall</code>）：核心思路是 guest 区域 <code>input=REJECT</code>（禁止访问路由器本身）、<code>forward=REJECT</code>（禁止转发到其他内网区域），只放行到 wan 的转发，再单独开 DHCP 和 DNS 两个小口子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">config zone &#x27;guest&#x27;</span><br><span class="line">	option name &#x27;guest&#x27;</span><br><span class="line">	option network &#x27;guest&#x27;</span><br><span class="line">	option input &#x27;REJECT&#x27;</span><br><span class="line">	option output &#x27;ACCEPT&#x27;</span><br><span class="line">	option forward &#x27;REJECT&#x27;</span><br><span class="line"></span><br><span class="line">config forwarding &#x27;guest_wan&#x27;</span><br><span class="line">	option src &#x27;guest&#x27;</span><br><span class="line">	option dest &#x27;wan&#x27;</span><br><span class="line"></span><br><span class="line">config rule &#x27;guest_dhcp&#x27;</span><br><span class="line">	option name &#x27;Guest-DHCP&#x27;</span><br><span class="line">	option src &#x27;guest&#x27;</span><br><span class="line">	option proto &#x27;udp&#x27;</span><br><span class="line">	option dest_port &#x27;67-68&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br><span class="line"></span><br><span class="line">config rule &#x27;guest_dns&#x27;</span><br><span class="line">	option name &#x27;Guest-DNS&#x27;</span><br><span class="line">	option src &#x27;guest&#x27;</span><br><span class="line">	option proto &#x27;tcp udp&#x27;</span><br><span class="line">	option dest_port &#x27;53&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>④ 访客 SSID</strong>（<code>/etc/config/wireless</code>）：在 2.4G 射频（radio0）上多开一个 AP，绑到 guest 网络，<code>isolate</code> 开启客户端隔离让访客之间也互相不可见：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">config wifi-iface &#x27;guest_2g&#x27;</span><br><span class="line">	option device &#x27;radio0&#x27;</span><br><span class="line">	option network &#x27;guest&#x27;</span><br><span class="line">	option mode &#x27;ap&#x27;</span><br><span class="line">	option ssid &#x27;your-guest-ssid&#x27;</span><br><span class="line">	option encryption &#x27;psk2&#x27;</span><br><span class="line">	option key &#x27;your-password&#x27;</span><br><span class="line">	option isolate &#x27;1&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">uci commit</span><br><span class="line">service network reload</span><br><span class="line">service firewall reload</span><br><span class="line">service dnsmasq restart</span><br><span class="line">wifi reload</span><br></pre></td></tr></table></figure>
+
+<p>一个小坑：<code>service network reload</code> 用 <code>nohup ... &amp;</code> 后台跑时被 SSH 会话退出连带杀掉了，导致新接口没加载。在前台重新执行一次 <code>service network reload</code> 后 <code>br-guest</code> 才起来。涉及生效步骤时还是前台跑、盯着输出比较稳。</p>
+<h3 id="问题：访客网国内通、国外不通"><a href="#问题：访客网国内通、国外不通" class="headerlink" title="问题：访客网国内通、国外不通"></a>问题：访客网国内通、国外不通</h3><p>配完后手机连访客 Wi-Fi 测试：拿到 <code>192.168.9.x</code> 地址 ✅，访问内网被拒 ✅，国内网站正常 ✅，但国外网站全部超时 ❌。</p>
+<p>主网设备完全正常，说明问题只出在 guest 区域的特殊性上。路由器的代理是 sing-box，tun 入站配了 <code>auto_route + auto_redirect</code>，它会自动生成 nftables 规则全局拦截 TCP&#x2F;UDP 流量。打开它的 prerouting 链看（有计数器，非常方便排查）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">chain prerouting &#123;</span><br><span class="line">	type nat hook prerouting priority dstnat + 2; policy accept;</span><br><span class="line">	iifname &quot;singbox-tun&quot; return</span><br><span class="line">	ip daddr &#123; 192.168.0.0/16 &#125; return              # 私网绕行</span><br><span class="line">	ip daddr @route_exclude_address_set return      # geoip-cn 绕行</span><br><span class="line">	meta l4proto tcp redirect to :33903 return      # 其余 TCP 重定向到本地随机端口</span><br><span class="line">	meta mark set 0x2023 ct mark set 0x2023 return  # 其余 UDP/ICMP 打标走 tproxy</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关键点：<strong>这些规则是全局的，不区分来源接口</strong>。国外 TCP 被 <code>redirect</code> 到路由器本地端口、UDP 被打上 <code>0x2023</code> 标记交给 tproxy——被拦截的包在网络栈里走的是 <strong>INPUT 链</strong>，而不是 FORWARD。</p>
+<p>再看主网和访客网的区别：lan 区域 <code>input=ACCEPT</code>，被重定向的包顺利被 sing-box 接收；而 guest 区域 <code>input=REJECT</code>，只放行了 53 和 67-68，重定向到随机端口的包全部被 <code>reject_from_guest</code> 拒掉。国内流量因为命中 geoip-cn 绕行规则根本不进入拦截，所以表现为”国内通、国外不通”。DNS 不受影响（53 已放行），解析正常但连接建立不了，故障现象完全吻合。</p>
+<h3 id="修复：fw4-的-nftables-include"><a href="#修复：fw4-的-nftables-include" class="headerlink" title="修复：fw4 的 nftables include"></a>修复：fw4 的 nftables include</h3><p>第一反应是加一条”放行 TCP 33903 端口”的规则，但 33903 是 sing-box 每次启动时<strong>随机分配</strong>的，写死端口重启 sing-box 后就失效了。正确的思路是按 conntrack 特征匹配”被拦截”的流量，与端口无关：</p>
+<ul>
+<li>被 <code>redirect</code> 的 TCP：conntrack 带 DNAT 状态 → <code>ct status dnat</code></li>
+<li>被 tproxy 接管的 UDP&#x2F;ICMP：带标记 → <code>ct mark 0x2023</code></li>
+</ul>
+<p>本来想用 fw4 规则的 <code>option extra</code> 写原生 nft 表达式，结果这个版本的 fw4 不支持该选项（reload 时会警告并跳过规则）。fw4 支持 <code>config include</code> 类型的 <code>nftables</code> 片段，可以插入指定链的指定位置，正好够用。</p>
+<p>先写片段文件 <code>/etc/fw4-guest-singbox.nft</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ct status dnat counter accept comment &quot;Guest-Singbox-TCP&quot;</span><br><span class="line">ct mark 0x2023 counter accept comment &quot;Guest-Singbox-UDP&quot;</span><br></pre></td></tr></table></figure>
+
+<p>再在 <code>/etc/config/firewall</code> 注册 include，插到 <code>input_guest</code> 链最前面（必须在 reject 跳转之前）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config include &#x27;guest_singbox&#x27;</span><br><span class="line">	option type &#x27;nftables&#x27;</span><br><span class="line">	option chain &#x27;input_guest&#x27;</span><br><span class="line">	option position &#x27;chain-prepend&#x27;</span><br><span class="line">	option path &#x27;/etc/fw4-guest-singbox.nft&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>service firewall reload</code> 后验证链内容，手机再测，国外网站恢复，且 <code>Guest-Singbox-TCP</code> 规则的计数器开始增长，确认流量走的就是这条规则。</p>
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><ul>
+<li>所有 UCI 配置（<code>/etc/config/</code>）和 nft 片段（<code>/etc/</code>）都在闪存 overlay 分区上，重启不丢。</li>
+<li>但 sysupgrade 固件升级只保留默认列表里的文件，自定义的 <code>/etc/fw4-guest-singbox.nft</code> 需要手动登记到 <code>/etc/sysupgrade.conf</code>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;/etc/fw4-guest-singbox.nft&quot; &gt;&gt; /etc/sysupgrade.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>最终的隔离效果：访客可以正常上网（国外流量自动走 sing-box 分流，和主网体验一致），但访问不了内网任何设备，也打不开路由器的 LuCI&#x2F;SSH，访客设备之间也被 AP 隔离。整个方案的要点有两个：一是全部使用新增配置段、不动现有配置，出问题可以随时 <code>uci revert</code>；二是理解了”透明代理拦截的流量走 INPUT 链”这一点后，guest 区域 <code>input=REJECT</code> 与代理的共存问题就变成了一个清晰的防火墙放行问题——按 conntrack 特征放行，而不是按易变的端口放行。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#OpenWrt" >
+    <span class="tag-code">OpenWrt</span>
+  </a>
+
+  <a href="/tags#网络" >
+    <span class="tag-code">网络</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2025/01/17/a-scam-experience/">
+        <span class="nav-arrow">← </span>
+        
+          一次被“诈骗”的经历
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="NikoTung/NikoTung.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%9B%AE%E6%A0%87%E6%8B%93%E6%89%91"><span class="toc-nav-text">目标拓扑</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">基础配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E8%AE%BF%E5%AE%A2%E7%BD%91%E5%9B%BD%E5%86%85%E9%80%9A%E3%80%81%E5%9B%BD%E5%A4%96%E4%B8%8D%E9%80%9A"><span class="toc-nav-text">问题：访客网国内通、国外不通</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BF%AE%E5%A4%8D%EF%BC%9Afw4-%E7%9A%84-nftables-include"><span class="toc-nav-text">修复：fw4 的 nftables include</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-nav-text">持久化</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-nav-text">小结</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2026/09/12/openwrt-guest-wifi-with-sing-box/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

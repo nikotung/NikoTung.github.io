@@ -57,7 +57,7 @@
 <script src="/js/local-search.js"></script>
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
 </div>
@@ -202,22 +202,22 @@ if ([device respondsToSelector:@selector(isMultitaskingSupported)])
 <p>一个是iOS4以上可以用，一个是iOS7以上可以用。这两个方法都带有一个<code>block</code>的参数，这个<code>block</code>就是当这个后台运行结束后就会被调用，在这个<code>block</code>中必须要调用<code>- (void)endBackgroundTask:(UIBackgroundTaskIdentifier)identifier NS_AVAILABLE_IOS(4_0);</code>,因为这个<code>block</code>如果是被系统调用，说明这个后台运行的时间快要结束了，防止你的任务还没有完成，为了保险需要在<code>block</code>中调用。</p>
 <p>Sample</p>
 <pre><code>- (void)applicationDidEnterBackground:(UIApplication *)application
-&#123;
-    bgTask = [application beginBackgroundTaskWithExpirationHandler:^&#123;
+{
+    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
         
         [application endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
-    &#125;];
+    }];
  
     // Start the long-running task and return immediately.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
  
         // Do the work associated with the task, preferably in chunks.
  
         [application endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
-    &#125;);
-&#125;
+    });
+}
 </code></pre>
 <p>###长时间后台运行(Long-Running Background Tasks)<br>对于那些需要长时间在后台运行的App，需要向系统申请对应的权限，一般来说我们都是在info.plist文件中的<code>UIBackgroundModes</code>增加对应的值就好了，如audio，location。</p>
 <p>这个主要说一个iOS7新增的Background Fetch，因为其它的都还没有真正用过。</p>
@@ -227,19 +227,19 @@ if ([device respondsToSelector:@selector(isMultitaskingSupported)])
 <p>当App进入后台后，获得后台执行权限的时候，UIApplication的delegate就会被调用。</p>
 <pre><code>//ios7 background fetch feature
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-&#123;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^&#123;
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [[JVMessageManager sharedInstance] fetchMessagesInBackgroundModeWith:completionHandler];
         //handler everything here 
-    &#125;);
-&#125;
+    });
+}
 </code></pre>
 <p>这个后台运行的时间最多也就只有三十秒，所以必须要在三十秒内完成，不然App就很有可能被挂起了。当我们的后台任务完成后必须要显式的调用completeHandler。这是一个block接收一个<code>UIBackgroundFetchResult</code>的类型参数。</p>
-<pre><code>typedef NS_ENUM(NSUInteger, UIBackgroundFetchResult) &#123;
+<pre><code>typedef NS_ENUM(NSUInteger, UIBackgroundFetchResult) {
 UIBackgroundFetchResultNewData,
 UIBackgroundFetchResultNoData,
 UIBackgroundFetchResultFailed
-&#125; NS_ENUM_AVAILABLE_IOS(7_0);
+} NS_ENUM_AVAILABLE_IOS(7_0);
 </code></pre>
 <p>不确定这三个值对下一次后台运行的时间有什么影响。</p>
 <p>这样我们就能够完成了一个iOS7的后台获取的功能了。</p>
@@ -374,7 +374,7 @@ UIBackgroundFetchResultFailed
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2025 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2026 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
     Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">hexo-theme-vexo</a>
     
